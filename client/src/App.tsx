@@ -20,6 +20,7 @@ import SettingsPage from "@/pages/shared/Settings";
 // Owner Pages
 import OwnerDashboard from "@/pages/OwnerDashboard";
 import OwnerProperties from "@/pages/owner/Properties";
+import AddEditProperty from "@/pages/owner/AddEditProperty";
 import OwnerTenants from "@/pages/owner/Tenants";
 import WebsiteBuilder from "@/pages/owner/WebsiteBuilder";
 import PricingPackages from "@/pages/owner/Packages";
@@ -49,6 +50,8 @@ function Router() {
       {/* Owner Routes */}
       <Route path="/dashboard/owner" component={OwnerDashboard} />
       <Route path="/dashboard/owner/properties" component={OwnerProperties} />
+      <Route path="/dashboard/owner/properties/new" component={AddEditProperty} />
+      <Route path="/dashboard/owner/properties/edit/:id" component={AddEditProperty} />
       <Route path="/dashboard/owner/tenants" component={OwnerTenants} />
       <Route path="/dashboard/owner/website" component={WebsiteBuilder} />
       <Route path="/dashboard/owner/packages" component={PricingPackages} />

@@ -4,52 +4,57 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
 import { Plus, MoreVertical, MapPin, BedDouble, Users } from "lucide-react";
+import { Link } from "wouter";
 
 export default function OwnerProperties() {
   return (
     <DashboardLayout type="owner">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">My Properties</h2>
           <p className="text-muted-foreground">Manage your listings and rooms.</p>
         </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" /> Add New Property
-        </Button>
+        <Link href="/dashboard/owner/properties/new">
+          <Button>
+            <Plus className="h-4 w-4 mr-2" /> Add New Property
+          </Button>
+        </Link>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {HOSTELS.map((hostel) => (
-          <Card key={hostel.id} className="overflow-hidden">
+          <Card key={hostel.id} className="overflow-hidden flex flex-col">
             <div className="h-40 w-full relative">
               <img src={hostel.image} className="w-full h-full object-cover" alt={hostel.name} />
               <Badge className="absolute top-2 right-2 bg-white/90 text-foreground hover:bg-white">Live</Badge>
             </div>
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex justify-between items-start">
-                {hostel.name}
-                <Button variant="ghost" size="icon" className="h-8 w-8 -mr-2">
+                <span className="truncate pr-2">{hostel.name}</span>
+                <Button variant="ghost" size="icon" className="h-8 w-8 -mr-2 shrink-0">
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </CardTitle>
               <div className="flex items-center text-xs text-muted-foreground">
-                <MapPin className="h-3 w-3 mr-1" />
-                {hostel.city}
+                <MapPin className="h-3 w-3 mr-1 shrink-0" />
+                <span className="truncate">{hostel.city}</span>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1 flex flex-col">
               <div className="grid grid-cols-2 gap-2 mb-4 text-sm">
-                <div className="flex items-center gap-2 p-2 bg-muted/50 rounded">
-                  <BedDouble className="h-4 w-4 text-muted-foreground" />
-                  <span className="font-medium">{hostel.rooms.length} Room Types</span>
+                <div className="flex items-center gap-2 p-2 bg-muted/50 rounded overflow-hidden">
+                  <BedDouble className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <span className="font-medium truncate">{hostel.rooms.length} Room Types</span>
                 </div>
-                <div className="flex items-center gap-2 p-2 bg-muted/50 rounded">
-                  <Users className="h-4 w-4 text-muted-foreground" />
-                  <span className="font-medium">92% Occupancy</span>
+                <div className="flex items-center gap-2 p-2 bg-muted/50 rounded overflow-hidden">
+                  <Users className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <span className="font-medium truncate">92% Occupancy</span>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <Button variant="outline" className="flex-1">Edit Details</Button>
+              <div className="mt-auto flex gap-2">
+                <Link href={`/dashboard/owner/properties/edit/${hostel.id}`} className="flex-1">
+                   <Button variant="outline" className="w-full">Edit Details</Button>
+                </Link>
                 <Button className="flex-1">Manage Rooms</Button>
               </div>
             </CardContent>

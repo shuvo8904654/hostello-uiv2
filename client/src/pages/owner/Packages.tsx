@@ -2,7 +2,6 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Plus, MoreVertical, Package, Wifi, Utensils } from "lucide-react";
@@ -22,7 +21,7 @@ const ADDONS = [
 export default function PricingPackages() {
   return (
     <DashboardLayout type="owner">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Packages & Pricing</h2>
           <p className="text-muted-foreground">Manage room rates, stay packages, and optional add-ons.</p>
@@ -32,16 +31,16 @@ export default function PricingPackages() {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          <Card>
+          <Card className="overflow-hidden">
             <CardHeader>
               <CardTitle>Stay Packages</CardTitle>
               <CardDescription>Base rates for different durations.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0 sm:p-6 overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Package Name</TableHead>
+                    <TableHead className="w-[150px]">Package Name</TableHead>
                     <TableHead>Duration</TableHead>
                     <TableHead>Price</TableHead>
                     <TableHead>Status</TableHead>
@@ -51,7 +50,7 @@ export default function PricingPackages() {
                 <TableBody>
                   {PACKAGES.map((pkg) => (
                     <TableRow key={pkg.id}>
-                      <TableCell className="font-medium">{pkg.name}</TableCell>
+                      <TableCell className="font-medium whitespace-nowrap">{pkg.name}</TableCell>
                       <TableCell>{pkg.duration}</TableCell>
                       <TableCell>৳{pkg.price}</TableCell>
                       <TableCell><Badge variant="outline">{pkg.status}</Badge></TableCell>
@@ -67,7 +66,7 @@ export default function PricingPackages() {
 
           <Card>
             <CardHeader>
-               <div className="flex justify-between">
+               <div className="flex flex-col sm:flex-row justify-between gap-4">
                   <div>
                     <CardTitle>Add-ons & Services</CardTitle>
                     <CardDescription>Extra services tenants can purchase.</CardDescription>
@@ -79,14 +78,14 @@ export default function PricingPackages() {
                <div className="grid sm:grid-cols-2 gap-4">
                   {ADDONS.map(addon => (
                     <div key={addon.id} className="flex items-center gap-4 p-4 border rounded-lg">
-                       <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                       <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                           <addon.icon className="h-5 w-5" />
                        </div>
-                       <div className="flex-1">
-                          <div className="font-bold">{addon.name}</div>
-                          <div className="text-sm text-muted-foreground">৳{addon.price} / {addon.type}</div>
+                       <div className="flex-1 min-w-0">
+                          <div className="font-bold truncate">{addon.name}</div>
+                          <div className="text-sm text-muted-foreground truncate">৳{addon.price} / {addon.type}</div>
                        </div>
-                       <Button variant="ghost" size="icon"><MoreVertical className="h-4 w-4"/></Button>
+                       <Button variant="ghost" size="icon" className="shrink-0"><MoreVertical className="h-4 w-4"/></Button>
                     </div>
                   ))}
                </div>
