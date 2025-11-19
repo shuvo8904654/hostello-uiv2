@@ -27,10 +27,13 @@ interface DashboardLayoutProps {
   type: DashboardType;
 }
 
-export function DashboardLayout({ children, type }: DashboardLayoutProps) {
-  const [location] = useLocation();
-  const [open, setOpen] = useState(false);
+interface NavContentProps {
+  type: DashboardType;
+  location: string;
+  setOpen: (open: boolean) => void;
+}
 
+const NavContent = ({ type, location, setOpen }: NavContentProps) => {
   const tenantLinks = [
     { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/tenant' },
     { icon: Search, label: 'Find Hostels', href: '/search' },
@@ -61,7 +64,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
   const links = type === 'tenant' ? tenantLinks : type === 'owner' ? ownerLinks : adminLinks;
   const roleLabel = type === 'tenant' ? 'Student' : type === 'owner' ? 'Property Owner' : 'Administrator';
 
-  const NavContent = () => (
+  return (
     <div className="flex flex-col h-full">
       <div className="p-6 border-b">
         <Link href="/" className="flex items-center gap-2 mb-1" onClick={() => setOpen(false)}>
@@ -103,12 +106,43 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
       </div>
     </div>
   );
+};
+
+export function DashboardLayout({ children, type }: DashboardLayoutProps) {
+  const [location] = useLocation();
+  const [open, setOpen] = useState(false);
+
+  // Helper to find current label
+  const getLabel = () => {
+     // Combine all links to find label
+     const allLinks = [
+        { label: 'Overview', href: '/dashboard/tenant' },
+        { label: 'Find Hostels', href: '/search' },
+        { label: 'Roommate Finder', href: '/dashboard/tenant/roommates' },
+        { label: 'My Bookings', href: '/dashboard/tenant/bookings' },
+        { label: 'Messages', href: '/dashboard/tenant/messages' },
+        { label: 'Settings', href: '/dashboard/tenant/settings' },
+        { label: 'Analytics', href: '/dashboard/owner' },
+        { label: 'My Properties', href: '/dashboard/owner/properties' },
+        { label: 'Packages & Pricing', href: '/dashboard/owner/packages' },
+        { label: 'Website Builder', href: '/dashboard/owner/website' },
+        { label: 'Tenants', href: '/dashboard/owner/tenants' },
+        { label: 'Messages', href: '/dashboard/owner/messages' },
+        { label: 'Settings', href: '/dashboard/owner/settings' },
+        { label: 'Admin Overview', href: '/dashboard/admin' },
+        { label: 'User Management', href: '/dashboard/admin/users' },
+        { label: 'Listings Approval', href: '/dashboard/admin/listings' },
+        { label: 'Billing & Plans', href: '/dashboard/admin/billing' },
+        { label: 'Platform Settings', href: '/dashboard/admin/settings' },
+     ];
+     return allLinks.find(l => l.href === location)?.label || 'Dashboard';
+  };
 
   return (
     <div className="min-h-screen flex bg-muted/20 font-sans">
       {/* Desktop Sidebar */}
       <aside className="w-64 bg-card border-r hidden md:flex flex-col fixed h-full z-30">
-        <NavContent />
+        <NavContent type={type} location={location} setOpen={setOpen} />
       </aside>
 
       {/* Main Content */}
@@ -124,11 +158,11 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-64">
                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                 <NavContent />
+                 <NavContent type={type} location={location} setOpen={setOpen} />
               </SheetContent>
             </Sheet>
             <h1 className="font-semibold text-lg capitalize truncate">
-              {links.find(l => l.href === location)?.label || 'Dashboard'}
+              {getLabel()}
             </h1>
           </div>
           
