@@ -1,6 +1,6 @@
-import heroImage from '@assets/generated_images/Modern_student_hostel_in_Dhaka_b12c4e5a.png';
+import heroImage from '@assets/generated_images/Modern_student_hostel_in_Dhaka_8b9032cc.png';
 import exteriorImage from '@assets/generated_images/Modern_student_accommodation_exterior_26c726a4.png';
-import dormImage from '@assets/generated_images/Comfortable_shared_room_in_Dhaka_3a4b5c6d.png';
+import dormImage from '@assets/generated_images/Comfortable_shared_room_in_Dhaka_66667007.png';
 import privateRoomImage from '@assets/generated_images/Stylish_private_student_room_1db365e3.png';
 
 export interface Hostel {
