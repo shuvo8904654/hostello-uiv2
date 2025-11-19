@@ -104,4 +104,30 @@ export const CITIES = ['London', 'Manchester', 'Bristol', 'Edinburgh', 'Leeds'];
 export const UNIVERSITIES = ['Imperial College', 'UCL', 'University of Manchester', 'University of Bristol', 'LSE'];
 export const AMENITIES = ['WiFi', 'Gym', 'Laundry', 'Kitchen', 'AC', 'Security'];
 
+// New Mock Data
+
+export const BOOKINGS = [
+  { id: 'b1', hostelName: 'The Hub Student Living', roomType: 'Private Studio', checkIn: '2025-09-01', checkOut: '2026-08-31', status: 'Active', price: 450 },
+  { id: 'b2', hostelName: 'Urban Nest', roomType: '4-Bed Dorm', checkIn: '2024-09-01', checkOut: '2025-06-30', status: 'Completed', price: 180 },
+];
+
+export const MESSAGES = [
+  { id: 'm1', sender: 'The Hub Manager', preview: 'Hi Alex, just confirming your move-in date.', time: '10:30 AM', unread: true },
+  { id: 'm2', sender: 'Sarah (Roommate)', preview: 'Hey! Do you know if we need to bring our own...', time: 'Yesterday', unread: false },
+  { id: 'm3', sender: 'Hostello Support', preview: 'Your booking request has been received.', time: '2 days ago', unread: false },
+];
+
+export const USERS = [
+  { id: 'u1', name: 'Alex Johnson', role: 'Tenant', email: 'alex@example.com', status: 'Verified' },
+  { id: 'u2', name: 'Maria Garcia', role: 'Owner', email: 'maria@properties.com', status: 'Pending' },
+  { id: 'u3', name: 'John Smith', role: 'Tenant', email: 'john@example.com', status: 'Verified' },
+  { id: 'u4', name: 'Luxury Living Ltd', role: 'Owner', email: 'contact@luxuryliving.com', status: 'Verified' },
+];
+
+export const TENANTS = [
+  { id: 't1', name: 'Alex Johnson', room: '304', rentStatus: 'Paid', leaseEnd: '2026-08-31', phone: '+44 7700 900077' },
+  { id: 't2', name: 'David Chen', room: '305', rentStatus: 'Overdue', leaseEnd: '2026-08-31', phone: '+44 7700 900123' },
+  { id: 't3', name: 'Sarah Williams', room: '306', rentStatus: 'Paid', leaseEnd: '2026-08-31', phone: '+44 7700 900456' },
+];
+
 export { heroImage, exteriorImage, dormImage, privateRoomImage };
