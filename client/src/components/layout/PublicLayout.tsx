@@ -10,20 +10,18 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col font-sans text-foreground bg-background">
       <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/">
-            <a className="flex items-center gap-2 transition-opacity hover:opacity-90">
+          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <Building2 className="h-5 w-5" />
               </div>
               <span className="text-xl font-bold tracking-tight">Hostello</span>
-            </a>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/search"><a className="text-sm font-medium hover:text-primary transition-colors">Find a Hostel</a></Link>
-            <Link href="/dashboard/tenant"><a className="text-sm font-medium hover:text-primary transition-colors">Tenant Dashboard</a></Link>
-            <Link href="/dashboard/owner"><a className="text-sm font-medium hover:text-primary transition-colors">List Your Property</a></Link>
+            <Link href="/search" className="text-sm font-medium hover:text-primary transition-colors">Find a Hostel</Link>
+            <Link href="/dashboard/tenant" className="text-sm font-medium hover:text-primary transition-colors">Tenant Dashboard</Link>
+            <Link href="/dashboard/owner" className="text-sm font-medium hover:text-primary transition-colors">List Your Property</Link>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" className="text-sm">Log in</Button>
               <Button size="sm" className="text-sm rounded-full px-6">Sign up</Button>
@@ -39,10 +37,10 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
         {/* Mobile Nav */}
         {isMenuOpen && (
           <div className="md:hidden border-t p-4 bg-background space-y-4 flex flex-col animate-in slide-in-from-top-5">
-            <Link href="/search"><a className="block text-sm font-medium py-2">Find a Hostel</a></Link>
-            <Link href="/dashboard/tenant"><a className="block text-sm font-medium py-2">Tenant Dashboard</a></Link>
-            <Link href="/dashboard/owner"><a className="block text-sm font-medium py-2">Owner Dashboard</a></Link>
-            <Link href="/dashboard/admin"><a className="block text-sm font-medium py-2">Admin Demo</a></Link>
+            <Link href="/search" className="block text-sm font-medium py-2">Find a Hostel</Link>
+            <Link href="/dashboard/tenant" className="block text-sm font-medium py-2">Tenant Dashboard</Link>
+            <Link href="/dashboard/owner" className="block text-sm font-medium py-2">Owner Dashboard</Link>
+            <Link href="/dashboard/admin" className="block text-sm font-medium py-2">Admin Demo</Link>
             <div className="pt-2 flex flex-col gap-2">
                <Button variant="outline" className="w-full">Log in</Button>
                <Button className="w-full">Sign up</Button>

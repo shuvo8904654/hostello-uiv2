@@ -57,13 +57,11 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
   const NavContent = () => (
     <div className="flex flex-col h-full">
       <div className="p-6 border-b">
-        <Link href="/">
-           <a className="flex items-center gap-2 mb-1" onClick={() => setOpen(false)}>
+        <Link href="/" className="flex items-center gap-2 mb-1" onClick={() => setOpen(false)}>
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Building2 className="h-5 w-5" />
             </div>
             <span className="text-xl font-bold tracking-tight text-foreground">Hostello</span>
-          </a>
         </Link>
         <div className="text-xs font-medium text-muted-foreground px-1 uppercase tracking-wider mt-2">{roleLabel} Portal</div>
       </div>
@@ -73,10 +71,11 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
           const Icon = link.icon;
           const isActive = location === link.href;
           return (
-            <Link key={link.href} href={link.href}>
-              <a 
-                onClick={() => setOpen(false)}
-                className={cn(
+            <Link 
+              key={link.href} 
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className={cn(
                 "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                 isActive 
                   ? "bg-primary/10 text-primary" 
@@ -84,7 +83,6 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
               )}>
                 <Icon className="h-4 w-4" />
                 {link.label}
-              </a>
             </Link>
           );
         })}

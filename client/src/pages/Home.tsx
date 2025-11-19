@@ -56,10 +56,8 @@ export default function Home() {
                 </SelectContent>
               </Select>
             </div>
-            <Link href="/search">
-              <a className={cn(buttonVariants({ size: "lg" }), "h-12 px-8 text-base font-semibold rounded-xl w-full md:w-auto shadow-lg shadow-primary/25")}>
+            <Link href="/search" className={cn(buttonVariants({ size: "lg" }), "h-12 px-8 text-base font-semibold rounded-xl w-full md:w-auto shadow-lg shadow-primary/25")}>
                 <Search className="mr-2 h-4 w-4" /> Search Hostels
-              </a>
             </Link>
           </div>
         </div>
@@ -106,8 +104,8 @@ export default function Home() {
             <h2 className="text-3xl font-bold mb-2">Popular near Campus</h2>
             <p className="text-muted-foreground">Top rated hostels students are booking right now.</p>
           </div>
-          <Link href="/search">
-             <a className={buttonVariants({ variant: "outline" })}>View All</a>
+          <Link href="/search" className={buttonVariants({ variant: "outline" })}>
+             View All
           </Link>
         </div>
         
@@ -125,8 +123,8 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Are you a Property Owner?</h2>
           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">List your property on Hostello and reach thousands of students instantly. Manage bookings, payments, and tenants all in one place.</p>
           <div className="flex justify-center gap-4">
-             <Link href="/dashboard/owner">
-               <a className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "rounded-full px-8 text-base font-bold")}>List Your Property</a>
+             <Link href="/dashboard/owner" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "rounded-full px-8 text-base font-bold")}>
+               List Your Property
              </Link>
              <Button size="lg" variant="outline" className="h-12 px-8 text-base font-bold rounded-full bg-transparent border-white text-white hover:bg-white hover:text-primary">Learn More</Button>
           </div>

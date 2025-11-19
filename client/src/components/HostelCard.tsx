@@ -57,8 +57,8 @@ export function HostelCard({ hostel }: HostelCardProps) {
             <span className="text-lg font-bold text-primary">£{hostel.price}</span>
             <span className="text-xs text-muted-foreground">/week</span>
           </div>
-          <Link href={`/hostel/${hostel.id}`}>
-            <a className={cn(buttonVariants({ size: "sm" }), "rounded-full px-4")}>View Details</a>
+          <Link href={`/hostel/${hostel.id}`} className={cn(buttonVariants({ size: "sm" }), "rounded-full px-4")}>
+            View Details
           </Link>
         </div>
       </div>
