@@ -11,7 +11,10 @@ import {
   Users, 
   BarChart,
   ShieldCheck,
-  Menu
+  Menu,
+  Globe,
+  Package,
+  CreditCard
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -31,6 +34,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
   const tenantLinks = [
     { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/tenant' },
     { icon: Search, label: 'Find Hostels', href: '/search' },
+    { icon: Users, label: 'Roommate Finder', href: '/dashboard/tenant/roommates' },
     { icon: Home, label: 'My Bookings', href: '/dashboard/tenant/bookings' },
     { icon: MessageSquare, label: 'Messages', href: '/dashboard/tenant/messages' },
     { icon: Settings, label: 'Settings', href: '/dashboard/tenant/settings' },
@@ -39,6 +43,8 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
   const ownerLinks = [
     { icon: BarChart, label: 'Analytics', href: '/dashboard/owner' },
     { icon: Building2, label: 'My Properties', href: '/dashboard/owner/properties' },
+    { icon: Package, label: 'Packages & Pricing', href: '/dashboard/owner/packages' },
+    { icon: Globe, label: 'Website Builder', href: '/dashboard/owner/website' },
     { icon: Users, label: 'Tenants', href: '/dashboard/owner/tenants' },
     { icon: MessageSquare, label: 'Messages', href: '/dashboard/owner/messages' },
     { icon: Settings, label: 'Settings', href: '/dashboard/owner/settings' },
@@ -48,6 +54,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
     { icon: ShieldCheck, label: 'Admin Overview', href: '/dashboard/admin' },
     { icon: Users, label: 'User Management', href: '/dashboard/admin/users' },
     { icon: Building2, label: 'Listings Approval', href: '/dashboard/admin/listings' },
+    { icon: CreditCard, label: 'Billing & Plans', href: '/dashboard/admin/billing' },
     { icon: Settings, label: 'Platform Settings', href: '/dashboard/admin/settings' },
   ];
 

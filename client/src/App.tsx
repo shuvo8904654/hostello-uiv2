@@ -13,6 +13,7 @@ import HostelDetail from "@/pages/HostelDetail";
 // Tenant Pages
 import TenantDashboard from "@/pages/TenantDashboard";
 import TenantBookings from "@/pages/tenant/Bookings";
+import RoommateFinder from "@/pages/tenant/RoommateFinder";
 import MessagesPage from "@/pages/shared/Messages";
 import SettingsPage from "@/pages/shared/Settings";
 
@@ -20,11 +21,14 @@ import SettingsPage from "@/pages/shared/Settings";
 import OwnerDashboard from "@/pages/OwnerDashboard";
 import OwnerProperties from "@/pages/owner/Properties";
 import OwnerTenants from "@/pages/owner/Tenants";
+import WebsiteBuilder from "@/pages/owner/WebsiteBuilder";
+import PricingPackages from "@/pages/owner/Packages";
 
 // Admin Pages
 import AdminDashboard from "@/pages/AdminDashboard";
 import AdminUsers from "@/pages/admin/Users";
 import AdminListings from "@/pages/admin/Listings";
+import AdminBilling from "@/pages/admin/Billing";
 
 import PlaceholderPage from "@/pages/Placeholder";
 
@@ -38,6 +42,7 @@ function Router() {
       {/* Tenant Routes */}
       <Route path="/dashboard/tenant" component={TenantDashboard} />
       <Route path="/dashboard/tenant/bookings" component={TenantBookings} />
+      <Route path="/dashboard/tenant/roommates" component={RoommateFinder} />
       <Route path="/dashboard/tenant/messages" component={MessagesPage} />
       <Route path="/dashboard/tenant/settings" component={SettingsPage} />
       
@@ -45,6 +50,8 @@ function Router() {
       <Route path="/dashboard/owner" component={OwnerDashboard} />
       <Route path="/dashboard/owner/properties" component={OwnerProperties} />
       <Route path="/dashboard/owner/tenants" component={OwnerTenants} />
+      <Route path="/dashboard/owner/website" component={WebsiteBuilder} />
+      <Route path="/dashboard/owner/packages" component={PricingPackages} />
       <Route path="/dashboard/owner/messages" component={MessagesPage} />
       <Route path="/dashboard/owner/settings" component={SettingsPage} />
       
@@ -52,6 +59,7 @@ function Router() {
       <Route path="/dashboard/admin" component={AdminDashboard} />
       <Route path="/dashboard/admin/users" component={AdminUsers} />
       <Route path="/dashboard/admin/listings" component={AdminListings} />
+      <Route path="/dashboard/admin/billing" component={AdminBilling} />
       <Route path="/dashboard/admin/settings" component={SettingsPage} />
 
       {/* Fallback */}
