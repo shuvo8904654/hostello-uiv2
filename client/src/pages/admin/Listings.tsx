@@ -24,7 +24,7 @@ export default function AdminListings() {
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-xl font-bold">{hostel.name}</h3>
-                      <p className="text-muted-foreground">{hostel.city} • {hostel.university}</p>
+                      <p className="text-muted-foreground">{hostel.location}, {hostel.city}</p>
                     </div>
                     <Badge variant="outline">Pending Review</Badge>
                   </div>
@@ -33,7 +33,7 @@ export default function AdminListings() {
                   
                   <div className="flex gap-2 pt-2">
                     <Badge variant="secondary" className="font-normal">{hostel.type}</Badge>
-                    <Badge variant="secondary" className="font-normal">£{hostel.price}/week</Badge>
+                    <Badge variant="secondary" className="font-normal">৳{hostel.price}/month</Badge>
                   </div>
                 </div>
 

@@ -17,7 +17,7 @@ export default function Search() {
            <div className="flex gap-4 max-w-2xl">
              <div className="relative flex-1">
                <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-               <Input className="pl-10 bg-background" placeholder="Search by university, city, or hostel name..." />
+               <Input className="pl-10 bg-background" placeholder="Search by location, city, or hostel name..." />
              </div>
              <Button>Search</Button>
            </div>
@@ -34,11 +34,11 @@ export default function Search() {
             
             <div className="space-y-6">
               <div>
-                <Label className="text-sm font-medium mb-2 block">Price Range (Weekly)</Label>
-                <Slider defaultValue={[150]} max={500} step={10} className="mb-2" />
+                <Label className="text-sm font-medium mb-2 block">Price Range (Monthly)</Label>
+                <Slider defaultValue={[5000]} max={20000} step={500} className="mb-2" />
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>£50</span>
-                  <span>£500+</span>
+                  <span>৳2k</span>
+                  <span>৳20k+</span>
                 </div>
               </div>
 

@@ -1,0 +1,199 @@
+A public Hostel Finder website
+
+A complete dashboard system for tenants, owners, and admins.
+
+Hostel Finder (Landing Page + Public Website)
+
+Students search hostels by city, area, price, gender, amenities
+
+Each hostel has a public profile showing:
+
+Photos
+
+Room types
+
+Pricing
+
+Amenities
+
+Rules/policies
+
+Reviews & ratings
+
+Map/location
+
+Contact or booking button
+
+Students can book instantly or send booking requests
+
+Featured hostels & trending hostels
+
+Owner sign-up section to join the SaaS system
+
+Tenant Dashboard
+
+Search hostels with filters + map view
+
+Booking system: pending, approved, rejected
+
+Cancel/reschedule bookings
+
+Save favorite hostels
+
+Booking history + receipts
+
+Roommate finder: create profile, match with others, chat
+
+In-app messaging with owners
+
+Review & rating system
+
+Push notifications for:
+
+Booking updates
+
+Messages
+
+Roommate matches
+
+Owner Dashboard (SaaS for Hostel Owners)
+
+Analytics Overview
+
+Total hostels, branches, views, bookings, revenue
+
+Ratings + performance metrics
+
+Multi-Branch Management
+
+Add/manage multiple branches
+
+Each branch has its own rooms, photos, pricing, amenities
+
+Assign staff/sub-admins to branches
+
+Property Management
+
+Add/edit hostel listings
+
+Manage rooms, amenities, and gallery
+
+Set rules/policies
+
+Location picker
+
+Performance analytics for each property
+
+Packages & Pricing System
+
+Create room types (shared, private, deluxe)
+
+Stay packages: monthly, daily, semester-based
+
+Add-ons: meals, laundry, WiFi upgrades
+
+Dynamic pricing (seasonal or occupancy-based)
+
+Booking Management
+
+Approve or reject booking requests
+
+View all bookings per branch
+
+Occupancy calendar
+
+Automatic WhatsApp/SMS/email messages
+
+Tenant Management
+
+Add tenants manually for offline bookings
+
+Track rent, deposits, due dates
+
+Export data to PDF/Excel
+
+Mini-Website Builder
+
+Auto-generated mini-site for each hostel
+
+Owners customize logo, colors, cover image
+
+Shows rooms, reviews, photos, booking button
+
+Messages & Reviews
+
+View/respond to reviews
+
+Chat with tenants
+
+Quick-reply templates
+
+Automated Notifications
+
+Alerts for new bookings
+
+Rent reminders
+
+Check-in/check-out notices
+
+Low occupancy alerts
+
+Payment confirmations
+
+Admin Dashboard (Platform Control)
+
+Platform Analytics
+
+Total users, hostels, branches
+
+Monthly revenue
+
+City-wise performance
+
+Booking & occupancy statistics
+
+Verification Center
+
+Verify owners + properties
+
+Approve or reject listings
+
+Pending verification queue
+
+User Management
+
+Manage tenants and owners
+
+Suspend, ban, or upgrade users
+
+Assign admin/mod roles
+
+Booking Oversight
+
+View all bookings
+
+Handle disputes
+
+Manage flag reports
+
+Content Moderation
+
+Review flagged reviews/listings
+
+Handle spam/fraud reports
+
+Subscription & Billing
+
+Manage subscription plans (Free, Pro, Premium)
+
+Payment history, renewals, failed transactions
+
+Generate invoices
+
+Platform Controls
+
+Global settings (pricing tiers, commissions)
+
+Send announcements
+
+Manage support tickets

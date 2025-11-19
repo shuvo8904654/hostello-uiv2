@@ -53,7 +53,7 @@ export default function HostelDetail() {
               </div>
               <div className="flex items-center text-muted-foreground text-lg mb-4">
                 <MapPin className="h-5 w-5 mr-2" />
-                {hostel.city} • Near {hostel.university}
+                {hostel.location}, {hostel.city}
               </div>
               <div className="flex gap-2">
                 <Badge variant="secondary" className="text-sm py-1 px-3">{hostel.type}</Badge>
@@ -93,7 +93,7 @@ export default function HostelDetail() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xl font-bold text-primary">£{room.price}<span className="text-sm text-muted-foreground font-normal">/week</span></div>
+                      <div className="text-xl font-bold text-primary">৳{room.price}<span className="text-sm text-muted-foreground font-normal">/month</span></div>
                       <div className="text-xs text-green-600 font-medium">{room.available} rooms left</div>
                     </div>
                   </div>
@@ -108,8 +108,8 @@ export default function HostelDetail() {
               <div className="mb-6">
                 <span className="text-sm text-muted-foreground">Starts from</span>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-primary">£{hostel.price}</span>
-                  <span className="text-muted-foreground">/week</span>
+                  <span className="text-3xl font-bold text-primary">৳{hostel.price}</span>
+                  <span className="text-muted-foreground">/month</span>
                 </div>
               </div>
 
@@ -117,11 +117,11 @@ export default function HostelDetail() {
                 <div className="grid grid-cols-2 gap-2">
                   <div className="border rounded-lg p-3">
                     <label className="text-xs text-muted-foreground block mb-1">Check-in</label>
-                    <div className="font-medium flex items-center gap-2"><Calendar className="h-4 w-4" /> Sep 1</div>
+                    <div className="font-medium flex items-center gap-2"><Calendar className="h-4 w-4" /> ASAP</div>
                   </div>
                   <div className="border rounded-lg p-3">
                     <label className="text-xs text-muted-foreground block mb-1">Duration</label>
-                    <div className="font-medium">52 Weeks</div>
+                    <div className="font-medium">Monthly</div>
                   </div>
                 </div>
                 <Button size="lg" className="w-full font-bold text-lg" onClick={handleBook}>Request to Book</Button>

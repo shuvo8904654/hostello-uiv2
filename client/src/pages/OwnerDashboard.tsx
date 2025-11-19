@@ -7,12 +7,12 @@ import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign } from "lucid
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 const data = [
-  { name: "Jan", total: 1200 },
-  { name: "Feb", total: 2100 },
-  { name: "Mar", total: 1800 },
-  { name: "Apr", total: 2400 },
-  { name: "May", total: 3200 },
-  { name: "Jun", total: 4500 },
+  { name: "Jan", total: 12000 },
+  { name: "Feb", total: 21000 },
+  { name: "Mar", total: 18000 },
+  { name: "Apr", total: 24000 },
+  { name: "May", total: 32000 },
+  { name: "Jun", total: 45000 },
 ];
 
 export default function OwnerDashboard() {
@@ -33,7 +33,7 @@ export default function OwnerDashboard() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">£12,450</div>
+            <div className="text-2xl font-bold">৳1,24,500</div>
             <p className="text-xs text-muted-foreground text-green-600 flex items-center mt-1">
               <ArrowUpRight className="h-3 w-3 mr-1" /> +20.1% from last month
             </p>
@@ -82,7 +82,7 @@ export default function OwnerDashboard() {
             <ResponsiveContainer width="100%" height={350}>
               <BarChart data={data}>
                 <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `£${value}`} />
+                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `৳${value}`} />
                 <Bar dataKey="total" fill="currentColor" radius={[4, 4, 0, 0]} className="fill-primary" />
               </BarChart>
             </ResponsiveContainer>
@@ -97,10 +97,10 @@ export default function OwnerDashboard() {
             <div className="space-y-4">
                <div className="flex items-center justify-between border-b pb-4">
                  <div className="flex items-center gap-3">
-                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground">JD</div>
+                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground">RA</div>
                    <div>
-                     <div className="font-medium">John Doe</div>
-                     <div className="text-xs text-muted-foreground">The Hub • Room 101</div>
+                     <div className="font-medium">Rahim Ahmed</div>
+                     <div className="text-xs text-muted-foreground">Dhaka Hub • Room 101</div>
                    </div>
                  </div>
                  <div className="flex gap-2">
@@ -110,10 +110,10 @@ export default function OwnerDashboard() {
                </div>
                <div className="flex items-center justify-between border-b pb-4">
                  <div className="flex items-center gap-3">
-                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground">SA</div>
+                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground">FK</div>
                    <div>
-                     <div className="font-medium">Sarah Adams</div>
-                     <div className="text-xs text-muted-foreground">Urban Nest • Bed 2</div>
+                     <div className="font-medium">Fatima Khan</div>
+                     <div className="text-xs text-muted-foreground">Uttara Girls • Bed 2</div>
                    </div>
                  </div>
                  <div className="flex gap-2">

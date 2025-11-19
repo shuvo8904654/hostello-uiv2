@@ -9,7 +9,7 @@ export default function TenantDashboard() {
   return (
     <DashboardLayout type="tenant">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold tracking-tight">Welcome back, Alex! 👋</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Welcome back, Rahim! 👋</h2>
         <p className="text-muted-foreground">Here's what's happening with your accommodation.</p>
       </div>
 
@@ -20,7 +20,7 @@ export default function TenantDashboard() {
             <Home className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">The Hub Living</div>
+            <div className="text-2xl font-bold">Dhaka Student Hub</div>
             <p className="text-xs text-muted-foreground">Room 304 • Moving in Sep 1</p>
           </CardContent>
         </Card>
@@ -30,7 +30,7 @@ export default function TenantDashboard() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">£250.00</div>
+            <div className="text-2xl font-bold">৳5,000.00</div>
             <p className="text-xs text-muted-foreground">Due Aug 25, 2025</p>
           </CardContent>
         </Card>
@@ -59,7 +59,7 @@ export default function TenantDashboard() {
                     <h4 className="font-semibold">{HOSTELS[0].name}</h4>
                     <Badge className="bg-yellow-500/15 text-yellow-700 hover:bg-yellow-500/25 border-yellow-200">Pending Approval</Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-2">Private Studio • 52 Weeks</p>
+                  <p className="text-sm text-muted-foreground mb-2">Private AC Room • Monthly</p>
                   <div className="text-sm font-medium">Applied on Nov 18, 2025</div>
                 </div>
              </div>
@@ -77,7 +77,7 @@ export default function TenantDashboard() {
                     <img src={hostel.image} className="w-12 h-12 rounded-md object-cover" alt="Hostel" />
                     <div className="flex-1">
                       <h4 className="font-medium text-sm">{hostel.name}</h4>
-                      <p className="text-xs text-muted-foreground">{hostel.city}</p>
+                      <p className="text-xs text-muted-foreground">{hostel.location}, {hostel.city}</p>
                     </div>
                     <Button variant="outline" size="sm">View</Button>
                   </div>

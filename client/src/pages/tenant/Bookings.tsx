@@ -41,7 +41,7 @@ export default function TenantBookings() {
                 </div>
                 <div className="space-y-1">
                   <span className="text-xs text-muted-foreground font-medium uppercase">Payment</span>
-                  <div className="font-medium">£{booking.price} / week</div>
+                  <div className="font-medium">৳{booking.price} / month</div>
                 </div>
                 <div className="flex items-center md:justify-end gap-3">
                   <Button variant="outline" size="sm">

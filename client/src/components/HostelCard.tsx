@@ -33,7 +33,7 @@ export function HostelCard({ hostel }: HostelCardProps) {
             <h3 className="font-bold text-lg leading-tight mb-1 group-hover:text-primary transition-colors">{hostel.name}</h3>
             <div className="flex items-center text-muted-foreground text-sm">
               <MapPin className="h-3 w-3 mr-1" />
-              {hostel.city} • {hostel.university}
+              {hostel.location}, {hostel.city}
             </div>
           </div>
         </div>
@@ -54,8 +54,8 @@ export function HostelCard({ hostel }: HostelCardProps) {
         <div className="mt-auto flex items-center justify-between pt-4 border-t">
           <div>
             <span className="text-xs text-muted-foreground block">Starts from</span>
-            <span className="text-lg font-bold text-primary">£{hostel.price}</span>
-            <span className="text-xs text-muted-foreground">/week</span>
+            <span className="text-lg font-bold text-primary">৳{hostel.price}</span>
+            <span className="text-xs text-muted-foreground">/month</span>
           </div>
           <Link href={`/hostel/${hostel.id}`} className={cn(buttonVariants({ size: "sm" }), "rounded-full px-4")}>
             View Details
