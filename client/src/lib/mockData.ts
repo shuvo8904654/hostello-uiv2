@@ -3,6 +3,15 @@ import exteriorImage from '@assets/generated_images/Modern_student_accommodation
 import dormImage from '@assets/generated_images/Comfortable_shared_room_in_Dhaka_66667007.png';
 import privateRoomImage from '@assets/generated_images/Stylish_private_student_room_1db365e3.png';
 
+export interface Review {
+  id: string;
+  user: string;
+  rating: number;
+  date: string;
+  comment: string;
+  avatar?: string;
+}
+
 export interface Hostel {
   id: string;
   name: string;
@@ -11,6 +20,7 @@ export interface Hostel {
   price: number;
   rating: number;
   reviews: number;
+  reviewsList: Review[];
   image: string;
   images: string[];
   amenities: string[];
@@ -44,6 +54,11 @@ export const HOSTELS: Hostel[] = [
     price: 5000,
     rating: 4.8,
     reviews: 124,
+    reviewsList: [
+      { id: 'r1', user: 'Tanvir Hasan', rating: 5, date: '2 days ago', comment: 'Amazing place! The WiFi is super fast and the study room is very quiet.', avatar: 'TH' },
+      { id: 'r2', user: 'Sadia Rahman', rating: 4, date: '1 week ago', comment: 'Great security and clean environment. Just wish the kitchen was a bit bigger.', avatar: 'SR' },
+      { id: 'r3', user: 'Karim Ullah', rating: 5, date: '2 weeks ago', comment: 'Best hostel in Bashundhara area for this price.', avatar: 'KU' },
+    ],
     image: exteriorImage,
     images: [exteriorImage, dormImage, privateRoomImage, heroImage],
     amenities: ['High-speed WiFi', 'Gym', 'Study Room', 'Generator', '24/7 Security', 'CCTV'],
@@ -66,6 +81,10 @@ export const HOSTELS: Hostel[] = [
     price: 4500,
     rating: 4.5,
     reviews: 89,
+    reviewsList: [
+       { id: 'r4', user: 'Nusrat Jahan', rating: 5, date: '3 days ago', comment: 'Very safe for girls. The warden is very helpful.', avatar: 'NJ' },
+       { id: 'r5', user: 'Farhana Akter', rating: 4, date: '2 weeks ago', comment: 'Good food and clean rooms.', avatar: 'FA' }
+    ],
     image: dormImage,
     images: [dormImage, exteriorImage, heroImage],
     amenities: ['WiFi', 'Meal Service', 'Kitchen', 'Lounge', 'CCTV'],
@@ -86,6 +105,7 @@ export const HOSTELS: Hostel[] = [
     price: 3500,
     rating: 4.7,
     reviews: 45,
+    reviewsList: [],
     image: privateRoomImage,
     images: [privateRoomImage, heroImage, exteriorImage],
     amenities: ['WiFi', 'Study Hall', 'Praying Room', 'Dining Hall'],
@@ -107,6 +127,7 @@ export const HOSTELS: Hostel[] = [
     price: 3000,
     rating: 4.6,
     reviews: 22,
+    reviewsList: [],
     image: exteriorImage,
     images: [exteriorImage, dormImage],
     amenities: ['Garden', 'WiFi', 'IPS Backup', 'Attached Bath'],
