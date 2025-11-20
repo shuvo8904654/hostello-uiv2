@@ -14,7 +14,8 @@ import {
   ChevronRight,
   CheckCircle2,
   MessageSquare,
-  Star
+  Star,
+  ArrowRight
 } from "lucide-react";
 import { 
   Accordion, 
@@ -100,31 +101,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section - NEW */}
+      {/* Stats Section - REVISED (No numbers) */}
       <section className="py-12 border-b bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x-0 md:divide-x divide-border">
-            <div className="p-4">
-              <div className="text-4xl font-bold text-primary mb-2">500+</div>
-              <div className="text-muted-foreground font-medium">Verified Hostels</div>
+            <div className="p-4 flex flex-col items-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+                 <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div className="font-bold text-lg mb-1">100% Verified</div>
+              <div className="text-muted-foreground text-sm">Every listing checked</div>
             </div>
-            <div className="p-4">
-              <div className="text-4xl font-bold text-primary mb-2">10k+</div>
-              <div className="text-muted-foreground font-medium">Happy Students</div>
+            <div className="p-4 flex flex-col items-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+                 <Users className="w-6 h-6" />
+              </div>
+              <div className="font-bold text-lg mb-1">Student Community</div>
+              <div className="text-muted-foreground text-sm">Join your peers</div>
             </div>
-            <div className="p-4">
-              <div className="text-4xl font-bold text-primary mb-2">50+</div>
-              <div className="text-muted-foreground font-medium">Universities Covered</div>
+            <div className="p-4 flex flex-col items-center">
+               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+                 <MapPin className="w-6 h-6" />
+              </div>
+              <div className="font-bold text-lg mb-1">Prime Locations</div>
+              <div className="text-muted-foreground text-sm">Near universities</div>
             </div>
-            <div className="p-4">
-              <div className="text-4xl font-bold text-primary mb-2">4.8</div>
-              <div className="text-muted-foreground font-medium">Average Rating</div>
+            <div className="p-4 flex flex-col items-center">
+               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+                 <Star className="w-6 h-6" />
+              </div>
+              <div className="font-bold text-lg mb-1">Top Rated</div>
+              <div className="text-muted-foreground text-sm">Quality assured stays</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Redesigned Features Section (Bento Grid Style) */}
+      {/* Features Section (Bento Grid Style) */}
       <section className="py-24 bg-slate-50">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -156,7 +169,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Feature 2: Real Student Reviews (Replaced Roommate Matching) */}
+            {/* Feature 2: Real Student Reviews */}
             <div className="bg-slate-900 rounded-3xl p-8 text-white flex flex-col justify-between relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500 rounded-full blur-3xl opacity-20 -translate-y-10 translate-x-10"></div>
               <div className="relative z-10">
@@ -192,9 +205,9 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Feature 4: Direct Booking (Replaced Digital Payments) */}
-            <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col md:flex-row items-center gap-8 overflow-hidden group">
-              <div className="flex-1">
+            {/* Feature 4: Direct Booking (Revised for Responsiveness) */}
+            <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col lg:flex-row items-center gap-8 overflow-hidden group">
+              <div className="flex-1 w-full">
                 <div className="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">
                   <MessageSquare className="w-6 h-6" />
                 </div>
@@ -204,21 +217,21 @@ export default function Home() {
                 </p>
                 <Button variant="outline" className="rounded-full">How it works</Button>
               </div>
-              <div className="flex-1 relative h-48 w-full bg-slate-50 rounded-2xl border border-slate-100 p-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+              <div className="flex-1 relative h-48 w-full bg-slate-50 rounded-2xl border border-slate-100 p-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-500 hidden sm:flex">
                  <div className="text-center space-y-2 w-full max-w-xs">
                     <div className="bg-white p-4 rounded-xl shadow-sm border flex items-center gap-4 w-full mx-auto">
                       <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
                         <Users size={18} />
                       </div>
-                      <div className="text-left flex-1">
+                      <div className="text-left flex-1 min-w-0">
                         <div className="text-xs text-muted-foreground">Message from Owner</div>
                         <div className="text-sm font-bold truncate">"Room is available!"</div>
                       </div>
-                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
                     </div>
                     <div className="bg-green-50 p-3 rounded-xl border border-green-100 flex items-center gap-3 w-3/4 ml-auto">
-                       <div className="text-xs text-green-700 font-medium">Booking Confirmed</div>
-                       <CheckCircle2 size={14} className="text-green-600 ml-auto" />
+                       <div className="text-xs text-green-700 font-medium whitespace-nowrap">Booking Confirmed</div>
+                       <CheckCircle2 size={14} className="text-green-600 ml-auto flex-shrink-0" />
                     </div>
                  </div>
               </div>
@@ -246,7 +259,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section - NEW */}
+      {/* FAQ Section */}
       <section className="py-24 bg-slate-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -301,23 +314,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Owner Sign Up Section */}
-      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500 via-transparent to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/20 to-transparent" />
-        
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Are you a Hostel Owner?</h2>
-          <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-            List your property on Hostello and reach thousands of students instantly. Manage bookings, payments, and tenants all in one smart dashboard.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-             <Link href="/list-your-property" className={cn(buttonVariants({ size: "lg", variant: "default" }), "bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-6 text-lg font-bold shadow-lg shadow-blue-900/50")}>
-               List Your Property
-             </Link>
-             <Link href="/list-your-property">
-               <Button size="lg" variant="outline" className="h-auto py-4 px-8 text-lg font-bold rounded-full bg-transparent border-slate-700 text-white hover:bg-white hover:text-slate-900 transition-all">Learn More</Button>
-             </Link>
+      {/* Owner Sign Up Section - REDESIGNED */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="bg-primary text-primary-foreground rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden relative">
+             {/* Background Pattern */}
+             <div className="absolute top-0 right-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
+             
+             <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+                <div className="text-left">
+                  <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Are you a Hostel Owner?</h2>
+                  <p className="text-xl opacity-90 mb-8 leading-relaxed max-w-xl">
+                    List your property on Hostello and reach thousands of students instantly. Manage bookings, payments, and tenants all in one smart dashboard.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link href="/list-your-property" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "rounded-full px-8 py-6 text-lg font-bold h-auto")}>
+                      List Your Property <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                    <Link href="/list-your-property">
+                      <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-lg font-bold h-auto bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                        Learn More
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+                
+                {/* Floating UI Mockup */}
+                <div className="relative hidden lg:block">
+                   <div className="absolute inset-0 bg-white/10 blur-3xl rounded-full transform rotate-12"></div>
+                   <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                      <div className="flex items-center gap-4 mb-6 border-b border-white/10 pb-4">
+                         <div className="w-12 h-12 bg-white/20 rounded-full"></div>
+                         <div>
+                            <div className="h-3 w-32 bg-white/30 rounded mb-2"></div>
+                            <div className="h-2 w-20 bg-white/20 rounded"></div>
+                         </div>
+                      </div>
+                      <div className="space-y-3">
+                         <div className="h-16 bg-white/5 rounded-lg p-3 flex items-center justify-between">
+                            <div className="w-1/2 h-2 bg-white/20 rounded"></div>
+                            <div className="w-8 h-8 bg-green-400/20 rounded-full flex items-center justify-center text-green-300 text-xs">✓</div>
+                         </div>
+                         <div className="h-16 bg-white/5 rounded-lg p-3 flex items-center justify-between">
+                            <div className="w-1/3 h-2 bg-white/20 rounded"></div>
+                            <div className="w-8 h-8 bg-blue-400/20 rounded-full flex items-center justify-center text-blue-300 text-xs">+</div>
+                         </div>
+                         <div className="h-16 bg-white/5 rounded-lg p-3 flex items-center justify-between">
+                            <div className="w-2/3 h-2 bg-white/20 rounded"></div>
+                            <div className="w-8 h-8 bg-orange-400/20 rounded-full flex items-center justify-center text-orange-300 text-xs">!</div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
           </div>
         </div>
       </section>
