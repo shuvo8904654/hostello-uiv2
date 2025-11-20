@@ -12,15 +12,68 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { Search, Mail, Phone, MoreHorizontal, Eye, Edit, CreditCard, UserMinus, MessageSquare } from "lucide-react";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, Mail, Phone, MoreHorizontal, Eye, Edit, CreditCard, UserMinus, MessageSquare, Plus, UserPlus } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock Data for Manager (Scoped)
 const TENANTS = [
-  { id: 1, name: "Rahim Ahmed", room: "101", leaseEnd: "2024-12-31", rentStatus: "Paid" },
-  { id: 2, name: "Karim Ullah", room: "102", leaseEnd: "2024-11-30", rentStatus: "Due" },
+  { id: 1, name: "Rahim Ahmed", room: "101", email: "rahim@example.com", phone: "+88017...", leaseStart: "2024-01-01", leaseEnd: "2024-12-31", rentStatus: "Paid", rentAmount: 5000 },
+  { id: 2, name: "Karim Ullah", room: "102", email: "karim@example.com", phone: "+88019...", leaseStart: "2024-02-15", leaseEnd: "2024-11-30", rentStatus: "Due", rentAmount: 4500 },
 ];
 
 export default function ManagerTenants() {
+  const { toast } = useToast();
+  const [selectedTenant, setSelectedTenant] = useState<any>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+
+  const handleAddTenant = () => {
+    toast({
+      title: "Tenant Added",
+      description: "New tenant has been registered successfully.",
+    });
+  };
+
+  const handleRecordPayment = () => {
+    toast({
+      title: "Payment Recorded",
+      description: "Rent payment has been logged.",
+    });
+    setIsPaymentOpen(false);
+  };
+
+  const openDetails = (tenant: any) => {
+    setSelectedTenant(tenant);
+    setIsDetailsOpen(true);
+  };
+
+  const openPayment = (tenant: any) => {
+    setSelectedTenant(tenant);
+    setIsPaymentOpen(true);
+  };
+
   return (
     <DashboardLayout type="manager">
       <div className="mb-8">
@@ -35,7 +88,67 @@ export default function ManagerTenants() {
               <Input placeholder="Search tenants..." className="pl-8" />
            </div>
            <div className="flex gap-2 w-full sm:w-auto">
-             <Button className="flex-1 sm:flex-none">Add Tenant</Button>
+             <Sheet>
+               <SheetTrigger asChild>
+                 <Button className="flex-1 sm:flex-none"><UserPlus className="mr-2 h-4 w-4"/> Add Tenant</Button>
+               </SheetTrigger>
+               <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
+                 <SheetHeader>
+                   <SheetTitle>Add New Tenant</SheetTitle>
+                   <SheetDescription>Register a new tenant to a room.</SheetDescription>
+                 </SheetHeader>
+                 <div className="grid gap-4 py-4">
+                    <div className="space-y-2">
+                       <Label>Full Name</Label>
+                       <Input placeholder="e.g. Rahim Ahmed" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                       <div className="space-y-2">
+                          <Label>Phone</Label>
+                          <Input placeholder="+880..." />
+                       </div>
+                       <div className="space-y-2">
+                          <Label>Email</Label>
+                          <Input placeholder="email@example.com" />
+                       </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                       <div className="space-y-2">
+                          <Label>Assign Room</Label>
+                          <Select>
+                             <SelectTrigger>
+                                <SelectValue placeholder="Select Room" />
+                             </SelectTrigger>
+                             <SelectContent>
+                                <SelectItem value="101">Room 101</SelectItem>
+                                <SelectItem value="102">Room 102</SelectItem>
+                                <SelectItem value="103">Room 103</SelectItem>
+                             </SelectContent>
+                          </Select>
+                       </div>
+                       <div className="space-y-2">
+                          <Label>Rent Amount (৳)</Label>
+                          <Input type="number" placeholder="5000" />
+                       </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                       <div className="space-y-2">
+                          <Label>Lease Start</Label>
+                          <Input type="date" />
+                       </div>
+                       <div className="space-y-2">
+                          <Label>Lease End</Label>
+                          <Input type="date" />
+                       </div>
+                    </div>
+                 </div>
+                 <SheetFooter>
+                    <SheetClose asChild>
+                       <Button onClick={handleAddTenant}>Register Tenant</Button>
+                    </SheetClose>
+                 </SheetFooter>
+               </SheetContent>
+             </Sheet>
            </div>
         </CardHeader>
         <CardContent className="p-0 sm:p-6 overflow-x-auto">
@@ -53,7 +166,9 @@ export default function ManagerTenants() {
             <TableBody>
               {TENANTS.map((tenant) => (
                 <TableRow key={tenant.id}>
-                  <TableCell className="font-medium whitespace-nowrap">{tenant.name}</TableCell>
+                  <TableCell className="font-medium whitespace-nowrap cursor-pointer hover:underline" onClick={() => openDetails(tenant)}>
+                    {tenant.name}
+                  </TableCell>
                   <TableCell>{tenant.room}</TableCell>
                   <TableCell className="hidden md:table-cell">{tenant.leaseEnd}</TableCell>
                   <TableCell>
@@ -81,14 +196,14 @@ export default function ManagerTenants() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openDetails(tenant)}>
                           <Eye className="mr-2 h-4 w-4" /> View Details
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <MessageSquare className="mr-2 h-4 w-4" /> Message
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openPayment(tenant)}>
                           <CreditCard className="mr-2 h-4 w-4" /> Record Payment
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -100,6 +215,102 @@ export default function ManagerTenants() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Tenant Details Dialog */}
+      <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Tenant Details</DialogTitle>
+            <DialogDescription>Full profile for {selectedTenant?.name}</DialogDescription>
+          </DialogHeader>
+          {selectedTenant && (
+             <div className="grid gap-4 py-2">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                   <div>
+                      <Label className="text-muted-foreground">Room Number</Label>
+                      <p className="font-medium text-lg">{selectedTenant.room}</p>
+                   </div>
+                   <div>
+                      <Label className="text-muted-foreground">Status</Label>
+                      <div className="mt-1">
+                        <Badge variant={selectedTenant.rentStatus === 'Paid' ? 'default' : 'destructive'}>
+                           Rent {selectedTenant.rentStatus}
+                        </Badge>
+                      </div>
+                   </div>
+                   <div>
+                      <Label className="text-muted-foreground">Email</Label>
+                      <p className="font-medium">{selectedTenant.email}</p>
+                   </div>
+                   <div>
+                      <Label className="text-muted-foreground">Phone</Label>
+                      <p className="font-medium">{selectedTenant.phone}</p>
+                   </div>
+                   <div>
+                      <Label className="text-muted-foreground">Lease Start</Label>
+                      <p className="font-medium">{selectedTenant.leaseStart}</p>
+                   </div>
+                   <div>
+                      <Label className="text-muted-foreground">Lease End</Label>
+                      <p className="font-medium">{selectedTenant.leaseEnd}</p>
+                   </div>
+                </div>
+                <div className="border-t pt-4">
+                   <h4 className="font-medium mb-2">Monthly Rent</h4>
+                   <div className="flex justify-between items-center bg-muted p-3 rounded">
+                      <span>Base Rent</span>
+                      <span className="font-bold">৳{selectedTenant.rentAmount}</span>
+                   </div>
+                </div>
+             </div>
+          )}
+          <DialogFooter>
+             <Button variant="outline" onClick={() => setIsDetailsOpen(false)}>Close</Button>
+             <Button onClick={() => { setIsDetailsOpen(false); openPayment(selectedTenant); }}>Record Payment</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Payment Dialog */}
+      <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
+         <DialogContent>
+            <DialogHeader>
+               <DialogTitle>Record Payment</DialogTitle>
+               <DialogDescription>Log a rent payment for {selectedTenant?.name}</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+               <div className="space-y-2">
+                  <Label>Amount (৳)</Label>
+                  <Input type="number" defaultValue={selectedTenant?.rentAmount} />
+               </div>
+               <div className="space-y-2">
+                  <Label>Payment Method</Label>
+                  <Select defaultValue="cash">
+                     <SelectTrigger>
+                        <SelectValue />
+                     </SelectTrigger>
+                     <SelectContent>
+                        <SelectItem value="cash">Cash</SelectItem>
+                        <SelectItem value="bkash">bKash</SelectItem>
+                        <SelectItem value="bank">Bank Transfer</SelectItem>
+                     </SelectContent>
+                  </Select>
+               </div>
+               <div className="space-y-2">
+                  <Label>Date</Label>
+                  <Input type="date" />
+               </div>
+               <div className="space-y-2">
+                  <Label>Notes (Optional)</Label>
+                  <Input placeholder="e.g. September Rent" />
+               </div>
+            </div>
+            <DialogFooter>
+               <Button variant="outline" onClick={() => setIsPaymentOpen(false)}>Cancel</Button>
+               <Button onClick={handleRecordPayment}>Confirm Payment</Button>
+            </DialogFooter>
+         </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
 }
