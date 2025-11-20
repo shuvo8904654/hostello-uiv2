@@ -2,7 +2,7 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DollarSign, Download, TrendingDown, TrendingUp, Plus, Search, Filter, Calendar, FileText, Wallet } from "lucide-react";
+import { DollarSign, Download, TrendingDown, TrendingUp, Plus, Search, Filter, Calendar, FileText, Wallet, Building2 } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -27,16 +27,17 @@ import {
 } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { useState } from "react";
 
 const TRANSACTIONS = [
-  { id: 1, desc: "Rent Payment - Room 101", type: "Income", amount: 5000, date: "Aug 20", status: "Cleared", category: "Rent" },
-  { id: 2, desc: "Plumbing Repair", type: "Expense", amount: 1200, date: "Aug 18", status: "Paid", category: "Maintenance" },
-  { id: 3, desc: "WiFi Bill", type: "Expense", amount: 2500, date: "Aug 15", status: "Paid", category: "Utilities" },
-  { id: 4, desc: "Rent Payment - Room 204", type: "Income", amount: 5000, date: "Aug 14", status: "Cleared", category: "Rent" },
-  { id: 5, desc: "Cleaning Supplies", type: "Expense", amount: 800, date: "Aug 12", status: "Paid", category: "Supplies" },
-  { id: 6, desc: "Deposit - Room 305", type: "Income", amount: 10000, date: "Aug 10", status: "Cleared", category: "Deposit" },
-  { id: 7, desc: "Salary - Abdul Karim (Manager)", type: "Expense", amount: 25000, date: "Aug 01", status: "Paid", category: "Staff Salary" },
-  { id: 8, desc: "Salary - Selina Begum (Reception)", type: "Expense", amount: 18000, date: "Aug 01", status: "Paid", category: "Staff Salary" },
+  { id: 1, desc: "Rent Payment - Room 101", type: "Income", amount: 5000, date: "Aug 20", status: "Cleared", category: "Rent", branch: "Dhaka Hub" },
+  { id: 2, desc: "Plumbing Repair", type: "Expense", amount: 1200, date: "Aug 18", status: "Paid", category: "Maintenance", branch: "Uttara Girls" },
+  { id: 3, desc: "WiFi Bill", type: "Expense", amount: 2500, date: "Aug 15", status: "Paid", category: "Utilities", branch: "Dhaka Hub" },
+  { id: 4, desc: "Rent Payment - Room 204", type: "Income", amount: 5000, date: "Aug 14", status: "Cleared", category: "Rent", branch: "Uttara Girls" },
+  { id: 5, desc: "Cleaning Supplies", type: "Expense", amount: 800, date: "Aug 12", status: "Paid", category: "Supplies", branch: "Mirpur Home" },
+  { id: 6, desc: "Deposit - Room 305", type: "Income", amount: 10000, date: "Aug 10", status: "Cleared", category: "Deposit", branch: "Dhaka Hub" },
+  { id: 7, desc: "Salary - Abdul Karim (Manager)", type: "Expense", amount: 25000, date: "Aug 01", status: "Paid", category: "Staff Salary", branch: "Dhaka Hub" },
+  { id: 8, desc: "Salary - Selina Begum (Reception)", type: "Expense", amount: 18000, date: "Aug 01", status: "Paid", category: "Staff Salary", branch: "Uttara Girls" },
 ];
 
 const CHART_DATA = [
@@ -48,6 +49,16 @@ const CHART_DATA = [
 
 export default function OwnerFinancials() {
   const { toast } = useToast();
+  const [branch, setBranch] = useState("all");
+
+  const filteredTransactions = branch === "all" 
+    ? TRANSACTIONS 
+    : TRANSACTIONS.filter(t => {
+        if (branch === "dhaka") return t.branch === "Dhaka Hub";
+        if (branch === "uttara") return t.branch === "Uttara Girls";
+        if (branch === "mirpur") return t.branch === "Mirpur Home";
+        return true;
+    });
 
   const handleDownload = () => {
     toast({
@@ -70,8 +81,21 @@ export default function OwnerFinancials() {
           <h2 className="text-3xl font-bold tracking-tight">Financials</h2>
           <p className="text-muted-foreground">Track income, expenses, and staff salaries.</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handleDownload}><Download className="h-4 w-4 mr-2"/> Download Report</Button>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <div className="w-full sm:w-[200px]">
+            <Select defaultValue="all" onValueChange={setBranch}>
+               <SelectTrigger>
+                  <SelectValue placeholder="Select Branch" />
+               </SelectTrigger>
+               <SelectContent>
+                  <SelectItem value="all">All Branches</SelectItem>
+                  <SelectItem value="dhaka">Dhaka Hub</SelectItem>
+                  <SelectItem value="uttara">Uttara Girls</SelectItem>
+                  <SelectItem value="mirpur">Mirpur Home</SelectItem>
+               </SelectContent>
+            </Select>
+          </div>
+          <Button variant="outline" onClick={handleDownload}><Download className="h-4 w-4 mr-2"/> Report</Button>
           
           <Sheet>
             <SheetTrigger asChild>
@@ -93,8 +117,21 @@ export default function OwnerFinancials() {
                   </Tabs>
                 </div>
                 <div className="space-y-2">
+                  <Label>Branch</Label>
+                  <Select>
+                     <SelectTrigger>
+                        <SelectValue placeholder="Select Branch" />
+                     </SelectTrigger>
+                     <SelectContent>
+                        <SelectItem value="dhaka">Dhaka Hub</SelectItem>
+                        <SelectItem value="uttara">Uttara Girls</SelectItem>
+                        <SelectItem value="mirpur">Mirpur Home</SelectItem>
+                     </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
                   <Label>Description</Label>
-                  <Input placeholder="e.g. Rent Payment" />
+                  <Input placeholder="e.g. Repair Cost" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -113,12 +150,14 @@ export default function OwnerFinancials() {
                       <SelectValue placeholder="Select Category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="rent">Rent</SelectItem>
+                      {/* Removed Rent and Staff Salary as requested */}
                       <SelectItem value="deposit">Security Deposit</SelectItem>
                       <SelectItem value="utilities">Utilities</SelectItem>
                       <SelectItem value="maintenance">Maintenance</SelectItem>
                       <SelectItem value="supplies">Supplies</SelectItem>
-                      <SelectItem value="salary">Staff Salary</SelectItem>
+                      <SelectItem value="furniture">Furniture & Equipment</SelectItem>
+                      <SelectItem value="marketing">Marketing</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -276,6 +315,7 @@ export default function OwnerFinancials() {
                   <TableRow>
                     <TableHead>Description</TableHead>
                     <TableHead>Category</TableHead>
+                    <TableHead>Branch</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Amount</TableHead>
@@ -284,11 +324,17 @@ export default function OwnerFinancials() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {TRANSACTIONS.map(t => (
+                  {filteredTransactions.map(t => (
                     <TableRow key={t.id}>
                       <TableCell className="font-medium">{t.desc}</TableCell>
                       <TableCell>
                         <Badge variant="secondary" className="font-normal">{t.category}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center text-muted-foreground text-xs">
+                           <Building2 className="h-3 w-3 mr-1" />
+                           {t.branch}
+                        </div>
                       </TableCell>
                       <TableCell>
                         <Badge variant={t.type === 'Income' ? 'outline' : 'secondary'} className={t.type === 'Income' ? 'text-green-600 border-green-200 bg-green-50' : ''}>

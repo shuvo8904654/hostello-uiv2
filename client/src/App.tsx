@@ -29,6 +29,7 @@ import WebsiteBuilder from "@/pages/owner/WebsiteBuilder";
 import PricingPackages from "@/pages/owner/Packages";
 import OwnerBookings from "@/pages/owner/Bookings";
 import OwnerStaff from "@/pages/owner/Staff";
+import OwnerSalaries from "@/pages/owner/Salaries";
 import OwnerMaintenance from "@/pages/owner/Maintenance";
 import OwnerFinancials from "@/pages/owner/Financials";
 import OwnerMarketing from "@/pages/owner/Marketing";
@@ -91,6 +92,7 @@ function Router() {
       <Route path="/dashboard/owner/packages" component={PricingPackages} />
       <Route path="/dashboard/owner/bookings" component={OwnerBookings} />
       <Route path="/dashboard/owner/staff" component={OwnerStaff} />
+      <Route path="/dashboard/owner/salaries" component={OwnerSalaries} />
       <Route path="/dashboard/owner/maintenance" component={OwnerMaintenance} />
       <Route path="/dashboard/owner/financials" component={OwnerFinancials} />
       <Route path="/dashboard/owner/payouts" component={OwnerPayouts} />
