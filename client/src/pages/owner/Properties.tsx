@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { Plus, MoreVertical, MapPin, BedDouble, Users, Star, MessageSquare, ShieldCheck } from "lucide-react";
+import { Plus, MoreVertical, MapPin, BedDouble, Users, Star, MessageSquare, ShieldCheck, Trash2, Edit, Settings, Power } from "lucide-react";
 import { Link } from "wouter";
 import {
   Tooltip,
@@ -11,13 +11,99 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+
+const MANAGERS = [
+  { id: "m1", name: "Abdul Karim" },
+  { id: "m2", name: "Fatima Hasan" },
+  { id: "m3", name: "Rahim Mia" },
+];
 
 export default function OwnerProperties() {
+  const { toast } = useToast();
+  const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isManagerOpen, setIsManagerOpen] = useState(false);
+  const [isRoomsOpen, setIsRoomsOpen] = useState(false);
+
   // Helper to simulate finding a manager for a property
   const getManager = (propertyId: string) => {
      if (propertyId === '1') return "Abdul Karim";
      if (propertyId === '2') return "Fatima Hasan";
      return null; // Unassigned
+  };
+
+  const handleDelete = () => {
+    toast({
+      title: "Property Deleted",
+      description: `${selectedProperty?.name} has been removed.`,
+      variant: "destructive",
+    });
+    setIsDeleteOpen(false);
+  };
+
+  const handleAssignManager = () => {
+    toast({
+      title: "Manager Assigned",
+      description: `Manager has been assigned to ${selectedProperty?.name}.`,
+    });
+    setIsManagerOpen(false);
+  };
+
+  const handleUpdateRooms = () => {
+    toast({
+      title: "Rooms Updated",
+      description: "Room availability and pricing updated successfully.",
+    });
+    setIsRoomsOpen(false);
+  };
+
+  const openDelete = (property: any) => {
+    setSelectedProperty(property);
+    setIsDeleteOpen(true);
+  };
+
+  const openManager = (property: any) => {
+    setSelectedProperty(property);
+    setIsManagerOpen(true);
+  };
+
+  const openRooms = (property: any) => {
+    setSelectedProperty(property);
+    setIsRoomsOpen(true);
+  };
+
+  const toggleStatus = (property: any) => {
+    toast({
+      title: "Status Updated",
+      description: `${property.name} is now ${Math.random() > 0.5 ? 'Hidden' : 'Live'}.`,
+    });
   };
 
   return (
@@ -38,10 +124,12 @@ export default function OwnerProperties() {
         {HOSTELS.map((hostel) => {
            const manager = getManager(hostel.id);
            return (
-            <Card key={hostel.id} className="overflow-hidden flex flex-col">
+            <Card key={hostel.id} className="overflow-hidden flex flex-col group">
               <div className="h-40 w-full relative">
-                <img src={hostel.image} className="w-full h-full object-cover" alt={hostel.name} />
-                <Badge className="absolute top-2 right-2 bg-white/90 text-foreground hover:bg-white">Live</Badge>
+                <img src={hostel.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={hostel.name} />
+                <Badge className="absolute top-2 right-2 bg-white/90 text-foreground hover:bg-white cursor-pointer" onClick={() => toggleStatus(hostel)}>
+                   <div className="h-2 w-2 rounded-full bg-green-500 mr-1"></div> Live
+                </Badge>
                 
                 <div className="absolute bottom-2 left-2 flex gap-2">
                    <Badge variant="secondary" className="bg-black/70 text-white hover:bg-black/80 flex items-center gap-1 border-0">
@@ -57,9 +145,31 @@ export default function OwnerProperties() {
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex justify-between items-start">
                   <span className="truncate pr-2">{hostel.name}</span>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 -mr-2 shrink-0">
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 -mr-2 shrink-0">
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <Link href={`/dashboard/owner/properties/edit/${hostel.id}`}>
+                         <DropdownMenuItem>
+                           <Edit className="mr-2 h-4 w-4" /> Edit Details
+                         </DropdownMenuItem>
+                      </Link>
+                      <DropdownMenuItem onClick={() => openManager(hostel)}>
+                        <ShieldCheck className="mr-2 h-4 w-4" /> Assign Manager
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => toggleStatus(hostel)}>
+                        <Power className="mr-2 h-4 w-4" /> Toggle Status
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => openDelete(hostel)}>
+                        <Trash2 className="mr-2 h-4 w-4" /> Delete Property
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </CardTitle>
                 <div className="flex items-center text-xs text-muted-foreground">
                   <MapPin className="h-3 w-3 mr-1 shrink-0" />
@@ -85,11 +195,11 @@ export default function OwnerProperties() {
                       <span className="font-medium">Manager:</span>
                    </div>
                    {manager ? (
-                      <span className="font-medium">{manager}</span>
+                      <span className="font-medium cursor-pointer hover:underline" onClick={() => openManager(hostel)}>{manager}</span>
                    ) : (
-                      <Link href="/dashboard/owner/staff">
-                         <span className="text-muted-foreground hover:underline cursor-pointer italic">Unassigned</span>
-                      </Link>
+                      <span className="text-muted-foreground hover:underline cursor-pointer italic" onClick={() => openManager(hostel)}>
+                         Unassigned
+                      </span>
                    )}
                 </div>
 
@@ -97,13 +207,109 @@ export default function OwnerProperties() {
                   <Link href={`/dashboard/owner/properties/edit/${hostel.id}`} className="flex-1">
                      <Button variant="outline" className="w-full">Edit Details</Button>
                   </Link>
-                  <Button className="flex-1">Manage Rooms</Button>
+                  <Button className="flex-1" onClick={() => openRooms(hostel)}>Manage Rooms</Button>
                 </div>
               </CardContent>
             </Card>
            );
         })}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+         <DialogContent>
+            <DialogHeader>
+               <DialogTitle>Delete Property</DialogTitle>
+               <DialogDescription>
+                  Are you sure you want to delete <strong>{selectedProperty?.name}</strong>? This action cannot be undone and all associated data (bookings, history) will be archived.
+               </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+               <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
+               <Button variant="destructive" onClick={handleDelete}>Delete Permanently</Button>
+            </DialogFooter>
+         </DialogContent>
+      </Dialog>
+
+      {/* Assign Manager Dialog */}
+      <Dialog open={isManagerOpen} onOpenChange={setIsManagerOpen}>
+         <DialogContent>
+            <DialogHeader>
+               <DialogTitle>Assign Branch Manager</DialogTitle>
+               <DialogDescription>
+                  Select a manager for <strong>{selectedProperty?.name}</strong>. They will have full access to manage this branch.
+               </DialogDescription>
+            </DialogHeader>
+            <div className="py-4">
+               <Label className="mb-2 block">Select Manager</Label>
+               <Select defaultValue={getManager(selectedProperty?.id) ? "assigned" : ""}>
+                  <SelectTrigger>
+                     <SelectValue placeholder="Choose a manager" />
+                  </SelectTrigger>
+                  <SelectContent>
+                     {MANAGERS.map(m => (
+                        <SelectItem key={m.id} value={m.id}>{m.name}</SelectItem>
+                     ))}
+                     <SelectItem value="assigned">Abdul Karim (Current)</SelectItem>
+                  </SelectContent>
+               </Select>
+               <p className="text-xs text-muted-foreground mt-2">
+                  Don't see the person you're looking for? <Link href="/dashboard/owner/staff" className="text-primary hover:underline">Add new staff</Link>.
+               </p>
+            </div>
+            <DialogFooter>
+               <Button variant="outline" onClick={() => setIsManagerOpen(false)}>Cancel</Button>
+               <Button onClick={handleAssignManager}>Save Assignment</Button>
+            </DialogFooter>
+         </DialogContent>
+      </Dialog>
+
+      {/* Quick Manage Rooms Dialog */}
+      <Dialog open={isRoomsOpen} onOpenChange={setIsRoomsOpen}>
+         <DialogContent className="max-w-2xl">
+            <DialogHeader>
+               <DialogTitle>Manage Rooms: {selectedProperty?.name}</DialogTitle>
+               <DialogDescription>
+                  Quickly update availability and pricing for room types.
+               </DialogDescription>
+            </DialogHeader>
+            <div className="py-4 space-y-4">
+               {selectedProperty?.rooms.map((room: any) => (
+                  <div key={room.id} className="grid grid-cols-12 gap-4 items-center border p-3 rounded-lg">
+                     <div className="col-span-4">
+                        <p className="font-medium">{room.name}</p>
+                        <p className="text-xs text-muted-foreground">{room.type} • {room.capacity} Person</p>
+                     </div>
+                     <div className="col-span-3">
+                        <Label className="text-xs text-muted-foreground">Price (Monthly)</Label>
+                        <Input type="number" defaultValue={room.price} className="h-8 mt-1" />
+                     </div>
+                     <div className="col-span-3">
+                        <Label className="text-xs text-muted-foreground">Available Beds</Label>
+                        <Input type="number" defaultValue={room.available} className="h-8 mt-1" />
+                     </div>
+                     <div className="col-span-2 flex justify-end">
+                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                           <Settings className="h-4 w-4" />
+                        </Button>
+                     </div>
+                  </div>
+               ))}
+               <div className="flex justify-center pt-2">
+                  <Link href={`/dashboard/owner/properties/edit/${selectedProperty?.id}`}>
+                     <Button variant="outline" size="sm" className="w-full border-dashed">
+                        <Plus className="h-3 w-3 mr-2" /> Add New Room Type
+                     </Button>
+                  </Link>
+               </div>
+            </div>
+            <DialogFooter>
+               <Button variant="outline" onClick={() => setIsRoomsOpen(false)}>Cancel</Button>
+               <Button onClick={handleUpdateRooms}>Save Changes</Button>
+            </DialogFooter>
+         </DialogContent>
+      </Dialog>
+
     </DashboardLayout>
   );
 }
