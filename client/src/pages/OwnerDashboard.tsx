@@ -119,26 +119,7 @@ export default function OwnerDashboard() {
       </div>
 
       {/* Operational Updates - New Section */}
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-3 mb-8">
-        <Card className="bg-blue-50/50 dark:bg-blue-950/20 border-blue-100 dark:border-blue-900">
-           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Today's Attendance</CardTitle>
-              <Shield className="h-4 w-4 text-blue-600" />
-           </CardHeader>
-           <CardContent>
-              <div className="flex justify-between items-end mb-2">
-                 <div className="text-2xl font-bold">142<span className="text-sm font-normal text-muted-foreground">/150</span></div>
-                 <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-200">95% Present</Badge>
-              </div>
-              <div className="text-xs text-muted-foreground mb-3">
-                 3 Late Entries • 2 Gate Passes Active
-              </div>
-              <Link href="/dashboard/owner/attendance">
-                 <Button size="sm" variant="ghost" className="w-full h-8 text-blue-700 hover:text-blue-800 hover:bg-blue-100">View Logs</Button>
-              </Link>
-           </CardContent>
-        </Card>
-
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 mb-8">
         <Card className="bg-orange-50/50 dark:bg-orange-950/20 border-orange-100 dark:border-orange-900">
            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Mess & Food</CardTitle>
