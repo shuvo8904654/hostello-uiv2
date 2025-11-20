@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { Clock, Home, DollarSign, Users, ArrowRight, CreditCard, AlertCircle, MessageCircle, UserCog } from "lucide-react";
+import { Clock, Home, DollarSign, Users, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
 export default function TenantDashboard() {
@@ -59,49 +59,6 @@ export default function TenantDashboard() {
             </Link>
           </CardContent>
         </Card>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
-            <Card className="hover:bg-muted/50 transition-colors cursor-pointer border-dashed shadow-sm hover:shadow-md">
-            <CardContent className="flex flex-col items-center justify-center p-6 gap-2 text-center h-full">
-                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-2">
-                <CreditCard className="h-5 w-5" />
-                </div>
-                <h3 className="font-medium">Pay Rent</h3>
-                <p className="text-xs text-muted-foreground">Clear dues securely</p>
-            </CardContent>
-            </Card>
-            <Card className="hover:bg-muted/50 transition-colors cursor-pointer border-dashed shadow-sm hover:shadow-md">
-            <CardContent className="flex flex-col items-center justify-center p-6 gap-2 text-center h-full">
-                <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mb-2">
-                <AlertCircle className="h-5 w-5" />
-                </div>
-                <h3 className="font-medium">Report Issue</h3>
-                <p className="text-xs text-muted-foreground">Maintenance request</p>
-            </CardContent>
-            </Card>
-            <Card className="hover:bg-muted/50 transition-colors cursor-pointer border-dashed shadow-sm hover:shadow-md">
-            <CardContent className="flex flex-col items-center justify-center p-6 gap-2 text-center h-full">
-                <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-2">
-                <MessageCircle className="h-5 w-5" />
-                </div>
-                <h3 className="font-medium">Message Owner</h3>
-                <p className="text-xs text-muted-foreground">Contact landlord</p>
-            </CardContent>
-            </Card>
-            <Card className="hover:bg-muted/50 transition-colors cursor-pointer border-dashed shadow-sm hover:shadow-md">
-            <CardContent className="flex flex-col items-center justify-center p-6 gap-2 text-center h-full">
-                <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-2">
-                <UserCog className="h-5 w-5" />
-                </div>
-                <h3 className="font-medium">Update Profile</h3>
-                <p className="text-xs text-muted-foreground">Manage account</p>
-            </CardContent>
-            </Card>
-        </div>
       </div>
 
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
