@@ -4,10 +4,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search, MapPin, ShieldCheck, Wifi, Users, Home as HomeIcon } from "lucide-react";
 import { CITIES, LOCATIONS, HOSTELS, heroImage } from "@/lib/mockData";
 import { HostelCard } from "@/components/HostelCard";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 export default function Home() {
+  const [selectedCity, setSelectedCity] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [_, setLocation] = useLocation();
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (selectedCity) params.append("city", selectedCity);
+    if (selectedLocation) params.append("location", selectedLocation);
+    
+    setLocation(`/search?${params.toString()}`);
+  };
+
   return (
     <PublicLayout>
       {/* Hero Section */}
@@ -35,7 +48,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto bg-white p-4 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-3 animate-in slide-in-from-bottom-10 duration-700">
             <div className="flex-1 relative">
               <MapPin className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-              <Select>
+              <Select value={selectedCity} onValueChange={setSelectedCity}>
                 <SelectTrigger className="pl-10 h-12 border-0 bg-muted/30 focus:ring-0 text-base">
                   <SelectValue placeholder="Select City" />
                 </SelectTrigger>
@@ -46,7 +59,7 @@ export default function Home() {
             </div>
             <div className="flex-1 relative">
               <HomeIcon className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-              <Select>
+              <Select value={selectedLocation} onValueChange={setSelectedLocation}>
                 <SelectTrigger className="pl-10 h-12 border-0 bg-muted/30 focus:ring-0 text-base">
                   <SelectValue placeholder="Select Area / Location" />
                 </SelectTrigger>
@@ -55,9 +68,13 @@ export default function Home() {
                 </SelectContent>
               </Select>
             </div>
-            <Link href="/search" className={cn(buttonVariants({ size: "lg" }), "h-12 px-8 text-base font-semibold rounded-xl w-full md:w-auto shadow-lg shadow-primary/25")}>
+            <Button 
+              onClick={handleSearch}
+              size="lg" 
+              className="h-12 px-8 text-base font-semibold rounded-xl w-full md:w-auto shadow-lg shadow-primary/25"
+            >
                 <Search className="mr-2 h-4 w-4" /> Search
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

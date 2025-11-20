@@ -27,14 +27,29 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useSearch } from "wouter";
 
 export default function Search() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const searchString = useSearch();
+  const params = new URLSearchParams(searchString);
+  
+  const [searchQuery, setSearchQuery] = useState(params.get("location") || "");
+  const [selectedCity, setSelectedCity] = useState(params.get("city") || "");
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchString);
+    const city = params.get("city");
+    const location = params.get("location");
+    
+    if (city) setSelectedCity(city);
+    if (location) setSearchQuery(location);
+  }, [searchString]);
 
   return (
     <PublicLayout>
@@ -49,6 +64,8 @@ export default function Search() {
                <Input 
                  className="pl-10 h-12 border-none bg-muted/30 text-lg focus-visible:ring-0" 
                  placeholder="Search by location, university, or hostel name..." 
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
                />
              </div>
              
@@ -56,7 +73,7 @@ export default function Search() {
              
              <div className="relative w-full md:w-64">
                <MapPin className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
-               <Select>
+               <Select value={selectedCity} onValueChange={setSelectedCity}>
                  <SelectTrigger className="pl-10 h-12 border-none bg-muted/30 text-lg focus:ring-0 shadow-none">
                    <SelectValue placeholder="Select City" />
                  </SelectTrigger>
@@ -265,13 +282,17 @@ export default function Search() {
 
           {/* Active Filters (Example) */}
           <div className="flex flex-wrap gap-2 mb-6">
-             <Badge variant="secondary" className="h-7 pl-2 pr-1 gap-1 font-normal bg-muted hover:bg-muted/80">
-               City: Dhaka <Button variant="ghost" size="icon" className="h-4 w-4 ml-1 hover:bg-transparent"><X className="h-3 w-3" /></Button>
-             </Badge>
-             <Badge variant="secondary" className="h-7 pl-2 pr-1 gap-1 font-normal bg-muted hover:bg-muted/80">
-               Price: &lt; ৳10k <Button variant="ghost" size="icon" className="h-4 w-4 ml-1 hover:bg-transparent"><X className="h-3 w-3" /></Button>
-             </Badge>
-             <Button variant="link" className="h-7 px-2 text-xs text-muted-foreground">Clear all</Button>
+             {selectedCity && (
+               <Badge variant="secondary" className="h-7 pl-2 pr-1 gap-1 font-normal bg-muted hover:bg-muted/80">
+                 City: {selectedCity} <Button variant="ghost" size="icon" className="h-4 w-4 ml-1 hover:bg-transparent" onClick={() => setSelectedCity("")}><X className="h-3 w-3" /></Button>
+               </Badge>
+             )}
+             {searchQuery && (
+                <Badge variant="secondary" className="h-7 pl-2 pr-1 gap-1 font-normal bg-muted hover:bg-muted/80">
+                 Location: {searchQuery} <Button variant="ghost" size="icon" className="h-4 w-4 ml-1 hover:bg-transparent" onClick={() => setSearchQuery("")}><X className="h-3 w-3" /></Button>
+               </Badge>
+             )}
+             <Button variant="link" className="h-7 px-2 text-xs text-muted-foreground" onClick={() => { setSelectedCity(""); setSearchQuery(""); }}>Clear all</Button>
           </div>
 
           <div className={`grid gap-6 ${
