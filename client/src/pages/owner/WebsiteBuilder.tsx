@@ -29,7 +29,10 @@ import {
   Type,
   Save,
   Building,
-  Package as PackageIcon
+  Package as PackageIcon,
+  Grid,
+  List,
+  CreditCard
 } from "lucide-react";
 import { HOSTELS } from "@/lib/mockData";
 import { useState } from "react";
@@ -47,7 +50,9 @@ export default function WebsiteBuilder() {
   const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("mobile");
   
   // State for the builder
+  const [selectedTemplate, setSelectedTemplate] = useState("modern");
   const [brandName, setBrandName] = useState("Premium Hostels");
+  const [subdomain, setSubdomain] = useState("premium-hostels");
   const [primaryColor, setPrimaryColor] = useState("indigo");
   const [heroHeadline, setHeroHeadline] = useState("Elevate Your Student Life");
   const [heroSubheadline, setHeroSubheadline] = useState("Experience premium living designed for students who want more than just a room.");
@@ -65,14 +70,18 @@ export default function WebsiteBuilder() {
     indigo: "bg-indigo-600",
     rose: "bg-rose-600", 
     emerald: "bg-emerald-600",
-    slate: "bg-slate-900"
+    slate: "bg-slate-900",
+    black: "bg-black",
+    blue: "bg-blue-600"
   };
 
   const textMap: Record<string, string> = {
     indigo: "text-indigo-600",
     rose: "text-rose-600",
     emerald: "text-emerald-600",
-    slate: "text-slate-900"
+    slate: "text-slate-900",
+    black: "text-black",
+    blue: "text-blue-600"
   };
 
   const toggleHostel = (id: string) => {
@@ -120,7 +129,7 @@ export default function WebsiteBuilder() {
               <Eye className="h-4 w-4 mr-2"/> Preview
             </Button>
             <Button size="sm" className="bg-black text-white hover:bg-gray-800">
-              <Share2 className="h-4 w-4 mr-2"/> Publish Site
+              <Share2 className="h-4 w-4 mr-2"/> Publish
             </Button>
           </div>
         </div>
@@ -149,6 +158,45 @@ export default function WebsiteBuilder() {
                   <div className="p-4 space-y-6">
                     
                     <TabsContent value="design" className="mt-0 space-y-6">
+                      {/* Template Selection */}
+                      <div className="space-y-3">
+                         <Label className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Template</Label>
+                         <div className="grid grid-cols-2 gap-3">
+                            <div 
+                              className={`border rounded-lg p-3 cursor-pointer hover:border-primary transition-all ${selectedTemplate === 'modern' ? 'border-primary ring-1 ring-primary bg-primary/5' : 'bg-background'}`}
+                              onClick={() => setSelectedTemplate('modern')}
+                            >
+                               <div className="aspect-video bg-indigo-100 rounded-md mb-2 flex items-center justify-center">
+                                  <Layout className="h-6 w-6 text-indigo-600" />
+                               </div>
+                               <div className="font-bold text-sm">Modern</div>
+                               <div className="text-[10px] text-muted-foreground">Clean & vibrant</div>
+                            </div>
+                            <div 
+                              className={`border rounded-lg p-3 cursor-pointer hover:border-primary transition-all ${selectedTemplate === 'minimal' ? 'border-primary ring-1 ring-primary bg-primary/5' : 'bg-background'}`}
+                              onClick={() => setSelectedTemplate('minimal')}
+                            >
+                               <div className="aspect-video bg-slate-100 rounded-md mb-2 flex items-center justify-center">
+                                  <Type className="h-6 w-6 text-slate-600" />
+                               </div>
+                               <div className="font-bold text-sm">Minimal</div>
+                               <div className="text-[10px] text-muted-foreground">Simple & typographic</div>
+                            </div>
+                            <div 
+                              className={`border rounded-lg p-3 cursor-pointer hover:border-primary transition-all ${selectedTemplate === 'bold' ? 'border-primary ring-1 ring-primary bg-primary/5' : 'bg-background'}`}
+                              onClick={() => setSelectedTemplate('bold')}
+                            >
+                               <div className="aspect-video bg-black/10 rounded-md mb-2 flex items-center justify-center">
+                                  <Grid className="h-6 w-6 text-black" />
+                               </div>
+                               <div className="font-bold text-sm">Bold</div>
+                               <div className="text-[10px] text-muted-foreground">High contrast</div>
+                            </div>
+                         </div>
+                      </div>
+
+                      <Separator />
+
                       {/* Theme Colors */}
                       <div className="space-y-3">
                         <Label className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Theme Color</Label>
@@ -171,23 +219,6 @@ export default function WebsiteBuilder() {
                             </button>
                           ))}
                         </div>
-                      </div>
-
-                      <Separator />
-
-                      {/* Typography Mock */}
-                      <div className="space-y-3">
-                         <Label className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Typography</Label>
-                         <div className="grid grid-cols-2 gap-2">
-                            <div className="border rounded-md p-3 cursor-pointer hover:border-primary bg-background">
-                               <div className="font-sans font-bold text-lg">Modern</div>
-                               <div className="font-sans text-xs text-muted-foreground">Inter / Roboto</div>
-                            </div>
-                            <div className="border rounded-md p-3 cursor-pointer hover:border-primary bg-background">
-                               <div className="font-serif font-bold text-lg">Classic</div>
-                               <div className="font-serif text-xs text-muted-foreground">Playfair / Lato</div>
-                            </div>
-                         </div>
                       </div>
 
                       <Separator />
@@ -326,13 +357,21 @@ export default function WebsiteBuilder() {
                        </div>
                        
                        <div className="space-y-3">
-                          <Label>Custom Domain</Label>
-                          <div className="flex gap-2">
-                             <Input placeholder="www.yourhostel.com" />
-                             <Button variant="secondary">Connect</Button>
+                          <Label>Website Slug</Label>
+                          <div className="flex gap-2 items-center">
+                             <div className="flex-1 relative">
+                                <Input 
+                                  value={subdomain}
+                                  onChange={(e) => setSubdomain(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+                                  className="pr-32"
+                                />
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm pointer-events-none">
+                                   .hostello.com
+                                </div>
+                             </div>
                           </div>
                           <p className="text-xs text-muted-foreground">
-                             Your site is currently live at <span className="text-primary font-medium">premium-hostels.hostello.com</span>
+                             This is your free subdomain. You can change it anytime.
                           </p>
                        </div>
 
@@ -382,6 +421,13 @@ export default function WebsiteBuilder() {
                          <Monitor className="h-3.5 w-3.5" /> Desktop
                       </Button>
                    </div>
+                   <div className="h-4 w-[1px] bg-border"></div>
+                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                     <Globe className="h-3 w-3" />
+                     <span className="text-muted-foreground/50">https://</span>
+                     <span className="text-foreground font-medium">{subdomain}</span>
+                     <span className="text-muted-foreground/50">.hostello.com</span>
+                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                    <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
@@ -406,116 +452,252 @@ export default function WebsiteBuilder() {
                    {/* WEBSITE CONTENT STARTS HERE */}
                    <div className="flex-1 overflow-y-auto scrollbar-hide bg-white font-sans">
                       
-                      {/* Navbar */}
-                      <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
-                         <div className="flex items-center justify-between px-6 py-4">
-                            <div className={`font-bold text-lg tracking-tight flex items-center gap-1 ${textMap[primaryColor]}`}>
-                               <div className={`h-6 w-6 rounded-lg ${colorMap[primaryColor]} flex items-center justify-center text-white`}>
-                                  <span className="font-serif italic">H</span>
-                               </div>
-                               <span className="text-slate-900">{brandName}</span>
-                            </div>
-                            <Menu className="h-5 w-5 text-slate-600 cursor-pointer hover:text-slate-900" />
-                         </div>
-                      </div>
+                      {/* ---- TEMPLATE: MODERN ---- */}
+                      {selectedTemplate === 'modern' && (
+                        <>
+                           {/* Navbar */}
+                           <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
+                              <div className="flex items-center justify-between px-6 py-4">
+                                 <div className={`font-bold text-lg tracking-tight flex items-center gap-1 ${textMap[primaryColor]}`}>
+                                    <div className={`h-6 w-6 rounded-lg ${colorMap[primaryColor]} flex items-center justify-center text-white`}>
+                                       <span className="font-serif italic">H</span>
+                                    </div>
+                                    <span className="text-slate-900">{brandName}</span>
+                                 </div>
+                                 <Menu className="h-5 w-5 text-slate-600 cursor-pointer hover:text-slate-900" />
+                              </div>
+                           </div>
 
-                      {/* Hero Section */}
-                      <div className="relative">
-                         <div className="absolute inset-0 bg-slate-900/10 z-10"></div>
-                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10"></div>
-                         <img 
-                            src={HOSTELS[0].image} 
-                            className="w-full h-[420px] object-cover"
-                            alt="Hostel Hero"
-                         />
-                         
-                         <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white">
-                            <Badge className={`mb-4 hover:bg-white/20 bg-white/20 text-white border-0 backdrop-blur-md`}>
-                               Premium Student Living
-                            </Badge>
-                            <h1 className="text-4xl font-bold leading-tight mb-3 drop-shadow-sm">
-                               {heroHeadline}
-                            </h1>
-                            <p className="text-white/90 text-sm leading-relaxed mb-6 max-w-md drop-shadow-sm font-light">
-                               {heroSubheadline}
-                            </p>
-                            <div className="flex gap-3">
-                               <Button 
-                                 className={`${colorMap[primaryColor]} hover:opacity-90 text-white border-0 font-medium px-6 shadow-lg shadow-black/20`}
-                                 style={{ borderRadius: `${buttonRadius}px` }}
-                               >
-                                 View Properties
-                               </Button>
-                            </div>
-                         </div>
-                      </div>
+                           {/* Hero Section */}
+                           <div className="relative">
+                              <div className="absolute inset-0 bg-slate-900/10 z-10"></div>
+                              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10"></div>
+                              <img 
+                                 src={HOSTELS[0].image} 
+                                 className="w-full h-[420px] object-cover"
+                                 alt="Hostel Hero"
+                              />
+                              
+                              <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white">
+                                 <Badge className={`mb-4 hover:bg-white/20 bg-white/20 text-white border-0 backdrop-blur-md`}>
+                                    Premium Student Living
+                                 </Badge>
+                                 <h1 className="text-4xl font-bold leading-tight mb-3 drop-shadow-sm">
+                                    {heroHeadline}
+                                 </h1>
+                                 <p className="text-white/90 text-sm leading-relaxed mb-6 max-w-md drop-shadow-sm font-light">
+                                    {heroSubheadline}
+                                 </p>
+                                 <div className="flex gap-3">
+                                    <Button 
+                                      className={`${colorMap[primaryColor]} hover:opacity-90 text-white border-0 font-medium px-6 shadow-lg shadow-black/20`}
+                                      style={{ borderRadius: `${buttonRadius}px` }}
+                                    >
+                                      View Properties
+                                    </Button>
+                                 </div>
+                              </div>
+                           </div>
 
-                      {/* Stats Section */}
-                      <div className="grid grid-cols-3 border-b border-gray-100">
-                         <div className="p-4 py-6 text-center border-r border-gray-100">
-                            <div className={`text-xl font-bold ${textMap[primaryColor]}`}>500+</div>
-                            <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Students</div>
-                         </div>
-                         <div className="p-4 py-6 text-center border-r border-gray-100">
-                            <div className={`text-xl font-bold ${textMap[primaryColor]}`}>4.9</div>
-                            <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Rating</div>
-                         </div>
-                         <div className="p-4 py-6 text-center">
-                            <div className={`text-xl font-bold ${textMap[primaryColor]}`}>24/7</div>
-                            <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Support</div>
-                         </div>
-                      </div>
+                           {/* Stats Section */}
+                           <div className="grid grid-cols-3 border-b border-gray-100">
+                              <div className="p-4 py-6 text-center border-r border-gray-100">
+                                 <div className={`text-xl font-bold ${textMap[primaryColor]}`}>500+</div>
+                                 <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Students</div>
+                              </div>
+                              <div className="p-4 py-6 text-center border-r border-gray-100">
+                                 <div className={`text-xl font-bold ${textMap[primaryColor]}`}>4.9</div>
+                                 <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Rating</div>
+                              </div>
+                              <div className="p-4 py-6 text-center">
+                                 <div className={`text-xl font-bold ${textMap[primaryColor]}`}>24/7</div>
+                                 <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Support</div>
+                              </div>
+                           </div>
 
-                      {/* Amenities Section */}
-                      {showAmenities && (
-                         <div className="p-8 bg-gray-50/50">
-                            <div className="flex items-center justify-between mb-6">
-                               <h3 className="font-bold text-xl text-slate-900">Premium Amenities</h3>
-                               <span className={`text-xs font-medium ${textMap[primaryColor]} cursor-pointer`}>View All</span>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                               {[
-                                  { icon: Wifi, label: "High-Speed Wifi", desc: "100 Mbps Dedicated" },
-                                  { icon: Shield, label: "24/7 Security", desc: "CCTV & Guards" },
-                                  { icon: Coffee, label: "Study Lounge", desc: "Quiet Zones" },
-                                  { icon: Zap, label: "Power Backup", desc: "Always On" }
-                               ].map((item, i) => (
-                                  <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all group">
-                                     <div className={`h-8 w-8 rounded-lg ${colorMap[primaryColor]} bg-opacity-10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                                        <item.icon className={`h-4 w-4 ${textMap[primaryColor]}`} />
-                                     </div>
-                                     <div className="font-semibold text-sm text-slate-900 mb-0.5">{item.label}</div>
-                                     <div className="text-[10px] text-gray-500">{item.desc}</div>
-                                  </div>
-                               ))}
-                            </div>
-                         </div>
+                           {/* Amenities Section */}
+                           {showAmenities && (
+                              <div className="p-8 bg-gray-50/50">
+                                 <div className="flex items-center justify-between mb-6">
+                                    <h3 className="font-bold text-xl text-slate-900">Premium Amenities</h3>
+                                    <span className={`text-xs font-medium ${textMap[primaryColor]} cursor-pointer`}>View All</span>
+                                 </div>
+                                 <div className="grid grid-cols-2 gap-4">
+                                    {[
+                                       { icon: Wifi, label: "High-Speed Wifi", desc: "100 Mbps Dedicated" },
+                                       { icon: Shield, label: "24/7 Security", desc: "CCTV & Guards" },
+                                       { icon: Coffee, label: "Study Lounge", desc: "Quiet Zones" },
+                                       { icon: Zap, label: "Power Backup", desc: "Always On" }
+                                    ].map((item, i) => (
+                                       <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all group">
+                                          <div className={`h-8 w-8 rounded-lg ${colorMap[primaryColor]} bg-opacity-10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                                             <item.icon className={`h-4 w-4 ${textMap[primaryColor]}`} />
+                                          </div>
+                                          <div className="font-semibold text-sm text-slate-900 mb-0.5">{item.label}</div>
+                                          <div className="text-[10px] text-gray-500">{item.desc}</div>
+                                       </div>
+                                    ))}
+                                 </div>
+                              </div>
+                           )}
+                        </>
                       )}
 
+                      {/* ---- TEMPLATE: MINIMAL ---- */}
+                      {selectedTemplate === 'minimal' && (
+                        <>
+                           {/* Navbar */}
+                           <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+                              <div className="flex items-center justify-between px-8 py-6">
+                                 <div className="font-bold text-xl tracking-tighter text-black">
+                                    {brandName}.
+                                 </div>
+                                 <Menu className="h-5 w-5 text-black cursor-pointer" />
+                              </div>
+                           </div>
+
+                           {/* Hero Section */}
+                           <div className="px-8 pt-12 pb-8">
+                              <h1 className="text-5xl font-light leading-[1.1] mb-6 text-black tracking-tight">
+                                 {heroHeadline.split(' ').slice(0,2).join(' ')} <br/>
+                                 <span className={`font-bold ${textMap[primaryColor]}`}>{heroHeadline.split(' ').slice(2).join(' ')}</span>
+                              </h1>
+                              <p className="text-gray-500 text-sm leading-relaxed max-w-xs mb-8">
+                                 {heroSubheadline}
+                              </p>
+                              <Button 
+                                 className={`rounded-none ${colorMap[primaryColor]} text-white px-8 h-12`}
+                                 style={{ borderRadius: `${buttonRadius}px` }}
+                              >
+                                 View Properties <ArrowLeft className="h-4 w-4 ml-2 rotate-180" />
+                              </Button>
+                           </div>
+                           
+                           <div className="aspect-[4/3] w-full bg-gray-100 relative overflow-hidden">
+                               <img 
+                                 src={HOSTELS[1].image} 
+                                 className="w-full h-full object-cover"
+                                 alt="Hostel Hero"
+                              />
+                           </div>
+
+                           {/* Amenities Section */}
+                           {showAmenities && (
+                              <div className="p-8 py-16">
+                                 <div className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8">Features</div>
+                                 <div className="space-y-6">
+                                    {[
+                                       { icon: Wifi, label: "High-Speed Wifi", desc: "100 Mbps Dedicated" },
+                                       { icon: Shield, label: "24/7 Security", desc: "CCTV & Guards" },
+                                       { icon: Coffee, label: "Study Lounge", desc: "Quiet Zones" },
+                                    ].map((item, i) => (
+                                       <div key={i} className="flex items-start gap-4 pb-6 border-b border-gray-100 last:border-0">
+                                          <div className="text-lg font-medium text-black w-1/3">{item.label}</div>
+                                          <div className="text-sm text-gray-500 w-2/3">{item.desc}</div>
+                                       </div>
+                                    ))}
+                                 </div>
+                              </div>
+                           )}
+                        </>
+                      )}
+
+                      {/* ---- TEMPLATE: BOLD ---- */}
+                      {selectedTemplate === 'bold' && (
+                        <>
+                           {/* Navbar */}
+                           <div className="bg-black text-white p-6 flex justify-between items-center sticky top-0 z-40">
+                              <div className="font-black text-xl tracking-tighter uppercase italic">
+                                 {brandName}
+                              </div>
+                              <Button size="sm" className="bg-white text-black hover:bg-gray-200 rounded-full font-bold text-xs">
+                                 MENU
+                              </Button>
+                           </div>
+
+                           {/* Hero Section */}
+                           <div className="bg-black text-white p-6 pt-10 pb-20 rounded-b-[3rem]">
+                              <div className="inline-block px-3 py-1 rounded-full border border-white/20 text-[10px] font-bold uppercase tracking-wider mb-6">
+                                 New Academic Year 2025
+                              </div>
+                              <h1 className="text-5xl font-black leading-none mb-6 uppercase tracking-tight">
+                                 {heroHeadline}
+                              </h1>
+                              <div className="flex items-center gap-4">
+                                 <div className="h-12 w-12 rounded-full border border-white/30 flex items-center justify-center">
+                                    <ArrowLeft className="h-5 w-5 rotate-[135deg]" />
+                                 </div>
+                                 <p className="text-white/60 text-xs max-w-[200px] leading-tight font-medium">
+                                    {heroSubheadline}
+                                 </p>
+                              </div>
+                           </div>
+
+                           <div className="px-4 -mt-12 relative z-10">
+                              <img 
+                                 src={HOSTELS[2].image} 
+                                 className="w-full aspect-square object-cover rounded-[2rem] border-4 border-white shadow-2xl rotate-1"
+                                 alt="Hostel Hero"
+                              />
+                           </div>
+
+                           {/* Amenities Section */}
+                           {showAmenities && (
+                              <div className="p-6 py-12">
+                                 <h2 className="text-3xl font-black uppercase mb-8 tracking-tight">What's Inside</h2>
+                                 <div className="grid grid-cols-2 gap-3">
+                                    {[
+                                       { icon: Wifi, label: "Fast Wifi" },
+                                       { icon: Shield, label: "Secure" },
+                                       { icon: Coffee, label: "Lounge" },
+                                       { icon: Zap, label: "Power" }
+                                    ].map((item, i) => (
+                                       <div key={i} className="bg-gray-100 p-6 rounded-2xl hover:bg-black hover:text-white transition-colors group cursor-pointer">
+                                          <item.icon className="h-6 w-6 mb-2" />
+                                          <div className="font-bold text-sm uppercase">{item.label}</div>
+                                       </div>
+                                    ))}
+                                 </div>
+                              </div>
+                           )}
+                        </>
+                      )}
+
+
+                      {/* Common Sections (Rendered for all templates but styled slightly differently if needed, or just reused for simplicity for now) */}
+                      
                       {/* Featured Rooms */}
                       {displayedHostels.length > 0 && (
-                        <div className="p-8 pb-4">
-                           <h3 className="font-bold text-xl text-slate-900 mb-6">Our Locations</h3>
+                        <div className={`p-8 pb-4 ${selectedTemplate === 'bold' ? 'bg-black text-white rounded-t-[3rem] mt-10' : ''}`}>
+                           <h3 className={`font-bold text-xl mb-6 ${selectedTemplate === 'bold' ? 'text-white uppercase' : 'text-slate-900'}`}>
+                              Our Locations
+                           </h3>
                            <div className="space-y-6">
                               {displayedHostels.map((hostel) => (
-                                 <div key={hostel.id} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
-                                    <div className="h-48 relative overflow-hidden">
+                                 <div key={hostel.id} className={`
+                                    group overflow-hidden transition-all duration-500
+                                    ${selectedTemplate === 'minimal' ? 'border-b pb-8 rounded-none bg-transparent' : 'bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl'}
+                                    ${selectedTemplate === 'bold' ? 'bg-gray-900 border-gray-800 text-white' : ''}
+                                 `}>
+                                    <div className={`relative overflow-hidden ${selectedTemplate === 'minimal' ? 'h-64 mb-4' : 'h-48'}`}>
                                        <img 
                                          src={hostel.image} 
                                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                                        />
-                                       <div className="absolute top-3 right-3">
-                                          <div className="bg-white/90 backdrop-blur px-2 py-1 rounded-md text-xs font-bold flex items-center gap-1 shadow-sm">
-                                             <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> 
-                                             {hostel.rating}
+                                       {selectedTemplate !== 'minimal' && (
+                                          <div className="absolute top-3 right-3">
+                                             <div className="bg-white/90 backdrop-blur px-2 py-1 rounded-md text-xs font-bold flex items-center gap-1 shadow-sm text-black">
+                                                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> 
+                                                {hostel.rating}
+                                             </div>
                                           </div>
-                                       </div>
+                                       )}
                                     </div>
-                                    <div className="p-5">
+                                    <div className={`${selectedTemplate === 'minimal' ? 'p-0' : 'p-5'}`}>
                                        <div className="flex justify-between items-start mb-2">
                                           <div>
-                                             <h4 className="font-bold text-slate-900 text-lg">{hostel.name}</h4>
-                                             <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
+                                             <h4 className={`font-bold text-lg ${selectedTemplate === 'bold' ? 'text-white' : 'text-slate-900'}`}>{hostel.name}</h4>
+                                             <p className={`text-xs flex items-center gap-1 mt-1 ${selectedTemplate === 'bold' ? 'text-gray-400' : 'text-gray-500'}`}>
                                                 <MapPin className="h-3 w-3" /> {hostel.location}
                                              </p>
                                           </div>
@@ -525,21 +707,18 @@ export default function WebsiteBuilder() {
                                           </div>
                                        </div>
                                        
-                                       <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between">
+                                       <div className={`mt-4 pt-4 flex items-center justify-between ${selectedTemplate === 'bold' ? 'border-t border-gray-800' : 'border-t border-gray-50'}`}>
                                           <div className="flex -space-x-2">
                                              {[1,2,3].map(i => (
                                                 <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
                                                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} className="h-full w-full object-cover" />
                                                 </div>
                                              ))}
-                                             <div className="h-6 w-6 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[8px] text-gray-500 font-medium">
-                                                +12
-                                             </div>
                                           </div>
                                           <Button 
                                             size="sm" 
-                                            variant="outline"
-                                            className={`hover:bg-gray-50 text-slate-900 h-8 text-xs`}
+                                            variant={selectedTemplate === 'minimal' ? 'link' : 'outline'}
+                                            className={`h-8 text-xs ${selectedTemplate === 'bold' ? 'bg-white text-black hover:bg-gray-200 border-0' : ''}`}
                                             style={{ borderRadius: `${buttonRadius}px` }}
                                           >
                                              View Details
@@ -554,17 +733,25 @@ export default function WebsiteBuilder() {
 
                       {/* Packages Section */}
                       {packageDetails.length > 0 && (
-                        <div className="p-8 pt-4 bg-gray-50/30">
-                           <h3 className="font-bold text-xl text-slate-900 mb-6">Available Packages</h3>
+                        <div className={`p-8 pt-4 ${selectedTemplate === 'bold' ? 'bg-black text-white pb-12' : 'bg-gray-50/30'}`}>
+                           <h3 className={`font-bold text-xl mb-6 ${selectedTemplate === 'bold' ? 'text-white uppercase' : 'text-slate-900'}`}>
+                              Available Packages
+                           </h3>
                            <div className="space-y-4">
                               {packageDetails.map((pkg, i) => pkg ? (
-                                 <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm">
+                                 <div key={i} className={`
+                                    flex justify-between items-center
+                                    ${selectedTemplate === 'minimal' ? 'border-b border-gray-200 py-4 rounded-none bg-transparent px-0' : 'p-4 rounded-xl border shadow-sm'}
+                                    ${selectedTemplate === 'bold' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}
+                                 `}>
                                     <div className="flex items-center gap-3">
-                                       <div className={`h-10 w-10 rounded-full bg-opacity-10 ${colorMap[primaryColor]} flex items-center justify-center`}>
-                                          <PackageIcon className={`h-5 w-5 ${textMap[primaryColor]}`} />
-                                       </div>
+                                       {selectedTemplate !== 'minimal' && (
+                                          <div className={`h-10 w-10 rounded-full bg-opacity-10 ${colorMap[primaryColor]} flex items-center justify-center`}>
+                                             <PackageIcon className={`h-5 w-5 ${textMap[primaryColor]}`} />
+                                          </div>
+                                       )}
                                        <div>
-                                          <div className="font-bold text-sm text-slate-900">{pkg.name}</div>
+                                          <div className={`font-bold text-sm ${selectedTemplate === 'bold' ? 'text-white' : 'text-slate-900'}`}>{pkg.name}</div>
                                           <div className="text-xs text-gray-500">{pkg.duration} Plan</div>
                                        </div>
                                     </div>
@@ -579,15 +766,15 @@ export default function WebsiteBuilder() {
 
                       {/* Testimonials */}
                       {showTestimonials && (
-                         <div className="p-8 bg-slate-900 text-white">
+                         <div className={`p-8 ${selectedTemplate === 'minimal' ? 'bg-gray-50 text-black' : 'bg-slate-900 text-white'} ${selectedTemplate === 'bold' ? 'bg-indigo-600' : ''}`}>
                             <div className="text-center mb-8">
                                <h3 className="font-bold text-xl mb-2">Student Stories</h3>
                                <p className="text-white/60 text-xs">Hear from our happy residents</p>
                             </div>
                             
-                            <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-6 relative">
-                               <div className="absolute -top-3 -left-2 text-4xl text-white/20 font-serif">"</div>
-                               <p className="text-sm leading-relaxed text-white/90 mb-4 italic">
+                            <div className={`backdrop-blur-md border rounded-2xl p-6 relative ${selectedTemplate === 'minimal' ? 'bg-white border-gray-200 shadow-sm' : 'bg-white/10 border-white/10'}`}>
+                               <div className="absolute -top-3 -left-2 text-4xl opacity-20 font-serif">"</div>
+                               <p className={`text-sm leading-relaxed mb-4 italic ${selectedTemplate === 'minimal' ? 'text-gray-600' : 'text-white/90'}`}>
                                   Moving here was the best decision I made for my university life. The community is amazing and the facilities are top-notch.
                                </p>
                                <div className="flex items-center gap-3">
@@ -595,8 +782,8 @@ export default function WebsiteBuilder() {
                                      <img src="https://i.pravatar.cc/100?img=32" className="h-full w-full object-cover" />
                                   </div>
                                   <div>
-                                     <div className="font-semibold text-sm">Sarah J.</div>
-                                     <div className="text-[10px] text-white/50">Resident since 2023</div>
+                                     <div className={`font-semibold text-sm ${selectedTemplate === 'minimal' ? 'text-black' : ''}`}>Sarah J.</div>
+                                     <div className={`text-[10px] ${selectedTemplate === 'minimal' ? 'text-gray-400' : 'text-white/50'}`}>Resident since 2023</div>
                                   </div>
                                </div>
                             </div>
@@ -604,7 +791,7 @@ export default function WebsiteBuilder() {
                       )}
 
                       {/* Footer */}
-                      <div className="bg-white border-t border-gray-100 p-8 pb-12">
+                      <div className={`border-t p-8 pb-12 ${selectedTemplate === 'bold' ? 'bg-black text-white border-gray-800' : 'bg-white border-gray-100'}`}>
                          <div className="flex items-center justify-between mb-6">
                             <div className={`font-bold text-lg tracking-tight ${textMap[primaryColor]}`}>{brandName}</div>
                             <div className="flex gap-3">
