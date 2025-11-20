@@ -14,7 +14,13 @@ import {
   Menu,
   Globe,
   Package,
-  CreditCard
+  CreditCard,
+  Calendar,
+  Wrench,
+  Megaphone,
+  Star,
+  Briefcase,
+  Banknote
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -45,10 +51,16 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
 
   const ownerLinks = [
     { icon: BarChart, label: 'Analytics', href: '/dashboard/owner' },
-    { icon: Building2, label: 'My Properties', href: '/dashboard/owner/properties' },
-    { icon: Package, label: 'Packages & Pricing', href: '/dashboard/owner/packages' },
-    { icon: Globe, label: 'Website Builder', href: '/dashboard/owner/website' },
+    { icon: Calendar, label: 'Bookings', href: '/dashboard/owner/bookings' },
+    { icon: Building2, label: 'Properties', href: '/dashboard/owner/properties' },
     { icon: Users, label: 'Tenants', href: '/dashboard/owner/tenants' },
+    { icon: Briefcase, label: 'Staff', href: '/dashboard/owner/staff' },
+    { icon: Wrench, label: 'Maintenance', href: '/dashboard/owner/maintenance' },
+    { icon: Banknote, label: 'Financials', href: '/dashboard/owner/financials' },
+    { icon: Package, label: 'Packages', href: '/dashboard/owner/packages' },
+    { icon: Megaphone, label: 'Marketing', href: '/dashboard/owner/marketing' },
+    { icon: Star, label: 'Reviews', href: '/dashboard/owner/reviews' },
+    { icon: Globe, label: 'Website', href: '/dashboard/owner/website' },
     { icon: MessageSquare, label: 'Messages', href: '/dashboard/owner/messages' },
     { icon: Settings, label: 'Settings', href: '/dashboard/owner/settings' },
   ];
@@ -123,9 +135,15 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
         { label: 'Messages', href: '/dashboard/tenant/messages' },
         { label: 'Settings', href: '/dashboard/tenant/settings' },
         { label: 'Analytics', href: '/dashboard/owner' },
-        { label: 'My Properties', href: '/dashboard/owner/properties' },
-        { label: 'Packages & Pricing', href: '/dashboard/owner/packages' },
-        { label: 'Website Builder', href: '/dashboard/owner/website' },
+        { label: 'Bookings', href: '/dashboard/owner/bookings' },
+        { label: 'Properties', href: '/dashboard/owner/properties' },
+        { label: 'Staff', href: '/dashboard/owner/staff' },
+        { label: 'Maintenance', href: '/dashboard/owner/maintenance' },
+        { label: 'Financials', href: '/dashboard/owner/financials' },
+        { label: 'Packages', href: '/dashboard/owner/packages' },
+        { label: 'Marketing', href: '/dashboard/owner/marketing' },
+        { label: 'Reviews', href: '/dashboard/owner/reviews' },
+        { label: 'Website', href: '/dashboard/owner/website' },
         { label: 'Tenants', href: '/dashboard/owner/tenants' },
         { label: 'Messages', href: '/dashboard/owner/messages' },
         { label: 'Settings', href: '/dashboard/owner/settings' },

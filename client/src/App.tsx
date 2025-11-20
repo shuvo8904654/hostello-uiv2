@@ -24,6 +24,12 @@ import AddEditProperty from "@/pages/owner/AddEditProperty";
 import OwnerTenants from "@/pages/owner/Tenants";
 import WebsiteBuilder from "@/pages/owner/WebsiteBuilder";
 import PricingPackages from "@/pages/owner/Packages";
+import OwnerBookings from "@/pages/owner/Bookings";
+import OwnerStaff from "@/pages/owner/Staff";
+import OwnerMaintenance from "@/pages/owner/Maintenance";
+import OwnerFinancials from "@/pages/owner/Financials";
+import OwnerMarketing from "@/pages/owner/Marketing";
+import OwnerReviews from "@/pages/owner/Reviews";
 
 // Admin Pages
 import AdminDashboard from "@/pages/AdminDashboard";
@@ -55,6 +61,12 @@ function Router() {
       <Route path="/dashboard/owner/tenants" component={OwnerTenants} />
       <Route path="/dashboard/owner/website" component={WebsiteBuilder} />
       <Route path="/dashboard/owner/packages" component={PricingPackages} />
+      <Route path="/dashboard/owner/bookings" component={OwnerBookings} />
+      <Route path="/dashboard/owner/staff" component={OwnerStaff} />
+      <Route path="/dashboard/owner/maintenance" component={OwnerMaintenance} />
+      <Route path="/dashboard/owner/financials" component={OwnerFinancials} />
+      <Route path="/dashboard/owner/marketing" component={OwnerMarketing} />
+      <Route path="/dashboard/owner/reviews" component={OwnerReviews} />
       <Route path="/dashboard/owner/messages" component={MessagesPage} />
       <Route path="/dashboard/owner/settings" component={SettingsPage} />
       
