@@ -35,10 +35,12 @@ const TRANSACTIONS = [
   { id: 4, desc: "Rent Payment - Room 204", type: "Income", amount: 5000, date: "Aug 14", status: "Cleared", category: "Rent" },
   { id: 5, desc: "Cleaning Supplies", type: "Expense", amount: 800, date: "Aug 12", status: "Paid", category: "Supplies" },
   { id: 6, desc: "Deposit - Room 305", type: "Income", amount: 10000, date: "Aug 10", status: "Cleared", category: "Deposit" },
+  { id: 7, desc: "Salary - Abdul Karim (Manager)", type: "Expense", amount: 25000, date: "Aug 01", status: "Paid", category: "Staff Salary" },
+  { id: 8, desc: "Salary - Selina Begum (Reception)", type: "Expense", amount: 18000, date: "Aug 01", status: "Paid", category: "Staff Salary" },
 ];
 
 const CHART_DATA = [
-  { name: 'Week 1', income: 15000, expense: 5000 },
+  { name: 'Week 1', income: 15000, expense: 45000 }, // Higher expense due to salaries
   { name: 'Week 2', income: 22000, expense: 8000 },
   { name: 'Week 3', income: 18000, expense: 4000 },
   { name: 'Week 4', income: 25000, expense: 6000 },
@@ -66,12 +68,9 @@ export default function OwnerFinancials() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Financials</h2>
-          <p className="text-muted-foreground">Track income, expenses, and invoices.</p>
+          <p className="text-muted-foreground">Track income, expenses, and staff salaries.</p>
         </div>
         <div className="flex gap-2">
-          <Link href="/dashboard/owner/payouts">
-            <Button variant="outline"><Wallet className="h-4 w-4 mr-2"/> Manage Payouts</Button>
-          </Link>
           <Button variant="outline" onClick={handleDownload}><Download className="h-4 w-4 mr-2"/> Download Report</Button>
           
           <Sheet>
@@ -164,8 +163,8 @@ export default function OwnerFinancials() {
               <TrendingDown className="h-4 w-4 text-red-500" />
            </CardHeader>
            <CardContent>
-              <div className="text-2xl font-bold">৳45,200</div>
-              <p className="text-xs text-muted-foreground">+5% from last month</p>
+              <div className="text-2xl font-bold">৳88,200</div>
+              <p className="text-xs text-muted-foreground">+15% from last month</p>
            </CardContent>
         </Card>
         <Card>
@@ -174,7 +173,7 @@ export default function OwnerFinancials() {
               <DollarSign className="h-4 w-4 text-primary" />
            </CardHeader>
            <CardContent>
-              <div className="text-2xl font-bold text-primary">৳79,300</div>
+              <div className="text-2xl font-bold text-primary">৳36,300</div>
               <p className="text-xs text-muted-foreground">Healthy Margin</p>
            </CardContent>
         </Card>
@@ -211,38 +210,38 @@ export default function OwnerFinancials() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium">Maintenance</span>
-                  <span className="text-muted-foreground">45%</span>
+                  <span className="font-medium">Staff Salary</span>
+                  <span className="text-muted-foreground">55%</span>
                 </div>
                 <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500 w-[45%]" />
+                  <div className="h-full bg-green-500 w-[55%]" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">Maintenance</span>
+                  <span className="text-muted-foreground">25%</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500 w-[25%]" />
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="font-medium">Utilities</span>
-                  <span className="text-muted-foreground">30%</span>
-                </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-orange-500 w-[30%]" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium">Staff Salary</span>
                   <span className="text-muted-foreground">15%</span>
                 </div>
                 <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-green-500 w-[15%]" />
+                  <div className="h-full bg-orange-500 w-[15%]" />
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="font-medium">Supplies</span>
-                  <span className="text-muted-foreground">10%</span>
+                  <span className="text-muted-foreground">5%</span>
                 </div>
                 <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-purple-500 w-[10%]" />
+                  <div className="h-full bg-purple-500 w-[5%]" />
                 </div>
               </div>
             </div>
