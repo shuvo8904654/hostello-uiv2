@@ -30,6 +30,7 @@ import {
   BedDouble,
   Armchair,
   Utensils,
+  DollarSign
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -65,6 +66,7 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
     { icon: Building2, label: 'Properties', href: '/dashboard/owner/properties' },
     { icon: Users, label: 'Tenants', href: '/dashboard/owner/tenants' },
     { icon: Briefcase, label: 'Staff', href: '/dashboard/owner/staff' },
+    { icon: DollarSign, label: 'Payroll', href: '/dashboard/owner/payroll' },
     { icon: Wrench, label: 'Maintenance', href: '/dashboard/owner/maintenance' },
     { icon: Banknote, label: 'Financials', href: '/dashboard/owner/financials' },
     { icon: Package, label: 'Packages', href: '/dashboard/owner/packages' },
@@ -177,6 +179,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
         { label: 'Bookings', href: '/dashboard/owner/bookings' },
         { label: 'Properties', href: '/dashboard/owner/properties' },
         { label: 'Staff', href: '/dashboard/owner/staff' },
+        { label: 'Payroll', href: '/dashboard/owner/payroll' },
         { label: 'Maintenance', href: '/dashboard/owner/maintenance' },
         { label: 'Financials', href: '/dashboard/owner/financials' },
         { label: 'Packages', href: '/dashboard/owner/packages' },
