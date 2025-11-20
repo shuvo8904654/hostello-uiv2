@@ -2,7 +2,7 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, TrendingUp, Shield, Users, Calendar, CreditCard, ArrowRight, Star } from "lucide-react";
+import { CheckCircle2, TrendingUp, Shield, Users, Calendar, CreditCard, ArrowRight, Star, Zap, Smartphone, PieChart } from "lucide-react";
 import generatedImage from '@assets/generated_images/modern_property_management_dashboard_on_a_laptop_with_a_bright_office_background.png';
 
 export default function OwnerLanding() {
@@ -119,7 +119,7 @@ export default function OwnerLanding() {
         </div>
       </section>
 
-      {/* Benefits Grid */}
+      {/* Benefits Grid - Upgraded */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -127,49 +127,107 @@ export default function OwnerLanding() {
             <p className="text-xl text-muted-foreground">We've built the operating system for modern student accommodation.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Users className="h-8 w-8 text-primary" />,
-                title: "Tenant Screening",
-                description: "We verify every student ID and university enrollment so you know exactly who is living in your property."
-              },
-              {
-                icon: <CreditCard className="h-8 w-8 text-primary" />,
-                title: "Automated Rent Collection",
-                description: "Say goodbye to cash collection. Payments are deposited directly to your bank account every month."
-              },
-              {
-                icon: <Calendar className="h-8 w-8 text-primary" />,
-                title: "Booking Management",
-                description: "Manage room availability, view upcoming check-ins, and handle lease agreements digitally."
-              },
-              {
-                icon: <Shield className="h-8 w-8 text-primary" />,
-                title: "Damage Protection",
-                description: "Secure deposits and documented inventory check-ins protect your property assets."
-              },
-              {
-                icon: <TrendingUp className="h-8 w-8 text-primary" />,
-                title: "Financial Reporting",
-                description: "Track expenses, revenue, and profitability with automated monthly reports."
-              },
-              {
-                icon: <Star className="h-8 w-8 text-primary" />,
-                title: "Reputation Management",
-                description: "Collect and showcase reviews from happy tenants to attract more students."
-              }
-            ].map((feature, i) => (
-              <div key={i} className="bg-background p-8 rounded-2xl shadow-sm border hover:shadow-md transition-all hover:-translate-y-1">
-                <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-[minmax(250px,auto)]">
+            {/* Large Card 1 */}
+            <div className="lg:col-span-2 bg-white p-10 rounded-3xl shadow-sm border hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+               
+               <div className="flex flex-col md:flex-row items-start gap-6 z-10 relative">
+                 <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-500">
+                   <Smartphone className="h-8 w-8 text-primary" />
+                 </div>
+                 <div>
+                   <h3 className="text-2xl font-bold mb-3">Complete Digital Management</h3>
+                   <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                     Manage your entire property from your phone. Check-in tenants, collect rent, and handle maintenance requests without ever touching a piece of paper.
+                   </p>
+                   <ul className="space-y-2">
+                     {["Mobile Dashboard", "Instant Notifications", "Digital Leases"].map((item, i) => (
+                       <li key={i} className="flex items-center text-sm font-medium text-foreground/80">
+                         <CheckCircle2 className="h-4 w-4 text-green-500 mr-2" /> {item}
+                       </li>
+                     ))}
+                   </ul>
+                 </div>
+               </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white p-8 rounded-3xl shadow-sm border hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+              <div className="h-14 w-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-blue-100 transition-colors">
+                <CreditCard className="h-7 w-7 text-blue-600" />
               </div>
-            ))}
+              <h3 className="text-xl font-bold mb-3">Auto Rent Collection</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Payments are automatically collected and deposited. Say goodbye to late payments and cash handling.
+              </p>
+            </div>
+
+             {/* Card 3 */}
+             <div className="bg-white p-8 rounded-3xl shadow-sm border hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+              <div className="h-14 w-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors">
+                <Users className="h-7 w-7 text-orange-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Tenant Screening</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                We verify every student ID and university enrollment so you know exactly who is living in your property.
+              </p>
+            </div>
+
+             {/* Large Card 2 */}
+             <div className="lg:col-span-2 bg-white p-10 rounded-3xl shadow-sm border hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+               <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none"></div>
+               
+               <div className="flex flex-col md:flex-row items-start gap-6 z-10 relative">
+                 <div>
+                   <h3 className="text-2xl font-bold mb-3">Data-Driven Insights</h3>
+                   <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                     Understand your business better with detailed reports on occupancy, revenue, and expenses. Spot trends and optimize your pricing.
+                   </p>
+                   <div className="flex gap-3 flex-wrap">
+                     <span className="px-3 py-1 rounded-full bg-muted text-xs font-bold uppercase tracking-wider">Revenue</span>
+                     <span className="px-3 py-1 rounded-full bg-muted text-xs font-bold uppercase tracking-wider">Occupancy</span>
+                     <span className="px-3 py-1 rounded-full bg-muted text-xs font-bold uppercase tracking-wider">Expenses</span>
+                   </div>
+                 </div>
+                 <div className="h-16 w-16 rounded-2xl bg-purple-100 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-500 order-first md:order-last">
+                   <PieChart className="h-8 w-8 text-purple-600" />
+                 </div>
+               </div>
+            </div>
+
+             {/* Card 5 */}
+             <div className="bg-white p-8 rounded-3xl shadow-sm border hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+              <div className="h-14 w-14 rounded-2xl bg-green-50 flex items-center justify-center mb-6 group-hover:bg-green-100 transition-colors">
+                <Shield className="h-7 w-7 text-green-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Damage Protection</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Secure deposits and documented inventory check-ins protect your property assets from damage.
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div className="bg-white p-8 rounded-3xl shadow-sm border hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+              <div className="h-14 w-14 rounded-2xl bg-red-50 flex items-center justify-center mb-6 group-hover:bg-red-100 transition-colors">
+                <Calendar className="h-7 w-7 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Smart Booking</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Fill vacancies faster with our smart booking engine that matches students to your available rooms.
+              </p>
+            </div>
+
+            {/* Card 7 */}
+             <div className="bg-white p-8 rounded-3xl shadow-sm border hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+              <div className="h-14 w-14 rounded-2xl bg-yellow-50 flex items-center justify-center mb-6 group-hover:bg-yellow-100 transition-colors">
+                <Star className="h-7 w-7 text-yellow-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Reputation Mgmt</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Collect reviews automatically and build a trusted brand that students love to recommend.
+              </p>
+            </div>
           </div>
         </div>
       </section>
