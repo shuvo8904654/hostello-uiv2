@@ -272,9 +272,9 @@ export default function Home() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
-                  <AccordionTrigger className="text-lg font-semibold text-slate-900">Is my security deposit refundable?</AccordionTrigger>
+                  <AccordionTrigger className="text-lg font-semibold text-slate-900">Do I pay the security deposit to Hostello?</AccordionTrigger>
                   <AccordionContent className="text-slate-600 leading-relaxed">
-                    Yes, your security deposit is fully refundable at the end of your stay, subject to the hostel's policy on damages and notice periods. Hostello ensures transparent refund processes.
+                    No, Hostello is a listing platform. You pay your rent and any required security deposit directly to the hostel owner upon arrival or as per their specific agreement. We do not hold any funds.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
