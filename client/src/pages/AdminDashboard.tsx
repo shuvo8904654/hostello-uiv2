@@ -53,17 +53,17 @@ export default function AdminDashboard() {
         <CardContent>
            <div className="space-y-4">
               {HOSTELS.slice(2,4).map(hostel => (
-                <div key={hostel.id} className="flex items-center justify-between p-4 border rounded-lg">
+                <div key={hostel.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg gap-4">
                   <div className="flex items-center gap-4">
-                    <img src={hostel.image} className="w-16 h-16 rounded-md object-cover" alt="Hostel" />
+                    <img src={hostel.image} className="w-16 h-16 rounded-md object-cover shrink-0" alt="Hostel" />
                     <div>
                       <h4 className="font-bold">{hostel.name}</h4>
                       <p className="text-sm text-muted-foreground">Submitted by Owner #842 • {hostel.city}</p>
                     </div>
                   </div>
-                  <div className="flex gap-3">
-                    <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/20">Reject</Button>
-                    <Button size="sm" className="bg-green-600 hover:bg-green-700">Approve Listing</Button>
+                  <div className="flex gap-3 w-full sm:w-auto">
+                    <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/20 flex-1 sm:flex-none">Reject</Button>
+                    <Button size="sm" className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-none">Approve Listing</Button>
                   </div>
                 </div>
               ))}

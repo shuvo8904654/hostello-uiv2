@@ -95,30 +95,30 @@ export default function OwnerDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-               <div className="flex items-center justify-between border-b pb-4">
+               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
                  <div className="flex items-center gap-3">
-                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground">RA</div>
+                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground shrink-0">RA</div>
                    <div>
                      <div className="font-medium">Rahim Ahmed</div>
                      <div className="text-xs text-muted-foreground">Dhaka Hub • Room 101</div>
                    </div>
                  </div>
-                 <div className="flex gap-2">
-                   <Button size="sm" variant="outline" className="text-xs px-2 h-8">Decline</Button>
-                   <Button size="sm" className="text-xs px-2 h-8">Accept</Button>
+                 <div className="flex gap-2 w-full sm:w-auto">
+                   <Button size="sm" variant="outline" className="text-xs px-2 h-8 flex-1 sm:flex-none">Decline</Button>
+                   <Button size="sm" className="text-xs px-2 h-8 flex-1 sm:flex-none">Accept</Button>
                  </div>
                </div>
-               <div className="flex items-center justify-between border-b pb-4">
+               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
                  <div className="flex items-center gap-3">
-                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground">FK</div>
+                   <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground shrink-0">FK</div>
                    <div>
                      <div className="font-medium">Fatima Khan</div>
                      <div className="text-xs text-muted-foreground">Uttara Girls • Bed 2</div>
                    </div>
                  </div>
-                 <div className="flex gap-2">
-                   <Button size="sm" variant="outline" className="text-xs px-2 h-8">Decline</Button>
-                   <Button size="sm" className="text-xs px-2 h-8">Accept</Button>
+                 <div className="flex gap-2 w-full sm:w-auto">
+                   <Button size="sm" variant="outline" className="text-xs px-2 h-8 flex-1 sm:flex-none">Decline</Button>
+                   <Button size="sm" className="text-xs px-2 h-8 flex-1 sm:flex-none">Accept</Button>
                  </div>
                </div>
             </div>
