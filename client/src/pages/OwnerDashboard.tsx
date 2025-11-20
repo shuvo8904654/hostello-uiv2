@@ -3,8 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity } from "lucide-react";
+import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity, Building2 } from "lucide-react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, LineChart, Line, PieChart, Pie, Cell, Tooltip, AreaChart, Area } from "recharts";
+import { Link } from "wouter";
 
 const revenueData = [
   { name: "Jan", total: 12000 },
@@ -36,6 +37,11 @@ const expensesData = [
   { name: "Jun", income: 55000, expense: 15000 },
 ];
 
+const MANAGERS = [
+  { id: 1, name: "Abdul Karim", branch: "Dhaka Hub", email: "abdul.k@hostello.com", status: "Active" },
+  { id: 2, name: "Fatima Hasan", branch: "Uttara Girls", email: "fatima.h@hostello.com", status: "Active" },
+];
+
 export default function OwnerDashboard() {
   return (
     <DashboardLayout type="owner">
@@ -44,7 +50,12 @@ export default function OwnerDashboard() {
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Owner Dashboard</h2>
           <p className="text-muted-foreground">Manage your properties and track performance.</p>
         </div>
-        <Button>+ Add New Property</Button>
+        <div className="flex gap-2">
+           <Link href="/dashboard/owner/staff">
+              <Button variant="outline">Manage Staff & Managers</Button>
+           </Link>
+           <Button>+ Add New Property</Button>
+        </div>
       </div>
 
       {/* Key Metrics */}
@@ -75,12 +86,12 @@ export default function OwnerDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Listings</CardTitle>
-            <BarChartIcon className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Active Managers</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">4</div>
-            <p className="text-xs text-muted-foreground mt-1">All properties live</p>
+            <div className="text-2xl font-bold">{MANAGERS.length}</div>
+            <p className="text-xs text-muted-foreground mt-1">Managing {HOSTELS.length} properties</p>
           </CardContent>
         </Card>
         <Card>
@@ -138,6 +149,44 @@ export default function OwnerDashboard() {
             </ResponsiveContainer>
           </CardContent>
         </Card>
+      </div>
+      
+      {/* Manager Overview Section */}
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-3 mb-8">
+         <Card className="col-span-1 lg:col-span-3">
+            <CardHeader>
+               <CardTitle>Branch Performance</CardTitle>
+               <CardDescription>Overview of metrics by branch manager.</CardDescription>
+            </CardHeader>
+            <CardContent>
+               <div className="space-y-4">
+                  {MANAGERS.map((manager) => (
+                     <div key={manager.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div className="flex items-center gap-4">
+                           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                              {manager.name.split(' ').map(n => n[0]).join('')}
+                           </div>
+                           <div>
+                              <h4 className="font-semibold">{manager.branch}</h4>
+                              <p className="text-sm text-muted-foreground">Manager: {manager.name}</p>
+                           </div>
+                        </div>
+                        <div className="flex items-center gap-8 text-sm">
+                           <div className="hidden sm:block text-right">
+                              <p className="text-muted-foreground">Occupancy</p>
+                              <p className="font-medium text-green-600">94%</p>
+                           </div>
+                           <div className="hidden sm:block text-right">
+                              <p className="text-muted-foreground">Revenue (Mo)</p>
+                              <p className="font-medium">৳85,000</p>
+                           </div>
+                           <Button variant="outline" size="sm">View Report</Button>
+                        </div>
+                     </div>
+                  ))}
+               </div>
+            </CardContent>
+         </Card>
       </div>
 
       {/* Secondary Charts Row */}
@@ -210,57 +259,6 @@ export default function OwnerDashboard() {
           </CardContent>
         </Card>
       </div>
-
-      {/* Recent Bookings List */}
-      <Card className="col-span-1">
-        <CardHeader>
-          <CardTitle>Recent Booking Requests</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground shrink-0">RA</div>
-                  <div className="min-w-0">
-                    <div className="font-medium truncate">Rahim Ahmed</div>
-                    <div className="text-xs text-muted-foreground truncate">Dhaka Hub • Room 101</div>
-                  </div>
-                </div>
-                <div className="flex gap-2 w-full sm:w-auto shrink-0">
-                  <Button size="sm" variant="outline" className="text-xs px-2 h-8 flex-1 sm:flex-none">Decline</Button>
-                  <Button size="sm" className="text-xs px-2 h-8 flex-1 sm:flex-none">Accept</Button>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground shrink-0">FK</div>
-                  <div className="min-w-0">
-                    <div className="font-medium truncate">Fatima Khan</div>
-                    <div className="text-xs text-muted-foreground truncate">Uttara Girls • Bed 2</div>
-                  </div>
-                </div>
-                <div className="flex gap-2 w-full sm:w-auto shrink-0">
-                  <Button size="sm" variant="outline" className="text-xs px-2 h-8 flex-1 sm:flex-none">Decline</Button>
-                  <Button size="sm" className="text-xs px-2 h-8 flex-1 sm:flex-none">Accept</Button>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 gap-4">
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground shrink-0">JS</div>
-                  <div className="min-w-0">
-                    <div className="font-medium truncate">Jamal Sheikh</div>
-                    <div className="text-xs text-muted-foreground truncate">Mirpur Home • Room 304</div>
-                  </div>
-                </div>
-                <div className="flex gap-2 w-full sm:w-auto shrink-0">
-                  <Button size="sm" variant="outline" className="text-xs px-2 h-8 flex-1 sm:flex-none">Decline</Button>
-                  <Button size="sm" className="text-xs px-2 h-8 flex-1 sm:flex-none">Accept</Button>
-                </div>
-              </div>
-          </div>
-        </CardContent>
-      </Card>
-
     </DashboardLayout>
   );
 }
