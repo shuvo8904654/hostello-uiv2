@@ -69,7 +69,9 @@ export default function Compare() {
           <table className="w-full border-collapse min-w-[800px]">
             <thead className="sticky top-0 z-20 shadow-sm">
               <tr>
-                <th className="p-4 text-left w-48 bg-background border-b border-r sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Features</th>
+                <th className="p-4 text-left w-32 sm:w-48 bg-background border-b border-r sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
+                  <span className="hidden sm:inline">Features</span>
+                </th>
                 {hostelsToCompare.map(hostel => (
                   <th key={hostel.id} className="p-4 text-left min-w-[250px] border-b relative align-top bg-background">
                     <Button 
@@ -80,7 +82,9 @@ export default function Compare() {
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
-                    <div className="pr-8">
+                    
+                    {/* Desktop Header (Full Details) */}
+                    <div className="hidden md:block pr-8">
                       <img 
                         src={hostel.image} 
                         alt={hostel.name} 
@@ -99,6 +103,19 @@ export default function Compare() {
                       </div>
                       <Button size="sm" className="w-full" onClick={() => setLocation(`/hostel/${hostel.id}`)}>
                         View Details
+                      </Button>
+                    </div>
+
+                    {/* Mobile/Tablet Header (Condensed) */}
+                    <div className="block md:hidden pr-8">
+                      <h3 className="font-bold text-base leading-tight mb-1 truncate" title={hostel.name}>
+                        <a href={`/hostel/${hostel.id}`} className="hover:underline">{hostel.name}</a>
+                      </h3>
+                      <div className="text-sm font-bold text-primary mb-2">
+                        ৳{hostel.price}<span className="text-xs font-normal text-muted-foreground">/mo</span>
+                      </div>
+                      <Button size="sm" variant="outline" className="w-full text-xs h-8" onClick={() => setLocation(`/hostel/${hostel.id}`)}>
+                        View
                       </Button>
                     </div>
                   </th>
