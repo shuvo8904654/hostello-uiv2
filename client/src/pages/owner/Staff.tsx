@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, UserPlus, Shield, Key, Save, Users, Building2 } from "lucide-react";
+import { Search, UserPlus, Shield, Key, Save, Users, Building2, Banknote } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -22,14 +22,14 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const STAFF = [
-  { id: 1, name: "Abdul Karim", role: "Manager", branch: "Dhaka Hub", status: "Active", email: "abdul@hostello.com" },
-  { id: 2, name: "Selina Begum", role: "Receptionist", branch: "Uttara Girls", status: "Active", email: "selina@hostello.com" },
-  { id: 3, name: "Rahim Mia", role: "Maintenance", branch: "All", status: "On Leave", email: "rahim@hostello.com" },
+  { id: 1, name: "Abdul Karim", role: "Manager", branch: "Dhaka Hub", status: "Active", email: "abdul@hostello.com", salary: "25,000" },
+  { id: 2, name: "Selina Begum", role: "Receptionist", branch: "Uttara Girls", status: "Active", email: "selina@hostello.com", salary: "18,000" },
+  { id: 3, name: "Rahim Mia", role: "Maintenance", branch: "All", status: "On Leave", email: "rahim@hostello.com", salary: "15,000" },
 ];
 
 const MANAGERS = [
-  { id: 1, name: "Abdul Karim", branch: "Dhaka Hub", email: "abdul.k@hostello.com", phone: "+88017...", status: "Active", lastActive: "2 mins ago" },
-  { id: 2, name: "Fatima Hasan", branch: "Uttara Girls", email: "fatima.h@hostello.com", phone: "+88019...", status: "Active", lastActive: "1 hour ago" },
+  { id: 1, name: "Abdul Karim", branch: "Dhaka Hub", email: "abdul.k@hostello.com", phone: "+88017...", status: "Active", lastActive: "2 mins ago", salary: "25,000" },
+  { id: 2, name: "Fatima Hasan", branch: "Uttara Girls", email: "fatima.h@hostello.com", phone: "+88019...", status: "Active", lastActive: "1 hour ago", salary: "28,000" },
 ];
 
 export default function OwnerStaff() {
@@ -54,7 +54,7 @@ export default function OwnerStaff() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Team Management</h2>
-          <p className="text-muted-foreground">Manage branch managers and operational staff.</p>
+          <p className="text-muted-foreground">Manage branch managers, operational staff, and payroll.</p>
         </div>
       </div>
 
@@ -92,6 +92,13 @@ export default function OwnerStaff() {
                       <div className="space-y-2">
                          <Label>Phone Number</Label>
                          <Input placeholder="+880..." />
+                      </div>
+                      <div className="space-y-2">
+                         <Label>Salary (Monthly)</Label>
+                         <div className="relative">
+                            <span className="absolute left-3 top-2.5 text-muted-foreground">৳</span>
+                            <Input className="pl-8" placeholder="Optional" />
+                         </div>
                       </div>
                    </div>
 
@@ -148,6 +155,7 @@ export default function OwnerStaff() {
                     <TableHead>Manager Name</TableHead>
                     <TableHead>Assigned Branch</TableHead>
                     <TableHead className="hidden md:table-cell">Email</TableHead>
+                    <TableHead>Salary</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
@@ -166,6 +174,12 @@ export default function OwnerStaff() {
                          </Badge>
                       </TableCell>
                       <TableCell className="hidden md:table-cell">{manager.email}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <span className="text-muted-foreground text-xs mr-1">৳</span>
+                          {manager.salary}
+                        </div>
+                      </TableCell>
                       <TableCell><Badge className="bg-green-600">{manager.status}</Badge></TableCell>
                       <TableCell className="text-right">
                         <Button variant="ghost" size="sm">Manage</Button>
@@ -206,6 +220,13 @@ export default function OwnerStaff() {
                       <div className="space-y-2">
                          <Label>Phone Number</Label>
                          <Input placeholder="+880..." />
+                      </div>
+                      <div className="space-y-2">
+                         <Label>Salary (Monthly)</Label>
+                         <div className="relative">
+                            <span className="absolute left-3 top-2.5 text-muted-foreground">৳</span>
+                            <Input className="pl-8" placeholder="Optional" />
+                         </div>
                       </div>
                    </div>
 
@@ -265,6 +286,7 @@ export default function OwnerStaff() {
                     <TableHead>Name</TableHead>
                     <TableHead>Role</TableHead>
                     <TableHead>Branch</TableHead>
+                    <TableHead>Salary</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
@@ -280,6 +302,12 @@ export default function OwnerStaff() {
                          </div>
                       </TableCell>
                       <TableCell>{member.branch}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <span className="text-muted-foreground text-xs mr-1">৳</span>
+                          {member.salary}
+                        </div>
+                      </TableCell>
                       <TableCell><Badge variant="outline">{member.status}</Badge></TableCell>
                       <TableCell className="text-right">
                         <Sheet>
@@ -296,6 +324,13 @@ export default function OwnerStaff() {
                                <div className="space-y-2">
                                   <Label>Full Name</Label>
                                   <Input defaultValue={member.name} />
+                               </div>
+                               <div className="space-y-2">
+                                  <Label>Salary (Monthly)</Label>
+                                  <div className="relative">
+                                     <span className="absolute left-3 top-2.5 text-muted-foreground">৳</span>
+                                     <Input className="pl-8" defaultValue={member.salary} />
+                                  </div>
                                </div>
                                <div className="space-y-2">
                                   <Label>Role</Label>
