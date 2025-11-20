@@ -20,7 +20,12 @@ import {
   Megaphone,
   Star,
   Briefcase,
-  Banknote
+  Banknote,
+  AlertTriangle,
+  LifeBuoy,
+  Server,
+  Database,
+  Sliders
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -66,11 +71,16 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
   ];
 
   const adminLinks = [
-    { icon: ShieldCheck, label: 'Admin Overview', href: '/dashboard/admin' },
+    { icon: BarChart, label: 'Analytics', href: '/dashboard/admin' },
+    { icon: ShieldCheck, label: 'Verification', href: '/dashboard/admin/verification' },
     { icon: Users, label: 'User Management', href: '/dashboard/admin/users' },
-    { icon: Building2, label: 'Listings Approval', href: '/dashboard/admin/listings' },
+    { icon: Building2, label: 'Hostels & Bookings', href: '/dashboard/admin/bookings' },
+    { icon: AlertTriangle, label: 'Moderation', href: '/dashboard/admin/moderation' },
     { icon: CreditCard, label: 'Billing & Plans', href: '/dashboard/admin/billing' },
-    { icon: Settings, label: 'Platform Settings', href: '/dashboard/admin/settings' },
+    { icon: Sliders, label: 'Platform Control', href: '/dashboard/admin/control' },
+    { icon: LifeBuoy, label: 'Support & Tickets', href: '/dashboard/admin/support' },
+    { icon: Server, label: 'System', href: '/dashboard/admin/system' },
+    { icon: Database, label: 'Data Management', href: '/dashboard/admin/data' },
   ];
 
   const links = type === 'tenant' ? tenantLinks : type === 'owner' ? ownerLinks : adminLinks;
@@ -147,11 +157,18 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
         { label: 'Tenants', href: '/dashboard/owner/tenants' },
         { label: 'Messages', href: '/dashboard/owner/messages' },
         { label: 'Settings', href: '/dashboard/owner/settings' },
-        { label: 'Admin Overview', href: '/dashboard/admin' },
+        
+        // Admin links
+        { label: 'Platform Analytics', href: '/dashboard/admin' },
+        { label: 'Verification & Approval', href: '/dashboard/admin/verification' },
         { label: 'User Management', href: '/dashboard/admin/users' },
-        { label: 'Listings Approval', href: '/dashboard/admin/listings' },
-        { label: 'Billing & Plans', href: '/dashboard/admin/billing' },
-        { label: 'Platform Settings', href: '/dashboard/admin/settings' },
+        { label: 'Hostel & Booking Oversight', href: '/dashboard/admin/bookings' },
+        { label: 'Content Moderation', href: '/dashboard/admin/moderation' },
+        { label: 'Subscription & Billing', href: '/dashboard/admin/billing' },
+        { label: 'Platform Control', href: '/dashboard/admin/control' },
+        { label: 'Support & Tickets', href: '/dashboard/admin/support' },
+        { label: 'System Management', href: '/dashboard/admin/system' },
+        { label: 'Data Management', href: '/dashboard/admin/data' },
      ];
      return allLinks.find(l => l.href === location)?.label || 'Dashboard';
   };

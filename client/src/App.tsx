@@ -36,8 +36,14 @@ import OwnerReviews from "@/pages/owner/Reviews";
 // Admin Pages
 import AdminDashboard from "@/pages/AdminDashboard";
 import AdminUsers from "@/pages/admin/Users";
-import AdminListings from "@/pages/admin/Listings";
+import AdminVerification from "@/pages/admin/Verification";
+import AdminBookings from "@/pages/admin/Bookings";
+import AdminModeration from "@/pages/admin/Moderation";
 import AdminBilling from "@/pages/admin/Billing";
+import AdminPlatformControl from "@/pages/admin/PlatformControl";
+import AdminSupport from "@/pages/admin/Support";
+import AdminSystem from "@/pages/admin/System";
+import AdminData from "@/pages/admin/Data";
 
 import PlaceholderPage from "@/pages/Placeholder";
 
@@ -76,10 +82,15 @@ function Router() {
       
       {/* Admin Routes */}
       <Route path="/dashboard/admin" component={AdminDashboard} />
+      <Route path="/dashboard/admin/verification" component={AdminVerification} />
       <Route path="/dashboard/admin/users" component={AdminUsers} />
-      <Route path="/dashboard/admin/listings" component={AdminListings} />
+      <Route path="/dashboard/admin/bookings" component={AdminBookings} />
+      <Route path="/dashboard/admin/moderation" component={AdminModeration} />
       <Route path="/dashboard/admin/billing" component={AdminBilling} />
-      <Route path="/dashboard/admin/settings" component={SettingsPage} />
+      <Route path="/dashboard/admin/control" component={AdminPlatformControl} />
+      <Route path="/dashboard/admin/support" component={AdminSupport} />
+      <Route path="/dashboard/admin/system" component={AdminSystem} />
+      <Route path="/dashboard/admin/data" component={AdminData} />
 
       {/* Fallback */}
       <Route path="/dashboard/:any*" component={PlaceholderPage} />

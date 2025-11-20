@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Check, X, AlertCircle, CreditCard } from "lucide-react";
+import { Check, AlertCircle, CreditCard, FileText, Clock } from "lucide-react";
 
 const SUBSCRIPTIONS = [
   { id: 1, plan: "Basic", price: 0, users: 850, features: ["1 Hostel", "Manual Bookings"] },
@@ -17,12 +17,18 @@ const TRANSACTIONS = [
   { id: "TX-9823", user: "Prime Properties", plan: "Enterprise", amount: 8000, status: "Success", date: "Nov 17, 2025" },
 ];
 
+const BILLING_HISTORY = [
+    { id: "INV-2024-001", owner: "John Doe", amount: "৳2,500", status: "Paid", date: "Oct 01, 2025" },
+    { id: "INV-2024-002", owner: "Jane Smith", amount: "৳8,000", status: "Paid", date: "Oct 05, 2025" },
+    { id: "INV-2024-003", owner: "Bob Wilson", amount: "৳2,500", status: "Overdue", date: "Sep 28, 2025" },
+];
+
 export default function AdminBilling() {
   return (
     <DashboardLayout type="admin">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold tracking-tight">Subscription & Billing</h2>
-        <p className="text-muted-foreground">Manage platform revenue and subscription plans.</p>
+        <h2 className="text-2xl font-bold tracking-tight">Subscription & Billing</h2>
+        <p className="text-muted-foreground">Manage platform revenue, plans, and invoices.</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3 mb-8">
@@ -57,10 +63,11 @@ export default function AdminBilling() {
 
       <div className="grid lg:grid-cols-3 gap-8">
          {/* Plans */}
-         <div className="lg:col-span-2">
+         <div className="lg:col-span-2 space-y-8">
             <Card>
                <CardHeader>
                   <CardTitle>Subscription Plans</CardTitle>
+                  <CardDescription>Manage Free, Pro, and Premium tiers</CardDescription>
                </CardHeader>
                <CardContent>
                   <div className="grid sm:grid-cols-3 gap-4">
@@ -80,7 +87,7 @@ export default function AdminBilling() {
                </CardContent>
             </Card>
 
-            <Card className="mt-6">
+            <Card>
                <CardHeader>
                   <CardTitle>Recent Transactions</CardTitle>
                </CardHeader>
@@ -93,7 +100,6 @@ export default function AdminBilling() {
                            <TableHead>Plan</TableHead>
                            <TableHead>Amount</TableHead>
                            <TableHead>Status</TableHead>
-                           <TableHead>Date</TableHead>
                         </TableRow>
                      </TableHeader>
                      <TableBody>
@@ -108,7 +114,6 @@ export default function AdminBilling() {
                                     {tx.status}
                                  </Badge>
                               </TableCell>
-                              <TableCell>{tx.date}</TableCell>
                            </TableRow>
                         ))}
                      </TableBody>
@@ -124,18 +129,44 @@ export default function AdminBilling() {
                   <CardDescription>Generate and send invoices.</CardDescription>
                </CardHeader>
                <CardContent className="space-y-4">
-                  <Button className="w-full" variant="outline"><CreditCard className="h-4 w-4 mr-2"/> Generate Monthly Invoice</Button>
+                  <Button className="w-full" variant="default"><CreditCard className="h-4 w-4 mr-2"/> Generate Monthly Invoice</Button>
                   <Button className="w-full" variant="outline">Send Payment Reminders</Button>
                </CardContent>
             </Card>
             
+            <Card>
+                <CardHeader>
+                    <CardTitle>Owner Billing History</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {BILLING_HISTORY.map(hist => (
+                        <div key={hist.id} className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0">
+                            <div className="flex items-center gap-3">
+                                <FileText className="h-4 w-4 text-muted-foreground" />
+                                <div>
+                                    <p className="text-sm font-medium">{hist.owner}</p>
+                                    <p className="text-xs text-muted-foreground">{hist.date}</p>
+                                </div>
+                            </div>
+                            <div className="text-right">
+                                <p className="text-sm font-bold">{hist.amount}</p>
+                                <Badge variant={hist.status === 'Paid' ? 'outline' : 'destructive'} className="text-[10px] h-5">
+                                    {hist.status}
+                                </Badge>
+                            </div>
+                        </div>
+                    ))}
+                    <Button variant="ghost" className="w-full text-xs">View All History</Button>
+                </CardContent>
+            </Card>
+
             <Card className="border-destructive/20 bg-destructive/5">
                <CardHeader>
                   <CardTitle className="text-destructive flex items-center"><AlertCircle className="h-5 w-5 mr-2"/> Disputes</CardTitle>
                </CardHeader>
                <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">2 payment disputes currently open.</p>
-                  <Button variant="destructive" size="sm">View Disputes</Button>
+                  <Button variant="destructive" size="sm" className="w-full">Handle Disputes</Button>
                </CardContent>
             </Card>
          </div>
