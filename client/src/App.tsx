@@ -33,6 +33,9 @@ import OwnerMaintenance from "@/pages/owner/Maintenance";
 import OwnerFinancials from "@/pages/owner/Financials";
 import OwnerMarketing from "@/pages/owner/Marketing";
 import OwnerReviews from "@/pages/owner/Reviews";
+import OwnerInventory from "@/pages/owner/Inventory";
+import OwnerAttendance from "@/pages/owner/Attendance";
+import OwnerFood from "@/pages/owner/Food";
 
 // Manager Pages
 import ManagerDashboard from "@/pages/ManagerDashboard";
@@ -91,6 +94,9 @@ function Router() {
       <Route path="/dashboard/owner/financials" component={OwnerFinancials} />
       <Route path="/dashboard/owner/marketing" component={OwnerMarketing} />
       <Route path="/dashboard/owner/reviews" component={OwnerReviews} />
+      <Route path="/dashboard/owner/inventory" component={OwnerInventory} />
+      <Route path="/dashboard/owner/attendance" component={OwnerAttendance} />
+      <Route path="/dashboard/owner/food" component={OwnerFood} />
       <Route path="/dashboard/owner/messages" component={MessagesPage} />
       <Route path="/dashboard/owner/settings" component={SettingsPage} />
 

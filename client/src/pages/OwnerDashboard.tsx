@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity, Building2 } from "lucide-react";
+import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity, Building2, BedDouble, AlertCircle, CreditCard } from "lucide-react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, LineChart, Line, PieChart, Pie, Cell, Tooltip, AreaChart, Area } from "recharts";
 import { Link } from "wouter";
 
@@ -48,13 +48,15 @@ export default function OwnerDashboard() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Owner Dashboard</h2>
-          <p className="text-muted-foreground">Manage your properties and track performance.</p>
+          <p className="text-muted-foreground">Manage your properties, staff, and track performance.</p>
         </div>
         <div className="flex gap-2">
            <Link href="/dashboard/owner/staff">
-              <Button variant="outline">Manage Staff & Managers</Button>
+              <Button variant="outline">Manage Staff</Button>
            </Link>
-           <Button>+ Add New Property</Button>
+           <Link href="/dashboard/owner/properties/new">
+              <Button>+ Add Property</Button>
+           </Link>
         </div>
       </div>
 
@@ -86,22 +88,32 @@ export default function OwnerDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Managers</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Properties & Capacity</CardTitle>
+            <Building2 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{MANAGERS.length}</div>
-            <p className="text-xs text-muted-foreground mt-1">Managing {HOSTELS.length} properties</p>
+            <div className="text-2xl font-bold">{HOSTELS.length} Hostels</div>
+            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+              <BedDouble className="h-3 w-3" /> 120 Rooms / 450 Beds
+            </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Requests</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Pending Actions</CardTitle>
+            <AlertCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground text-orange-600 mt-1">Requires action</p>
+            <div className="text-2xl font-bold">25</div>
+            <div className="flex gap-2 mt-1">
+              <p className="text-xs text-muted-foreground text-orange-600 flex items-center">
+                 12 Payments
+              </p>
+              <span className="text-xs text-muted-foreground">•</span>
+               <p className="text-xs text-muted-foreground text-blue-600 flex items-center">
+                 13 Bookings
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>

@@ -27,7 +27,10 @@ import {
   Database,
   Sliders,
   Bell,
-  BedDouble
+  BedDouble,
+  Armchair,
+  Utensils,
+  Shield
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -68,6 +71,9 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
     { icon: Package, label: 'Packages', href: '/dashboard/owner/packages' },
     { icon: Megaphone, label: 'Marketing', href: '/dashboard/owner/marketing' },
     { icon: Star, label: 'Reviews', href: '/dashboard/owner/reviews' },
+    { icon: Armchair, label: 'Inventory', href: '/dashboard/owner/inventory' },
+    { icon: Shield, label: 'Attendance & Security', href: '/dashboard/owner/attendance' },
+    { icon: Utensils, label: 'Food & Meals', href: '/dashboard/owner/food' },
     { icon: Globe, label: 'Website', href: '/dashboard/owner/website' },
     { icon: MessageSquare, label: 'Messages', href: '/dashboard/owner/messages' },
     { icon: Settings, label: 'Settings', href: '/dashboard/owner/settings' },
@@ -180,6 +186,9 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
         { label: 'Reviews', href: '/dashboard/owner/reviews' },
         { label: 'Website', href: '/dashboard/owner/website' },
         { label: 'Tenants', href: '/dashboard/owner/tenants' },
+        { label: 'Inventory', href: '/dashboard/owner/inventory' },
+        { label: 'Attendance & Security', href: '/dashboard/owner/attendance' },
+        { label: 'Food & Meals', href: '/dashboard/owner/food' },
         { label: 'Messages', href: '/dashboard/owner/messages' },
         { label: 'Settings', href: '/dashboard/owner/settings' },
         

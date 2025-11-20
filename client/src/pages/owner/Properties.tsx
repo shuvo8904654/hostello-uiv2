@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { Plus, MoreVertical, MapPin, BedDouble, Users, Star, MessageSquare, ShieldCheck, Trash2, Edit, Settings, Power } from "lucide-react";
+import { Plus, MoreVertical, MapPin, BedDouble, Users, Star, MessageSquare, ShieldCheck, Trash2, Edit, Settings, Power, LayoutGrid, List } from "lucide-react";
 import { Link } from "wouter";
 import {
   Tooltip,
@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -266,44 +267,93 @@ export default function OwnerProperties() {
 
       {/* Quick Manage Rooms Dialog */}
       <Dialog open={isRoomsOpen} onOpenChange={setIsRoomsOpen}>
-         <DialogContent className="max-w-2xl">
+         <DialogContent className="max-w-3xl h-[80vh] flex flex-col">
             <DialogHeader>
                <DialogTitle>Manage Rooms: {selectedProperty?.name}</DialogTitle>
                <DialogDescription>
-                  Quickly update availability and pricing for room types.
+                  Update availability, pricing, and view floor plans.
                </DialogDescription>
             </DialogHeader>
-            <div className="py-4 space-y-4">
-               {selectedProperty?.rooms.map((room: any) => (
-                  <div key={room.id} className="grid grid-cols-12 gap-4 items-center border p-3 rounded-lg">
-                     <div className="col-span-4">
-                        <p className="font-medium">{room.name}</p>
-                        <p className="text-xs text-muted-foreground">{room.type} • {room.capacity} Person</p>
-                     </div>
-                     <div className="col-span-3">
-                        <Label className="text-xs text-muted-foreground">Price (Monthly)</Label>
-                        <Input type="number" defaultValue={room.price} className="h-8 mt-1" />
-                     </div>
-                     <div className="col-span-3">
-                        <Label className="text-xs text-muted-foreground">Available Beds</Label>
-                        <Input type="number" defaultValue={room.available} className="h-8 mt-1" />
-                     </div>
-                     <div className="col-span-2 flex justify-end">
-                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                           <Settings className="h-4 w-4" />
-                        </Button>
-                     </div>
-                  </div>
-               ))}
-               <div className="flex justify-center pt-2">
-                  <Link href={`/dashboard/owner/properties/edit/${selectedProperty?.id}`}>
-                     <Button variant="outline" size="sm" className="w-full border-dashed">
-                        <Plus className="h-3 w-3 mr-2" /> Add New Room Type
+            
+            <Tabs defaultValue="list" className="flex-1 flex flex-col overflow-hidden">
+              <div className="flex justify-between items-center mb-4">
+                 <TabsList>
+                    <TabsTrigger value="list"><List className="h-4 w-4 mr-2" /> List View</TabsTrigger>
+                    <TabsTrigger value="floorplan"><LayoutGrid className="h-4 w-4 mr-2" /> Floor Plan</TabsTrigger>
+                 </TabsList>
+                 <Link href={`/dashboard/owner/properties/edit/${selectedProperty?.id}`}>
+                     <Button variant="outline" size="sm" className="border-dashed">
+                        <Plus className="h-3 w-3 mr-2" /> Add New Room
                      </Button>
                   </Link>
-               </div>
-            </div>
-            <DialogFooter>
+              </div>
+
+              <TabsContent value="list" className="flex-1 overflow-y-auto pr-1">
+                 <div className="space-y-4">
+                    {selectedProperty?.rooms.map((room: any) => (
+                       <div key={room.id} className="grid grid-cols-12 gap-4 items-center border p-3 rounded-lg">
+                          <div className="col-span-4">
+                             <p className="font-medium">{room.name}</p>
+                             <p className="text-xs text-muted-foreground">{room.type} • {room.capacity} Person</p>
+                          </div>
+                          <div className="col-span-3">
+                             <Label className="text-xs text-muted-foreground">Price (Monthly)</Label>
+                             <Input type="number" defaultValue={room.price} className="h-8 mt-1" />
+                          </div>
+                          <div className="col-span-3">
+                             <Label className="text-xs text-muted-foreground">Available Beds</Label>
+                             <Input type="number" defaultValue={room.available} className="h-8 mt-1" />
+                          </div>
+                          <div className="col-span-2 flex justify-end">
+                             <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                                <Settings className="h-4 w-4" />
+                             </Button>
+                          </div>
+                       </div>
+                    ))}
+                 </div>
+              </TabsContent>
+
+              <TabsContent value="floorplan" className="flex-1 overflow-y-auto">
+                 <div className="border rounded-lg p-4 bg-muted/20 min-h-[400px]">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                       {selectedProperty?.rooms.map((room: any) => (
+                          <div key={room.id} className="border bg-background rounded-lg p-3 shadow-sm">
+                             <div className="flex justify-between items-start mb-2">
+                                <span className="font-medium text-sm">{room.name}</span>
+                                <Badge variant={room.available > 0 ? "outline" : "secondary"} className="text-[10px]">
+                                   {room.available > 0 ? `${room.available} Free` : "Full"}
+                                </Badge>
+                             </div>
+                             <div className="grid grid-cols-2 gap-2 mt-2">
+                                {Array.from({ length: room.capacity || 2 }).map((_, i) => (
+                                   <div 
+                                      key={i} 
+                                      className={`h-12 rounded border flex items-center justify-center relative
+                                         ${i < (room.capacity - room.available) 
+                                            ? "bg-primary/10 border-primary/30" 
+                                            : "bg-secondary/50 border-dashed hover:bg-secondary cursor-pointer"
+                                         }`}
+                                   >
+                                      <BedDouble className={`h-4 w-4 ${i < (room.capacity - room.available) ? "text-primary" : "text-muted-foreground"}`} />
+                                      {i < (room.capacity - room.available) && (
+                                         <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></div>
+                                      )}
+                                   </div>
+                                ))}
+                             </div>
+                          </div>
+                       ))}
+                    </div>
+                 </div>
+                 <div className="mt-2 flex items-center justify-end gap-4 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1"><div className="w-3 h-3 bg-primary/10 border border-primary/30 rounded"></div> Occupied</div>
+                    <div className="flex items-center gap-1"><div className="w-3 h-3 bg-secondary/50 border border-dashed rounded"></div> Available</div>
+                 </div>
+              </TabsContent>
+            </Tabs>
+
+            <DialogFooter className="mt-4">
                <Button variant="outline" onClick={() => setIsRoomsOpen(false)}>Cancel</Button>
                <Button onClick={handleUpdateRooms}>Save Changes</Button>
             </DialogFooter>
