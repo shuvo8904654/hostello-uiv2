@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { Plus, MoreVertical, MapPin, BedDouble, Users, Star, MessageSquare, ShieldCheck, Trash2, Edit, Settings, Power, LayoutGrid, List } from "lucide-react";
+import { Plus, MoreVertical, MapPin, BedDouble, Users, Star, MessageSquare, ShieldCheck, Trash2, Edit, Settings, Power, LayoutGrid, List, Globe } from "lucide-react";
 import { Link } from "wouter";
 import {
   Tooltip,
@@ -154,6 +154,11 @@ export default function OwnerProperties() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <Link href={`/dashboard/owner/website?hostelId=${hostel.id}`}>
+                         <DropdownMenuItem>
+                           <Globe className="mr-2 h-4 w-4" /> Website Builder
+                         </DropdownMenuItem>
+                      </Link>
                       <Link href={`/dashboard/owner/properties/edit/${hostel.id}`}>
                          <DropdownMenuItem>
                            <Edit className="mr-2 h-4 w-4" /> Edit Details
@@ -205,8 +210,10 @@ export default function OwnerProperties() {
                 </div>
 
                 <div className="mt-auto flex gap-2">
-                  <Link href={`/dashboard/owner/properties/edit/${hostel.id}`} className="flex-1">
-                     <Button variant="outline" className="w-full">Edit Details</Button>
+                  <Link href={`/dashboard/owner/website?hostelId=${hostel.id}`} className="flex-1">
+                     <Button variant="outline" className="w-full">
+                        <Globe className="h-3 w-3 mr-2" /> Site
+                     </Button>
                   </Link>
                   <Button className="flex-1" onClick={() => openRooms(hostel)}>Manage Rooms</Button>
                 </div>

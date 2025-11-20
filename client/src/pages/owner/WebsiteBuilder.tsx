@@ -14,17 +14,26 @@ import {
   Package,
   Calendar,
   Check,
-  CreditCard
+  CreditCard,
+  ArrowLeft
 } from "lucide-react";
 import { HOSTELS } from "@/lib/mockData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Link } from "wouter";
 
 export default function WebsiteBuilder() {
-  const [selectedHostelId, setSelectedHostelId] = useState(HOSTELS[0].id);
+  // Simple way to get query params since wouter doesn't support them in useLocation
+  const getQueryParam = (name: string) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.get(name);
+  };
+
+  const initialHostelId = getQueryParam('hostelId') || HOSTELS[0].id;
+  const [selectedHostelId, setSelectedHostelId] = useState(initialHostelId);
   const [activeTab, setActiveTab] = useState("branding");
   
   const hostel = HOSTELS.find(h => h.id === selectedHostelId) || HOSTELS[0];
@@ -32,10 +41,18 @@ export default function WebsiteBuilder() {
   // Mock state for package management
   const [packages, setPackages] = useState(hostel.packages.map(p => ({ ...p, enabled: true })));
 
+  // Update packages when hostel changes
+  useEffect(() => {
+    const newHostel = HOSTELS.find(h => h.id === selectedHostelId) || HOSTELS[0];
+    setPackages(newHostel.packages.map(p => ({ ...p, enabled: true })));
+  }, [selectedHostelId]);
+
   const handleHostelChange = (id: string) => {
     setSelectedHostelId(id);
-    const newHostel = HOSTELS.find(h => h.id === id) || HOSTELS[0];
-    setPackages(newHostel.packages.map(p => ({ ...p, enabled: true })));
+    // URL update without reload (optional, but nice for UX)
+    const url = new URL(window.location.href);
+    url.searchParams.set('hostelId', id);
+    window.history.pushState({}, '', url);
   };
 
   const togglePackage = (index: number) => {
@@ -46,28 +63,33 @@ export default function WebsiteBuilder() {
 
   return (
     <DashboardLayout type="owner">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Website Builder</h2>
-          <p className="text-muted-foreground">Create a professional booking site for your hostel.</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline"><Eye className="h-4 w-4 mr-2"/> Preview Site</Button>
-          <Button><Share2 className="h-4 w-4 mr-2"/> Publish Live</Button>
+      <div className="mb-6">
+        <Link href="/dashboard/owner/properties">
+           <a className="flex items-center text-muted-foreground hover:text-foreground mb-4 text-sm">
+             <ArrowLeft className="h-4 w-4 mr-1" /> Back to Properties
+           </a>
+        </Link>
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight">Website Builder</h2>
+            <p className="text-muted-foreground">Managing website for <span className="font-semibold text-foreground">{hostel.name}</span></p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline"><Eye className="h-4 w-4 mr-2"/> Preview Site</Button>
+            <Button><Share2 className="h-4 w-4 mr-2"/> Publish Live</Button>
+          </div>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-12 gap-8">
         {/* Editor Sidebar */}
         <div className="lg:col-span-4 space-y-6">
+          
+          {/* Property Selector - Only show if we want to switch contexts */}
           <Card>
-            <CardHeader>
-              <CardTitle>Property</CardTitle>
-              <CardDescription>Select which listing to build a site for</CardDescription>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 pt-4">
                <div className="space-y-2">
-                  <Label>Select Listing</Label>
+                  <Label className="text-xs uppercase text-muted-foreground font-semibold tracking-wider">Current Property Listing</Label>
                   <Select value={selectedHostelId} onValueChange={handleHostelChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a hostel" />
@@ -78,13 +100,16 @@ export default function WebsiteBuilder() {
                       ))}
                     </SelectContent>
                   </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Packages and room details are pulled directly from this listing.
+                  </p>
                </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Configuration</CardTitle>
+              <CardTitle>Site Configuration</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -136,48 +161,35 @@ export default function WebsiteBuilder() {
                   </TabsContent>
 
                   <TabsContent value="packages" className="space-y-6 mt-0">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-800 mb-4">
+                       These packages are linked to your <strong>{hostel.name}</strong> listing. 
+                       <Link href={`/dashboard/owner/properties/edit/${hostel.id}`}>
+                          <a className="underline ml-1 font-semibold">Edit Listing</a>
+                       </Link>
+                    </div>
+
                     <div className="space-y-4">
                        <div className="flex items-center justify-between">
                           <Label className="text-base">Enable Booking System</Label>
                           <Switch defaultChecked />
                        </div>
-                       <p className="text-xs text-muted-foreground">Allow students to book packages directly from your website.</p>
                     </div>
                     
                     <Separator />
 
                     <div className="space-y-4">
-                      <Label className="text-base">Active Packages</Label>
+                      <Label className="text-base">Visible Packages</Label>
                       {packages.map((pkg, i) => (
                         <div key={i} className="border rounded-lg p-3 space-y-3 bg-card">
                            <div className="flex items-center justify-between">
-                              <span className="font-medium">{pkg.name}</span>
+                              <div>
+                                 <span className="font-medium block">{pkg.name}</span>
+                                 <span className="text-xs text-muted-foreground">{pkg.duration} • ৳{pkg.price}</span>
+                              </div>
                               <Switch checked={pkg.enabled} onCheckedChange={() => togglePackage(i)} />
                            </div>
-                           {pkg.enabled && (
-                             <div className="grid grid-cols-2 gap-2">
-                                <div className="space-y-1">
-                                   <Label className="text-xs text-muted-foreground">Price</Label>
-                                   <Input className="h-8 text-sm" defaultValue={pkg.price} />
-                                </div>
-                                <div className="space-y-1">
-                                   <Label className="text-xs text-muted-foreground">Duration</Label>
-                                   <Select defaultValue={pkg.duration}>
-                                      <SelectTrigger className="h-8 text-sm">
-                                         <SelectValue />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                         <SelectItem value="Monthly">Monthly</SelectItem>
-                                         <SelectItem value="Semester">Semester</SelectItem>
-                                         <SelectItem value="Yearly">Yearly</SelectItem>
-                                      </SelectContent>
-                                   </Select>
-                                </div>
-                             </div>
-                           )}
                         </div>
                       ))}
-                      <Button variant="outline" size="sm" className="w-full">+ Add New Package</Button>
                     </div>
                   </TabsContent>
 
