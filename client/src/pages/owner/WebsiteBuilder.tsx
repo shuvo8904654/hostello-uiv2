@@ -33,7 +33,8 @@ import {
   Grid,
   List,
   CreditCard,
-  Briefcase
+  Briefcase,
+  GraduationCap
 } from "lucide-react";
 import { HOSTELS } from "@/lib/mockData";
 import { useState } from "react";
@@ -55,8 +56,8 @@ export default function WebsiteBuilder() {
   const [brandName, setBrandName] = useState("Premium Stays");
   const [subdomain, setSubdomain] = useState("premium-stays");
   const [primaryColor, setPrimaryColor] = useState("indigo");
-  const [heroHeadline, setHeroHeadline] = useState("Elevate Your Living Experience");
-  const [heroSubheadline, setHeroSubheadline] = useState("Experience premium living designed for professionals and travelers who want more than just a room.");
+  const [heroHeadline, setHeroHeadline] = useState("Ideal Living for Students & Pros");
+  const [heroSubheadline, setHeroSubheadline] = useState("Experience premium accommodation designed for university students and young professionals.");
   const [showAmenities, setShowAmenities] = useState(true);
   const [showTestimonials, setShowTestimonials] = useState(true);
   const [buttonRadius, setButtonRadius] = useState([8]);
@@ -481,7 +482,7 @@ export default function WebsiteBuilder() {
                               
                               <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white">
                                  <Badge className={`mb-4 hover:bg-white/20 bg-white/20 text-white border-0 backdrop-blur-md`}>
-                                    Premium Living
+                                    Student & Professional Living
                                  </Badge>
                                  <h1 className="text-4xl font-bold leading-tight mb-3 drop-shadow-sm">
                                     {heroHeadline}
@@ -504,7 +505,7 @@ export default function WebsiteBuilder() {
                            <div className="grid grid-cols-3 border-b border-gray-100">
                               <div className="p-4 py-6 text-center border-r border-gray-100">
                                  <div className={`text-xl font-bold ${textMap[primaryColor]}`}>500+</div>
-                                 <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Residents</div>
+                                 <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Happy Residents</div>
                               </div>
                               <div className="p-4 py-6 text-center border-r border-gray-100">
                                  <div className={`text-xl font-bold ${textMap[primaryColor]}`}>4.9</div>
@@ -527,8 +528,8 @@ export default function WebsiteBuilder() {
                                     {[
                                        { icon: Wifi, label: "High-Speed Wifi", desc: "100 Mbps Dedicated" },
                                        { icon: Shield, label: "24/7 Security", desc: "CCTV & Guards" },
-                                       { icon: Briefcase, label: "Work Space", desc: "Quiet Zones" },
-                                       { icon: Zap, label: "Power Backup", desc: "Always On" }
+                                       { icon: GraduationCap, label: "Study Zones", desc: "Quiet & Focused" },
+                                       { icon: Briefcase, label: "Work Space", desc: "Professional Desk" }
                                     ].map((item, i) => (
                                        <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all group">
                                           <div className={`h-8 w-8 rounded-lg ${colorMap[primaryColor]} bg-opacity-10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
@@ -590,7 +591,7 @@ export default function WebsiteBuilder() {
                                     {[
                                        { icon: Wifi, label: "High-Speed Wifi", desc: "100 Mbps Dedicated" },
                                        { icon: Shield, label: "24/7 Security", desc: "CCTV & Guards" },
-                                       { icon: Briefcase, label: "Work Space", desc: "Quiet Zones" },
+                                       { icon: GraduationCap, label: "Study & Work", desc: "Quiet Zones" },
                                     ].map((item, i) => (
                                        <div key={i} className="flex items-start gap-4 pb-6 border-b border-gray-100 last:border-0">
                                           <div className="text-lg font-medium text-black w-1/3">{item.label}</div>
@@ -650,7 +651,7 @@ export default function WebsiteBuilder() {
                                     {[
                                        { icon: Wifi, label: "Fast Wifi" },
                                        { icon: Shield, label: "Secure" },
-                                       { icon: Briefcase, label: "Lounge" },
+                                       { icon: GraduationCap, label: "Study" },
                                        { icon: Zap, label: "Power" }
                                     ].map((item, i) => (
                                        <div key={i} className="bg-gray-100 p-6 rounded-2xl hover:bg-black hover:text-white transition-colors group cursor-pointer">
