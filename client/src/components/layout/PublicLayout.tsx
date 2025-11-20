@@ -21,7 +21,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           <div className="hidden md:flex items-center gap-6">
             <Link href="/search" className="text-sm font-medium hover:text-primary transition-colors">Find a Hostel</Link>
             <Link href="/dashboard/tenant" className="text-sm font-medium hover:text-primary transition-colors">Tenant Dashboard</Link>
-            <Link href="/dashboard/owner" className="text-sm font-medium hover:text-primary transition-colors">List Your Property</Link>
+            <Link href="/list-your-property" className="text-sm font-medium hover:text-primary transition-colors">List Your Property</Link>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" className="text-sm">Log in</Button>
               <Button size="sm" className="text-sm rounded-full px-6">Sign up</Button>
@@ -39,7 +39,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           <div className="md:hidden border-t p-4 bg-background space-y-4 flex flex-col animate-in slide-in-from-top-5">
             <Link href="/search" className="block text-sm font-medium py-2">Find a Hostel</Link>
             <Link href="/dashboard/tenant" className="block text-sm font-medium py-2">Tenant Dashboard</Link>
-            <Link href="/dashboard/owner" className="block text-sm font-medium py-2">Owner Dashboard</Link>
+            <Link href="/list-your-property" className="block text-sm font-medium py-2">List Your Property</Link>
             <Link href="/dashboard/admin" className="block text-sm font-medium py-2">Admin Demo</Link>
             <div className="pt-2 flex flex-col gap-2">
                <Button variant="outline" className="w-full">Log in</Button>
@@ -72,7 +72,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><a href="#" className="hover:text-foreground">Browse Hostels</a></li>
               <li><a href="#" className="hover:text-foreground">How it works</a></li>
-              <li><a href="#" className="hover:text-foreground">Pricing for Owners</a></li>
+              <li><Link href="/list-your-property" className="hover:text-foreground">List Your Property</Link></li>
             </ul>
           </div>
 

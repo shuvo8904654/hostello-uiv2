@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 
 // Pages
 import Home from "@/pages/Home";
+import OwnerLanding from "@/pages/OwnerLanding";
 import Search from "@/pages/Search";
 import HostelDetail from "@/pages/HostelDetail";
 import SignUp from "@/pages/SignUp";
@@ -44,6 +45,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/list-your-property" component={OwnerLanding} />
       <Route path="/search" component={Search} />
       <Route path="/hostel/:id" component={HostelDetail} />
       <Route path="/signup" component={SignUp} />

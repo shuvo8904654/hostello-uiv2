@@ -122,10 +122,12 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Are you a Hostel Owner?</h2>
           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">List your property on Hostello and reach thousands of students instantly. Manage bookings, payments, and tenants all in one place.</p>
           <div className="flex justify-center gap-4">
-             <Link href="/dashboard/owner" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "rounded-full px-8 text-base font-bold")}>
+             <Link href="/list-your-property" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "rounded-full px-8 text-base font-bold")}>
                List Your Property
              </Link>
-             <Button size="lg" variant="outline" className="h-12 px-8 text-base font-bold rounded-full bg-transparent border-white text-white hover:bg-white hover:text-primary">Learn More</Button>
+             <Link href="/list-your-property">
+               <Button size="lg" variant="outline" className="h-12 px-8 text-base font-bold rounded-full bg-transparent border-white text-white hover:bg-white hover:text-primary">Learn More</Button>
+             </Link>
           </div>
         </div>
       </section>
