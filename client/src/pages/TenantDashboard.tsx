@@ -1,9 +1,10 @@
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { Clock, Home, DollarSign } from "lucide-react";
+import { Clock, Home, DollarSign, Users, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 export default function TenantDashboard() {
   return (
@@ -13,7 +14,7 @@ export default function TenantDashboard() {
         <p className="text-muted-foreground">Here's what's happening with your accommodation.</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3 mb-8">
+      <div className="grid gap-6 md:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Booking</CardTitle>
@@ -42,6 +43,20 @@ export default function TenantDashboard() {
           <CardContent>
             <div className="text-2xl font-bold">3 Saved</div>
             <p className="text-xs text-muted-foreground">2 Price drops recently</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-primary/5 border-primary/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-primary">Roommate Finder</CardTitle>
+            <Users className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-primary">12 Matches</div>
+            <Link href="/dashboard/tenant/roommates">
+              <Button variant="link" className="p-0 h-auto text-xs text-primary/80 hover:text-primary">
+                Find roommates <ArrowRight className="ml-1 h-3 w-3" />
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       </div>
