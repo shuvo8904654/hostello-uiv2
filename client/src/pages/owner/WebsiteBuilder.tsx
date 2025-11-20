@@ -16,18 +16,28 @@ import {
   ArrowLeft,
   MapPin,
   Star,
-  ArrowRight
+  ArrowRight,
+  Menu,
+  Phone,
+  Instagram,
+  Facebook,
+  Shield,
+  Wifi,
+  Zap
 } from "lucide-react";
 import { HOSTELS } from "@/lib/mockData";
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "wouter";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 
 export default function WebsiteBuilder() {
   const [activeTab, setActiveTab] = useState("branding");
   const [brandName, setBrandName] = useState("Premium Hostels Group");
-  const [heroHeadline, setHeroHeadline] = useState("Your Perfect Student Home");
+  const [heroHeadline, setHeroHeadline] = useState("Elevate Your Student Life");
+  const [aboutText, setAboutText] = useState("We provide more than just a room. We provide a community where you can thrive, study, and make lifelong friends.");
   
   // Flatten all packages from all hostels for the "Packages" tab
   const allPackages = HOSTELS.flatMap(h => h.packages.map(p => ({ ...p, hostelName: h.name })));
@@ -42,11 +52,11 @@ export default function WebsiteBuilder() {
         </Link>
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight">Website Builder</h2>
-            <p className="text-muted-foreground">Manage your main brand website listing all your properties.</p>
+            <h2 className="text-3xl font-bold tracking-tight">Brand Website Builder</h2>
+            <p className="text-muted-foreground">Customize your main hostel brand website.</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline"><Eye className="h-4 w-4 mr-2"/> Preview Site</Button>
+            <Button variant="outline"><Eye className="h-4 w-4 mr-2"/> Preview</Button>
             <Button><Share2 className="h-4 w-4 mr-2"/> Publish Live</Button>
           </div>
         </div>
@@ -57,7 +67,7 @@ export default function WebsiteBuilder() {
         <div className="lg:col-span-4 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Site Configuration</CardTitle>
+              <CardTitle>Configuration</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -78,7 +88,7 @@ export default function WebsiteBuilder() {
                     value="domain" 
                     className="flex-1 rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-primary data-[state=active]:bg-muted/10"
                   >
-                    <Globe className="h-4 w-4 mr-2"/> Settings
+                    <Globe className="h-4 w-4 mr-2"/> Domain
                   </TabsTrigger>
                 </TabsList>
                 
@@ -89,19 +99,19 @@ export default function WebsiteBuilder() {
                       <Input value={brandName} onChange={(e) => setBrandName(e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Theme Color</Label>
+                      <Label>Primary Color</Label>
                       <div className="flex gap-2">
-                        <div className="h-8 w-8 rounded-full bg-blue-600 cursor-pointer ring-2 ring-offset-2 ring-blue-600"></div>
+                        <div className="h-8 w-8 rounded-full bg-indigo-600 cursor-pointer ring-2 ring-offset-2 ring-indigo-600"></div>
                         <div className="h-8 w-8 rounded-full bg-rose-600 cursor-pointer hover:ring-2 ring-rose-600 ring-offset-2"></div>
                         <div className="h-8 w-8 rounded-full bg-emerald-600 cursor-pointer hover:ring-2 ring-emerald-600 ring-offset-2"></div>
-                        <div className="h-8 w-8 rounded-full bg-violet-600 cursor-pointer hover:ring-2 ring-violet-600 ring-offset-2"></div>
-                        <div className="h-8 w-8 rounded-full bg-amber-600 cursor-pointer hover:ring-2 ring-amber-600 ring-offset-2"></div>
+                        <div className="h-8 w-8 rounded-full bg-black cursor-pointer hover:ring-2 ring-black ring-offset-2"></div>
                       </div>
                     </div>
                     <div className="space-y-2">
-                       <Label>Logo</Label>
-                       <div className="border-2 border-dashed rounded-lg p-4 text-center text-sm text-muted-foreground hover:bg-muted/50 cursor-pointer">
-                          Click to upload logo
+                       <Label>Logo Upload</Label>
+                       <div className="border-2 border-dashed rounded-lg p-8 text-center text-sm text-muted-foreground hover:bg-muted/50 cursor-pointer transition-colors">
+                          <div className="font-medium">Drop logo here</div>
+                          <div className="text-xs mt-1">or click to browse</div>
                        </div>
                     </div>
                   </TabsContent>
@@ -112,19 +122,24 @@ export default function WebsiteBuilder() {
                       <Input value={heroHeadline} onChange={(e) => setHeroHeadline(e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Sub-headline</Label>
-                      <Input defaultValue="Find the best student accommodation across the country." />
+                      <Label>About Text</Label>
+                      <Textarea 
+                        value={aboutText} 
+                        onChange={(e) => setAboutText(e.target.value)} 
+                        className="h-24"
+                      />
                     </div>
                     <Separator />
                     <div className="space-y-2">
-                       <Label>Listings to Display</Label>
-                       <div className="space-y-2 border rounded-md p-2 max-h-40 overflow-y-auto">
-                          {HOSTELS.map(h => (
-                             <div key={h.id} className="flex items-center space-x-2">
-                                <Switch id={`show-${h.id}`} defaultChecked />
-                                <Label htmlFor={`show-${h.id}`} className="font-normal cursor-pointer">{h.name}</Label>
-                             </div>
-                          ))}
+                       <Label>Contact Info</Label>
+                       <Input placeholder="Phone Number" defaultValue="+880 1711 000000" />
+                       <Input placeholder="Email" defaultValue="info@premiumhostels.com" className="mt-2" />
+                    </div>
+                    <div className="space-y-2">
+                       <Label>Social Links</Label>
+                       <div className="flex gap-2">
+                          <Input placeholder="Facebook URL" />
+                          <Input placeholder="Instagram URL" />
                        </div>
                     </div>
                   </TabsContent>
@@ -137,11 +152,7 @@ export default function WebsiteBuilder() {
                          <span className="text-muted-foreground text-sm">.hostello.com</span>
                        </div>
                      </div>
-                     <div className="space-y-2">
-                       <Label>Custom Domain</Label>
-                       <Input placeholder="www.yourbrand.com" />
-                     </div>
-                     <Button variant="secondary" className="w-full">Connect Domain</Button>
+                     <Button variant="secondary" className="w-full">Connect Custom Domain</Button>
                   </TabsContent>
                 </div>
               </Tabs>
@@ -150,34 +161,24 @@ export default function WebsiteBuilder() {
           
           <Card>
              <CardHeader>
-                <CardTitle>Packages Summary</CardTitle>
+                <CardTitle>Properties Included</CardTitle>
              </CardHeader>
              <CardContent>
-                <div className="text-sm text-muted-foreground mb-4">
-                   These packages are automatically pulled from your active listings.
-                </div>
                 <div className="space-y-2">
-                   {allPackages.slice(0, 3).map((pkg, i) => (
-                      <div key={i} className="flex justify-between items-center p-2 bg-muted/50 rounded text-sm">
-                         <div>
-                            <span className="font-medium">{pkg.name}</span>
-                            <span className="text-xs text-muted-foreground block">{pkg.hostelName}</span>
-                         </div>
-                         <span className="font-bold">৳{pkg.price}</span>
+                  {HOSTELS.map(h => (
+                      <div key={h.id} className="flex items-center justify-between p-2 border rounded text-sm">
+                         <span className="font-medium truncate max-w-[180px]">{h.name}</span>
+                         <Badge variant="outline" className="text-xs">Active</Badge>
                       </div>
                    ))}
-                   {allPackages.length > 3 && (
-                      <div className="text-center text-xs text-muted-foreground pt-2">
-                         + {allPackages.length - 3} more packages
-                      </div>
-                   )}
                 </div>
+                <Button variant="link" className="w-full mt-2 text-xs">Manage Listings</Button>
              </CardContent>
           </Card>
         </div>
 
         {/* Live Preview Mockup */}
-        <div className="lg:col-span-8 bg-muted/30 border rounded-xl p-4 lg:p-8 flex justify-center items-center relative overflow-hidden min-h-[800px]">
+        <div className="lg:col-span-8 bg-muted/30 border rounded-xl p-4 lg:p-8 flex justify-center items-center relative overflow-hidden min-h-[850px]">
            <div className="absolute inset-0 grid grid-cols-[1fr_400px] gap-4 opacity-5 pointer-events-none">
               <div className="border-r"></div>
            </div>
@@ -189,98 +190,148 @@ export default function WebsiteBuilder() {
              </div>
 
              {/* Phone Frame Mockup */}
-             <div className="w-[340px] h-[700px] bg-white border-[8px] border-gray-900 rounded-[3rem] overflow-hidden shadow-2xl relative ring-1 ring-gray-900/50">
+             <div className="w-[360px] h-[750px] bg-white border-[8px] border-gray-900 rounded-[3rem] overflow-hidden shadow-2xl relative ring-1 ring-gray-900/50">
                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-900 rounded-b-2xl z-20"></div>
                
                {/* Mini Website Content */}
-               <div className="h-full overflow-y-auto scrollbar-hide bg-gray-50 pb-12">
-                  {/* Hero */}
-                  <div className="bg-blue-600 text-white p-6 pt-12 pb-8 rounded-b-[2rem] shadow-lg relative overflow-hidden">
-                     <div className="absolute top-0 left-0 w-full h-full opacity-20">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl transform translate-x-10 -translate-y-10"></div>
-                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-white rounded-full blur-2xl transform -translate-x-10 translate-y-10"></div>
-                     </div>
-                     <div className="relative z-10 text-center">
-                        <div className="font-bold text-xl mb-1">{brandName}</div>
-                        <div className="w-12 h-1 bg-white/30 mx-auto mb-4 rounded-full"></div>
-                        <h2 className="text-2xl font-extrabold leading-tight mb-2">{heroHeadline}</h2>
-                        <p className="text-blue-100 text-xs px-4">Premium accommodation for students across {HOSTELS.length} locations.</p>
+               <div className="h-full overflow-y-auto scrollbar-hide bg-white pb-12 font-sans">
+                  
+                  {/* Navbar */}
+                  <div className="flex items-center justify-between p-4 sticky top-0 bg-white/90 backdrop-blur z-20 border-b border-gray-100">
+                     <div className="font-bold text-lg tracking-tight text-indigo-900">{brandName.split(' ')[0]}<span className="text-indigo-600">.</span></div>
+                     <Menu className="h-5 w-5 text-gray-600" />
+                  </div>
+
+                  {/* Hero Section */}
+                  <div className="relative h-[400px]">
+                     <img src={HOSTELS[0].image} className="w-full h-full object-cover" />
+                     <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-white"></div>
+                     
+                     <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6 pt-20">
+                        <h1 className="text-4xl font-black text-white mb-4 leading-tight drop-shadow-md">
+                           {heroHeadline}
+                        </h1>
+                        <p className="text-white/90 text-sm mb-6 max-w-[240px] drop-shadow">
+                           Experience premium living designed for students who want more.
+                        </p>
+                        <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-8 shadow-lg shadow-indigo-600/30 border-none">
+                           Find Your Room
+                        </Button>
                      </div>
                   </div>
                   
-                  <div className="p-4 space-y-6">
-                     {/* Search Bar Placeholder */}
-                     <div className="bg-white p-3 rounded-xl shadow-sm flex items-center gap-2 border">
-                        <MapPin className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-xs text-muted-foreground">Search by city or area...</span>
+                  {/* Brand Promise / About */}
+                  <div className="p-8 text-center -mt-10 relative z-10 bg-white rounded-t-[2rem]">
+                     <div className="w-12 h-1 bg-indigo-100 mx-auto rounded-full mb-6"></div>
+                     <h3 className="text-xl font-bold text-gray-900 mb-3">Why Choose Us?</h3>
+                     <p className="text-sm text-gray-500 leading-relaxed mb-8">
+                        {aboutText}
+                     </p>
+                     
+                     <div className="grid grid-cols-3 gap-4">
+                        <div className="flex flex-col items-center gap-2">
+                           <div className="h-10 w-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
+                              <Shield className="h-5 w-5" />
+                           </div>
+                           <span className="text-[10px] font-semibold text-gray-600">Secure</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                           <div className="h-10 w-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
+                              <Wifi className="h-5 w-5" />
+                           </div>
+                           <span className="text-[10px] font-semibold text-gray-600">Fast Wifi</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                           <div className="h-10 w-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
+                              <Zap className="h-5 w-5" />
+                           </div>
+                           <span className="text-[10px] font-semibold text-gray-600">Backup</span>
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Locations / Listings */}
+                  <div className="bg-gray-50 p-6 py-10">
+                     <div className="flex justify-between items-end mb-6">
+                        <div>
+                           <h3 className="text-xl font-bold text-gray-900">Our Locations</h3>
+                           <p className="text-xs text-gray-500 mt-1">Select a branch to view details</p>
+                        </div>
                      </div>
 
-                     {/* Featured Listings */}
-                     <div className="space-y-3">
-                        <div className="flex justify-between items-center px-1">
-                           <h3 className="font-bold text-gray-900 text-sm">Our Properties</h3>
-                           <span className="text-[10px] text-blue-600 font-medium">View All</span>
-                        </div>
-
-                        <div className="space-y-4">
-                           {HOSTELS.map((h) => (
-                              <div key={h.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group cursor-pointer hover:shadow-md transition-all">
-                                 <div className="h-32 relative">
-                                    <img src={h.image} className="w-full h-full object-cover" />
-                                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 shadow-sm">
-                                       <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> {h.rating}
-                                    </div>
-                                    <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur text-white px-2 py-0.5 rounded text-[10px]">
-                                       {h.city}
-                                    </div>
+                     <div className="space-y-6">
+                        {HOSTELS.map((h) => (
+                           <div key={h.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+                              <div className="h-48 relative overflow-hidden">
+                                 <img src={h.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                 <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-indigo-900">
+                                    {h.city}
                                  </div>
-                                 <div className="p-3">
-                                    <div className="flex justify-between items-start mb-1">
-                                       <h4 className="font-bold text-sm text-gray-800">{h.name}</h4>
-                                       <span className="text-xs font-bold text-blue-600">৳{h.price}<span className="text-[10px] font-normal text-gray-400">/mo</span></span>
-                                    </div>
-                                    <p className="text-[10px] text-gray-500 line-clamp-2 mb-2">{h.description}</p>
-                                    
-                                    {/* Mini Package Preview */}
-                                    <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-hide">
-                                       {h.packages.slice(0, 2).map((p, i) => (
-                                          <span key={i} className="text-[9px] bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100 whitespace-nowrap">
-                                             {p.name}
-                                          </span>
-                                       ))}
-                                    </div>
-
-                                    <div className="mt-3 pt-2 border-t flex justify-between items-center">
-                                       <div className="flex -space-x-1.5">
-                                          {[1,2,3].map(i => (
-                                             <div key={i} className="w-5 h-5 rounded-full bg-gray-200 border-2 border-white"></div>
-                                          ))}
-                                       </div>
-                                       <div className="flex items-center gap-1 text-[10px] font-medium text-blue-600 group-hover:gap-2 transition-all">
-                                          View Details <ArrowRight className="h-3 w-3" />
-                                       </div>
-                                    </div>
+                                 <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 text-white text-xs">
+                                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> {h.rating}
                                  </div>
                               </div>
-                           ))}
-                        </div>
-                     </div>
+                              
+                              <div className="p-5">
+                                 <h4 className="font-bold text-lg text-gray-900 mb-1">{h.name}</h4>
+                                 <div className="flex items-center gap-1 text-xs text-gray-500 mb-3">
+                                    <MapPin className="h-3 w-3" /> {h.location}
+                                 </div>
+                                 
+                                 <div className="flex flex-wrap gap-2 mb-4">
+                                    {h.amenities.slice(0, 3).map(a => (
+                                       <span key={a} className="text-[10px] px-2 py-1 bg-gray-100 rounded-md text-gray-600">{a}</span>
+                                    ))}
+                                 </div>
 
-                     {/* Global Call to Action */}
-                     <div className="bg-gray-900 text-white rounded-xl p-5 text-center space-y-3 relative overflow-hidden">
-                        <div className="relative z-10">
-                           <h3 className="font-bold text-lg">Not sure where to stay?</h3>
-                           <p className="text-xs text-gray-400 mb-3">Talk to our student counselors for free advice.</p>
-                           <Button size="sm" className="bg-white text-gray-900 hover:bg-gray-100 w-full rounded-full h-8 text-xs font-bold">
-                              Chat on WhatsApp
-                           </Button>
+                                 <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                                    <div>
+                                       <span className="text-[10px] text-gray-400 uppercase tracking-wide">Starting from</span>
+                                       <div className="font-bold text-indigo-600">৳{h.price.toLocaleString()} <span className="text-xs font-normal text-gray-400">/mo</span></div>
+                                    </div>
+                                    <Button size="sm" className="rounded-full bg-gray-900 text-white h-8 px-4 text-xs">
+                                       View Details
+                                    </Button>
+                                 </div>
+                              </div>
+                           </div>
+                        ))}
+                     </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="bg-gray-900 text-gray-400 p-8 pb-12">
+                     <div className="flex items-center justify-between mb-8">
+                        <div className="font-bold text-white text-xl">{brandName.split(' ')[0]}.</div>
+                        <div className="flex gap-4">
+                           <Instagram className="h-5 w-5 hover:text-white cursor-pointer" />
+                           <Facebook className="h-5 w-5 hover:text-white cursor-pointer" />
                         </div>
                      </div>
                      
-                     <div className="text-center text-[10px] text-gray-400 pt-4 border-t">
-                        &copy; 2025 {brandName}. All rights reserved.
+                     <div className="grid grid-cols-2 gap-8 text-xs mb-8">
+                        <div className="space-y-3">
+                           <div className="text-white font-bold mb-2">Company</div>
+                           <div className="cursor-pointer hover:text-white">About Us</div>
+                           <div className="cursor-pointer hover:text-white">Careers</div>
+                           <div className="cursor-pointer hover:text-white">Contact</div>
+                        </div>
+                        <div className="space-y-3">
+                           <div className="text-white font-bold mb-2">Legal</div>
+                           <div className="cursor-pointer hover:text-white">Terms</div>
+                           <div className="cursor-pointer hover:text-white">Privacy</div>
+                           <div className="cursor-pointer hover:text-white">Rules</div>
+                        </div>
+                     </div>
+
+                     <div className="pt-8 border-t border-gray-800 flex flex-col gap-2 text-[10px]">
+                        <div className="flex items-center gap-2">
+                           <Phone className="h-3 w-3" /> +880 1711 000000
+                        </div>
+                        <div>© 2025 {brandName}. All rights reserved.</div>
                      </div>
                   </div>
+
                </div>
              </div>
            </div>
