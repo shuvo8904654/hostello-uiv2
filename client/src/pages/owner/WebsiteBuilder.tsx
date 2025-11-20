@@ -606,7 +606,7 @@ export default function WebsiteBuilder() {
                       {selectedTemplate === 'bold' && (
                         <>
                            {/* Navbar */}
-                           <div className="bg-black text-white p-6 flex justify-between items-center sticky top-0 z-40">
+                           <div className={`${colorMap[primaryColor]} text-white p-6 flex justify-between items-center sticky top-0 z-40`}>
                               <div className="font-black text-xl tracking-tighter uppercase italic">
                                  {brandName}
                               </div>
@@ -616,7 +616,7 @@ export default function WebsiteBuilder() {
                            </div>
 
                            {/* Hero Section */}
-                           <div className="bg-black text-white p-6 pt-10 pb-20 rounded-b-[3rem]">
+                           <div className={`${colorMap[primaryColor]} text-white p-6 pt-10 pb-20 rounded-b-[3rem]`}>
                               <div className="inline-block px-3 py-1 rounded-full border border-white/20 text-[10px] font-bold uppercase tracking-wider mb-6">
                                  New Academic Year 2025
                               </div>
@@ -644,7 +644,7 @@ export default function WebsiteBuilder() {
                            {/* Amenities Section */}
                            {showAmenities && (
                               <div className="p-6 py-12">
-                                 <h2 className="text-3xl font-black uppercase mb-8 tracking-tight">What's Inside</h2>
+                                 <h2 className="text-3xl font-black uppercase mb-8 tracking-tight text-slate-900">What's Inside</h2>
                                  <div className="grid grid-cols-2 gap-3">
                                     {[
                                        { icon: Wifi, label: "Fast Wifi" },
@@ -653,7 +653,7 @@ export default function WebsiteBuilder() {
                                        { icon: Zap, label: "Power" }
                                     ].map((item, i) => (
                                        <div key={i} className="bg-gray-100 p-6 rounded-2xl hover:bg-black hover:text-white transition-colors group cursor-pointer">
-                                          <item.icon className="h-6 w-6 mb-2" />
+                                          <item.icon className={`h-6 w-6 mb-2 ${textMap[primaryColor]} group-hover:text-white transition-colors`} />
                                           <div className="font-bold text-sm uppercase">{item.label}</div>
                                        </div>
                                     ))}
@@ -676,8 +676,9 @@ export default function WebsiteBuilder() {
                               {displayedHostels.map((hostel) => (
                                  <div key={hostel.id} className={`
                                     group overflow-hidden transition-all duration-500
-                                    ${selectedTemplate === 'minimal' ? 'border-b pb-8 rounded-none bg-transparent' : 'bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl'}
-                                    ${selectedTemplate === 'bold' ? 'bg-gray-900 border-gray-800 text-white' : ''}
+                                    ${selectedTemplate === 'minimal' ? 'border-b pb-8 rounded-none bg-transparent' : ''}
+                                    ${selectedTemplate === 'modern' ? 'bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl' : ''}
+                                    ${selectedTemplate === 'bold' ? 'bg-gray-900 border-gray-800 text-white rounded-2xl' : ''}
                                  `}>
                                     <div className={`relative overflow-hidden ${selectedTemplate === 'minimal' ? 'h-64 mb-4' : 'h-48'}`}>
                                        <img 
@@ -742,7 +743,8 @@ export default function WebsiteBuilder() {
                                  <div key={i} className={`
                                     flex justify-between items-center
                                     ${selectedTemplate === 'minimal' ? 'border-b border-gray-200 py-4 rounded-none bg-transparent px-0' : 'p-4 rounded-xl border shadow-sm'}
-                                    ${selectedTemplate === 'bold' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}
+                                    ${selectedTemplate === 'modern' ? 'bg-white border-gray-100' : ''}
+                                    ${selectedTemplate === 'bold' ? 'bg-gray-900 border-gray-800' : ''}
                                  `}>
                                     <div className="flex items-center gap-3">
                                        {selectedTemplate !== 'minimal' && (
@@ -766,7 +768,7 @@ export default function WebsiteBuilder() {
 
                       {/* Testimonials */}
                       {showTestimonials && (
-                         <div className={`p-8 ${selectedTemplate === 'minimal' ? 'bg-gray-50 text-black' : 'bg-slate-900 text-white'} ${selectedTemplate === 'bold' ? 'bg-indigo-600' : ''}`}>
+                         <div className={`p-8 ${selectedTemplate === 'minimal' ? 'bg-gray-50 text-black' : ''} ${selectedTemplate === 'modern' ? 'bg-slate-900 text-white' : ''} ${selectedTemplate === 'bold' ? `${colorMap[primaryColor]} text-white` : ''}`}>
                             <div className="text-center mb-8">
                                <h3 className="font-bold text-xl mb-2">Student Stories</h3>
                                <p className="text-white/60 text-xs">Hear from our happy residents</p>
