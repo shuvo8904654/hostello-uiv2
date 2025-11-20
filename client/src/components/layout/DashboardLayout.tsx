@@ -25,10 +25,13 @@ import {
   LifeBuoy,
   Server,
   Database,
-  Sliders
+  Sliders,
+  Bell,
+  BedDouble
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useState } from "react";
 
 type DashboardType = 'tenant' | 'owner' | 'admin' | 'manager';
@@ -73,8 +76,14 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
   const managerLinks = [
     { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/manager' },
     { icon: Calendar, label: 'Bookings', href: '/dashboard/manager/bookings' },
+    { icon: BedDouble, label: 'Rooms & Beds', href: '/dashboard/manager/rooms' },
     { icon: Users, label: 'Tenants', href: '/dashboard/manager/tenants' },
     { icon: Wrench, label: 'Maintenance', href: '/dashboard/manager/maintenance' },
+    { icon: Banknote, label: 'Financials', href: '/dashboard/manager/financials' },
+    { icon: Megaphone, label: 'Marketing', href: '/dashboard/manager/marketing' },
+    { icon: Package, label: 'Packages', href: '/dashboard/manager/packages' },
+    { icon: Star, label: 'Reviews', href: '/dashboard/manager/reviews' },
+    { icon: BarChart, label: 'Analytics', href: '/dashboard/manager/analytics' },
     { icon: MessageSquare, label: 'Messages', href: '/dashboard/manager/messages' },
     { icon: Settings, label: 'Settings', href: '/dashboard/manager/settings' },
   ];
@@ -177,8 +186,14 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
         // Manager links
         { label: 'Overview', href: '/dashboard/manager' },
         { label: 'Bookings', href: '/dashboard/manager/bookings' },
+        { label: 'Rooms & Beds', href: '/dashboard/manager/rooms' },
         { label: 'Tenants', href: '/dashboard/manager/tenants' },
         { label: 'Maintenance', href: '/dashboard/manager/maintenance' },
+        { label: 'Financials', href: '/dashboard/manager/financials' },
+        { label: 'Marketing', href: '/dashboard/manager/marketing' },
+        { label: 'Packages', href: '/dashboard/manager/packages' },
+        { label: 'Reviews', href: '/dashboard/manager/reviews' },
+        { label: 'Analytics', href: '/dashboard/manager/analytics' },
         { label: 'Messages', href: '/dashboard/manager/messages' },
         { label: 'Settings', href: '/dashboard/manager/settings' },
 
@@ -226,6 +241,52 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
           </div>
           
           <div className="flex items-center gap-4">
+            {/* Notifications & Alerts */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-600 border-2 border-background"></span>
+                  <span className="sr-only">Notifications</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-80">
+                 <div className="grid gap-4">
+                   <div className="space-y-2">
+                     <h4 className="font-medium leading-none">Notifications</h4>
+                     <p className="text-sm text-muted-foreground">You have 3 unread messages.</p>
+                   </div>
+                   <div className="grid gap-2">
+                     <div className="flex items-start gap-2 p-2 rounded-md bg-muted/50">
+                        <div className="h-2 w-2 mt-1.5 rounded-full bg-blue-500 shrink-0" />
+                        <div>
+                           <p className="text-sm font-medium">New Booking Request</p>
+                           <p className="text-xs text-muted-foreground">Rahim Ahmed requested Room 101</p>
+                           <p className="text-[10px] text-muted-foreground mt-1">2 mins ago</p>
+                        </div>
+                     </div>
+                     <div className="flex items-start gap-2 p-2 rounded-md hover:bg-muted/50">
+                        <div className="h-2 w-2 mt-1.5 rounded-full bg-transparent shrink-0" />
+                        <div>
+                           <p className="text-sm font-medium">Maintenance Update</p>
+                           <p className="text-xs text-muted-foreground">Leaking faucet ticket resolved</p>
+                           <p className="text-[10px] text-muted-foreground mt-1">1 hour ago</p>
+                        </div>
+                     </div>
+                     <div className="flex items-start gap-2 p-2 rounded-md bg-muted/50">
+                        <div className="h-2 w-2 mt-1.5 rounded-full bg-orange-500 shrink-0" />
+                        <div>
+                           <p className="text-sm font-medium">Rent Overdue</p>
+                           <p className="text-xs text-muted-foreground">Sujon Khan's rent is 5 days late</p>
+                           <p className="text-[10px] text-muted-foreground mt-1">Yesterday</p>
+                        </div>
+                     </div>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full">View All Notifications</Button>
+                 </div>
+              </PopoverContent>
+            </Popover>
+
             <div className="h-8 w-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-xs font-bold text-primary">
               {type === 'tenant' ? 'AL' : type === 'owner' ? 'JD' : type === 'manager' ? 'BM' : 'AD'}
             </div>
