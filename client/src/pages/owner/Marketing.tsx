@@ -3,9 +3,38 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Share2, Ticket, Zap, BarChart3 } from "lucide-react";
+import { Share2, Ticket, Zap, BarChart3, Plus, Save } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 export default function OwnerMarketing() {
+  const { toast } = useToast();
+
+  const handleCreateCoupon = () => {
+    toast({
+      title: "Coupon Created",
+      description: "The new discount code is now active.",
+    });
+  };
+
+  const handleSocialPost = () => {
+    toast({
+      title: "Post Scheduled",
+      description: "Your social media post has been scheduled.",
+    });
+  };
+
   return (
     <DashboardLayout type="owner">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -22,7 +51,47 @@ export default function OwnerMarketing() {
                   <CardTitle>Active Coupons</CardTitle>
                   <CardDescription>Manage discount codes.</CardDescription>
                </div>
-               <Button size="sm" variant="outline"><Plus className="h-4 w-4 mr-2"/> Create Coupon</Button>
+               
+               <Sheet>
+                 <SheetTrigger asChild>
+                   <Button size="sm" variant="outline"><Plus className="h-4 w-4 mr-2"/> Create Coupon</Button>
+                 </SheetTrigger>
+                 <SheetContent>
+                   <SheetHeader>
+                     <SheetTitle>Create New Coupon</SheetTitle>
+                     <SheetDescription>Set up a discount code for prospective tenants.</SheetDescription>
+                   </SheetHeader>
+                   <div className="grid gap-4 py-4">
+                      <div className="space-y-2">
+                         <Label>Coupon Code</Label>
+                         <Input placeholder="e.g. SUMMER2024" className="uppercase" />
+                      </div>
+                      <div className="space-y-2">
+                         <Label>Discount Type</Label>
+                         <Select>
+                            <SelectTrigger><SelectValue placeholder="Select Type" /></SelectTrigger>
+                            <SelectContent>
+                               <SelectItem value="percentage">Percentage (%)</SelectItem>
+                               <SelectItem value="flat">Flat Amount (৳)</SelectItem>
+                            </SelectContent>
+                         </Select>
+                      </div>
+                      <div className="space-y-2">
+                         <Label>Discount Value</Label>
+                         <Input type="number" placeholder="10" />
+                      </div>
+                      <div className="space-y-2">
+                         <Label>Max Usage Limit</Label>
+                         <Input type="number" placeholder="100" />
+                      </div>
+                   </div>
+                   <SheetFooter>
+                      <SheetClose asChild>
+                         <Button onClick={handleCreateCoupon}>Create Coupon</Button>
+                      </SheetClose>
+                   </SheetFooter>
+                 </SheetContent>
+               </Sheet>
             </CardHeader>
             <CardContent className="space-y-4">
                <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -62,7 +131,7 @@ export default function OwnerMarketing() {
                <CardTitle>Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-               <Button className="w-full justify-start" variant="outline">
+               <Button className="w-full justify-start" variant="outline" onClick={handleSocialPost}>
                   <Share2 className="h-4 w-4 mr-2" /> Social Media Post
                </Button>
                <Button className="w-full justify-start" variant="outline">
@@ -77,5 +146,3 @@ export default function OwnerMarketing() {
     </DashboardLayout>
   );
 }
-
-import { Plus } from "lucide-react";

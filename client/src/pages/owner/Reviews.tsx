@@ -3,6 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, MessageSquare, ThumbsUp } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 const REVIEWS = [
   { id: 1, user: "Rahim Ahmed", rating: 5, comment: "Great hostel! Clean and quiet.", date: "2 days ago", status: "Published" },
@@ -11,6 +22,15 @@ const REVIEWS = [
 ];
 
 export default function OwnerReviews() {
+  const { toast } = useToast();
+
+  const handleReply = () => {
+    toast({
+      title: "Reply Posted",
+      description: "Your response has been published.",
+    });
+  };
+
   return (
     <DashboardLayout type="owner">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -39,7 +59,26 @@ export default function OwnerReviews() {
                         <p className="text-muted-foreground">{review.comment}</p>
                      </div>
                      <div className="flex items-start gap-2">
-                        <Button variant="outline" size="sm"><MessageSquare className="h-4 w-4 mr-2"/> Reply</Button>
+                        <Dialog>
+                           <DialogTrigger asChild>
+                              <Button variant="outline" size="sm"><MessageSquare className="h-4 w-4 mr-2"/> Reply</Button>
+                           </DialogTrigger>
+                           <DialogContent>
+                              <DialogHeader>
+                                 <DialogTitle>Reply to Review</DialogTitle>
+                                 <DialogDescription>Posting as Owner. Your reply will be public.</DialogDescription>
+                              </DialogHeader>
+                              <div className="py-4">
+                                 <div className="bg-muted p-3 rounded-md mb-4 text-sm text-muted-foreground italic">
+                                    "{review.comment}"
+                                 </div>
+                                 <Textarea placeholder="Write your response..." />
+                              </div>
+                              <DialogFooter>
+                                 <Button onClick={handleReply}>Post Reply</Button>
+                              </DialogFooter>
+                           </DialogContent>
+                        </Dialog>
                         <Button variant="ghost" size="sm"><ThumbsUp className="h-4 w-4 mr-2"/> Helpful</Button>
                      </div>
                   </div>

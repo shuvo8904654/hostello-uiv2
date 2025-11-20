@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DollarSign, Download, TrendingDown, TrendingUp } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useToast } from "@/hooks/use-toast";
 
 const TRANSACTIONS = [
   { id: 1, desc: "Rent Payment - Room 101", type: "Income", amount: 5000, date: "Aug 20", status: "Cleared" },
@@ -12,6 +13,15 @@ const TRANSACTIONS = [
 ];
 
 export default function OwnerFinancials() {
+  const { toast } = useToast();
+
+  const handleDownload = () => {
+    toast({
+      title: "Report Downloaded",
+      description: "Financial report has been saved to your device.",
+    });
+  };
+
   return (
     <DashboardLayout type="owner">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -19,7 +29,7 @@ export default function OwnerFinancials() {
           <h2 className="text-3xl font-bold tracking-tight">Financials</h2>
           <p className="text-muted-foreground">Track income, expenses, and invoices.</p>
         </div>
-        <Button variant="outline"><Download className="h-4 w-4 mr-2"/> Download Report</Button>
+        <Button variant="outline" onClick={handleDownload}><Download className="h-4 w-4 mr-2"/> Download Report</Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3 mb-8">
