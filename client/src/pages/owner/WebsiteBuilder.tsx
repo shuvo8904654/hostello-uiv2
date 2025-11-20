@@ -27,7 +27,9 @@ import {
   CheckCircle2,
   Image as ImageIcon,
   Type,
-  Save
+  Save,
+  Building,
+  Package as PackageIcon
 } from "lucide-react";
 import { HOSTELS } from "@/lib/mockData";
 import { useState } from "react";
@@ -38,6 +40,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function WebsiteBuilder() {
   const [activeTab, setActiveTab] = useState("design");
@@ -51,6 +54,12 @@ export default function WebsiteBuilder() {
   const [showAmenities, setShowAmenities] = useState(true);
   const [showTestimonials, setShowTestimonials] = useState(true);
   const [buttonRadius, setButtonRadius] = useState([8]);
+  
+  // New state for filtering
+  const [selectedHostelIds, setSelectedHostelIds] = useState<string[]>(HOSTELS.map(h => h.id));
+  const [selectedPackageNames, setSelectedPackageNames] = useState<string[]>(
+    Array.from(new Set(HOSTELS.flatMap(h => h.packages.map(p => p.name))))
+  );
 
   const colorMap: Record<string, string> = {
     indigo: "bg-indigo-600",
@@ -65,6 +74,30 @@ export default function WebsiteBuilder() {
     emerald: "text-emerald-600",
     slate: "text-slate-900"
   };
+
+  const toggleHostel = (id: string) => {
+    setSelectedHostelIds(prev => 
+      prev.includes(id) ? prev.filter(hId => hId !== id) : [...prev, id]
+    );
+  };
+
+  const togglePackage = (name: string) => {
+    setSelectedPackageNames(prev => 
+      prev.includes(name) ? prev.filter(pName => pName !== name) : [...prev, name]
+    );
+  };
+
+  // Derived data for preview
+  const displayedHostels = HOSTELS.filter(h => selectedHostelIds.includes(h.id));
+  const allUniquePackages = Array.from(new Set(HOSTELS.flatMap(h => h.packages.map(p => p.name))));
+  const displayedPackages = allUniquePackages.filter(pName => selectedPackageNames.includes(pName));
+
+  // Get sample packages with details for preview (taking first occurrence)
+  const packageDetails = displayedPackages.map(pName => {
+    const pkg = HOSTELS.flatMap(h => h.packages).find(p => p.name === pName);
+    return pkg;
+  }).filter(Boolean);
+
 
   return (
     <DashboardLayout type="owner">
@@ -204,10 +237,62 @@ export default function WebsiteBuilder() {
 
                       <Separator />
 
+                      {/* Listings Filter */}
+                      <div className="space-y-4">
+                        <Label className="text-base font-medium flex items-center gap-2">
+                            <Building className="h-4 w-4 text-primary"/> Listings to Show
+                        </Label>
+                        <div className="space-y-2 border rounded-md p-3 bg-background">
+                           {HOSTELS.map(hostel => (
+                             <div key={hostel.id} className="flex items-center space-x-2">
+                               <Checkbox 
+                                 id={`hostel-${hostel.id}`} 
+                                 checked={selectedHostelIds.includes(hostel.id)}
+                                 onCheckedChange={() => toggleHostel(hostel.id)}
+                               />
+                               <label
+                                 htmlFor={`hostel-${hostel.id}`}
+                                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                               >
+                                 {hostel.name}
+                               </label>
+                             </div>
+                           ))}
+                        </div>
+                      </div>
+
+                      <Separator />
+
+                       {/* Packages Filter */}
+                       <div className="space-y-4">
+                        <Label className="text-base font-medium flex items-center gap-2">
+                            <PackageIcon className="h-4 w-4 text-primary"/> Packages to Show
+                        </Label>
+                        <div className="space-y-2 border rounded-md p-3 bg-background">
+                           {allUniquePackages.map(pkgName => (
+                             <div key={pkgName} className="flex items-center space-x-2">
+                               <Checkbox 
+                                 id={`pkg-${pkgName}`} 
+                                 checked={selectedPackageNames.includes(pkgName)}
+                                 onCheckedChange={() => togglePackage(pkgName)}
+                               />
+                               <label
+                                 htmlFor={`pkg-${pkgName}`}
+                                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                               >
+                                 {pkgName}
+                               </label>
+                             </div>
+                           ))}
+                        </div>
+                      </div>
+
+                      <Separator />
+
                       {/* Sections Toggle */}
                       <div className="space-y-4">
                          <Label className="text-base font-medium flex items-center gap-2">
-                            <Layout className="h-4 w-4 text-primary"/> Page Sections
+                            <Layout className="h-4 w-4 text-primary"/> Other Sections
                          </Label>
                          
                          <div className="space-y-3">
@@ -229,16 +314,6 @@ export default function WebsiteBuilder() {
                                   <div className="text-sm font-medium">Testimonials</div>
                                </div>
                                <Switch checked={showTestimonials} onCheckedChange={setShowTestimonials} />
-                            </div>
-
-                            <div className="flex items-center justify-between border p-3 rounded-md bg-background">
-                               <div className="flex items-center gap-3">
-                                  <div className="p-2 bg-green-50 text-green-600 rounded-md">
-                                     <MapPin className="h-4 w-4"/>
-                                  </div>
-                                  <div className="text-sm font-medium">Locations</div>
-                               </div>
-                               <Switch checked={true} disabled />
                             </div>
                          </div>
                       </div>
@@ -369,14 +444,7 @@ export default function WebsiteBuilder() {
                                  className={`${colorMap[primaryColor]} hover:opacity-90 text-white border-0 font-medium px-6 shadow-lg shadow-black/20`}
                                  style={{ borderRadius: `${buttonRadius}px` }}
                                >
-                                 Book a Tour
-                               </Button>
-                               <Button 
-                                 variant="outline" 
-                                 className="bg-white/10 backdrop-blur-md border-white/30 text-white hover:bg-white/20"
-                                 style={{ borderRadius: `${buttonRadius}px` }}
-                               >
-                                 View Rooms
+                                 View Properties
                                </Button>
                             </div>
                          </div>
@@ -425,61 +493,89 @@ export default function WebsiteBuilder() {
                       )}
 
                       {/* Featured Rooms */}
-                      <div className="p-8 pb-4">
-                         <h3 className="font-bold text-xl text-slate-900 mb-6">Available Rooms</h3>
-                         <div className="space-y-6">
-                            {HOSTELS.slice(0, 2).map((hostel) => (
-                               <div key={hostel.id} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
-                                  <div className="h-48 relative overflow-hidden">
-                                     <img 
-                                       src={hostel.image} 
-                                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                                     />
-                                     <div className="absolute top-3 right-3">
-                                        <div className="bg-white/90 backdrop-blur px-2 py-1 rounded-md text-xs font-bold flex items-center gap-1 shadow-sm">
-                                           <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> 
-                                           {hostel.rating}
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div className="p-5">
-                                     <div className="flex justify-between items-start mb-2">
-                                        <div>
-                                           <h4 className="font-bold text-slate-900 text-lg">{hostel.name}</h4>
-                                           <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
-                                              <MapPin className="h-3 w-3" /> {hostel.location}
-                                           </p>
-                                        </div>
-                                        <div className="text-right">
-                                           <div className={`font-bold text-lg ${textMap[primaryColor]}`}>৳{hostel.price.toLocaleString()}</div>
-                                           <div className="text-[10px] text-gray-400">/month</div>
-                                        </div>
-                                     </div>
-                                     
-                                     <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between">
-                                        <div className="flex -space-x-2">
-                                           {[1,2,3].map(i => (
-                                              <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                                                 <img src={`https://i.pravatar.cc/100?img=${i + 10}`} className="h-full w-full object-cover" />
-                                              </div>
-                                           ))}
-                                           <div className="h-6 w-6 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[8px] text-gray-500 font-medium">
-                                              +12
-                                           </div>
-                                        </div>
-                                        <Button 
-                                          size="sm" 
-                                          className={`${colorMap[primaryColor]} hover:opacity-90 text-white h-8 text-xs`}
-                                          style={{ borderRadius: `${buttonRadius}px` }}
-                                        >
-                                           Book Now
-                                        </Button>
-                                     </div>
-                                  </div>
-                               </div>
-                            ))}
-                         </div>
-                      </div>
+                      {displayedHostels.length > 0 && (
+                        <div className="p-8 pb-4">
+                           <h3 className="font-bold text-xl text-slate-900 mb-6">Our Locations</h3>
+                           <div className="space-y-6">
+                              {displayedHostels.map((hostel) => (
+                                 <div key={hostel.id} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
+                                    <div className="h-48 relative overflow-hidden">
+                                       <img 
+                                         src={hostel.image} 
+                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                                       />
+                                       <div className="absolute top-3 right-3">
+                                          <div className="bg-white/90 backdrop-blur px-2 py-1 rounded-md text-xs font-bold flex items-center gap-1 shadow-sm">
+                                             <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> 
+                                             {hostel.rating}
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div className="p-5">
+                                       <div className="flex justify-between items-start mb-2">
+                                          <div>
+                                             <h4 className="font-bold text-slate-900 text-lg">{hostel.name}</h4>
+                                             <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
+                                                <MapPin className="h-3 w-3" /> {hostel.location}
+                                             </p>
+                                          </div>
+                                          <div className="text-right">
+                                             <div className={`font-bold text-lg ${textMap[primaryColor]}`}>৳{hostel.price.toLocaleString()}</div>
+                                             <div className="text-[10px] text-gray-400">/month</div>
+                                          </div>
+                                       </div>
+                                       
+                                       <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between">
+                                          <div className="flex -space-x-2">
+                                             {[1,2,3].map(i => (
+                                                <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
+                                                   <img src={`https://i.pravatar.cc/100?img=${i + 10}`} className="h-full w-full object-cover" />
+                                                </div>
+                                             ))}
+                                             <div className="h-6 w-6 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[8px] text-gray-500 font-medium">
+                                                +12
+                                             </div>
+                                          </div>
+                                          <Button 
+                                            size="sm" 
+                                            variant="outline"
+                                            className={`hover:bg-gray-50 text-slate-900 h-8 text-xs`}
+                                            style={{ borderRadius: `${buttonRadius}px` }}
+                                          >
+                                             View Details
+                                          </Button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              ))}
+                           </div>
+                        </div>
+                      )}
+
+                      {/* Packages Section */}
+                      {packageDetails.length > 0 && (
+                        <div className="p-8 pt-4 bg-gray-50/30">
+                           <h3 className="font-bold text-xl text-slate-900 mb-6">Available Packages</h3>
+                           <div className="space-y-4">
+                              {packageDetails.map((pkg, i) => pkg ? (
+                                 <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm">
+                                    <div className="flex items-center gap-3">
+                                       <div className={`h-10 w-10 rounded-full bg-opacity-10 ${colorMap[primaryColor]} flex items-center justify-center`}>
+                                          <PackageIcon className={`h-5 w-5 ${textMap[primaryColor]}`} />
+                                       </div>
+                                       <div>
+                                          <div className="font-bold text-sm text-slate-900">{pkg.name}</div>
+                                          <div className="text-xs text-gray-500">{pkg.duration} Plan</div>
+                                       </div>
+                                    </div>
+                                    <div className="text-right">
+                                       <div className={`font-bold text-sm ${textMap[primaryColor]}`}>৳{pkg.price.toLocaleString()}</div>
+                                    </div>
+                                 </div>
+                              ) : null)}
+                           </div>
+                        </div>
+                      )}
 
                       {/* Testimonials */}
                       {showTestimonials && (
