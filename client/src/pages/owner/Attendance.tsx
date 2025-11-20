@@ -5,21 +5,74 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar as CalendarIcon, Search, UserCheck, UserMinus, Shield, Clock } from "lucide-react";
+import { Calendar as CalendarIcon, Search, UserCheck, UserMinus, Shield, Clock, Plus } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
-const entryLogs = [
-  { id: 1, name: "Rahim Ahmed", room: "101", type: "Entry", time: "08:30 PM", date: "Today", status: "On Time" },
-  { id: 2, name: "Karim Uddin", room: "205", type: "Exit", time: "09:00 AM", date: "Today", status: "Normal" },
-  { id: 3, name: "Sujon Khan", room: "302", type: "Entry", time: "11:45 PM", date: "Today", status: "Late Entry" },
-  { id: 4, name: "Visitor: Mr. Kamal", host: "Rahim Ahmed (101)", type: "Entry", time: "05:00 PM", date: "Today", status: "Approved" },
+const initialEntryLogs = [
+  { id: 1, name: "Rahim Ahmed", room: "101", type: "Entry", time: "08:30 PM", date: "Today", status: "On Time", host: "" },
+  { id: 2, name: "Karim Uddin", room: "205", type: "Exit", time: "09:00 AM", date: "Today", status: "Normal", host: "" },
+  { id: 3, name: "Sujon Khan", room: "302", type: "Entry", time: "11:45 PM", date: "Today", status: "Late Entry", host: "" },
+  { id: 4, name: "Visitor: Mr. Kamal", room: "", type: "Entry", time: "05:00 PM", date: "Today", status: "Approved", host: "Rahim Ahmed (101)" },
 ];
 
-const gatePasses = [
+const initialGatePasses = [
   { id: "GP-001", student: "Fatima Begum", room: "Girls-201", reason: "Going home for weekend", validFrom: "2023-11-24", validTo: "2023-11-26", status: "Active" },
   { id: "GP-002", student: "Nasrin Akter", room: "Girls-105", reason: "Medical appointment", validFrom: "2023-11-20", validTo: "2023-11-20", status: "Expired" },
 ];
 
 export default function OwnerAttendance() {
+  const { toast } = useToast();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isGatePassOpen, setIsGatePassOpen] = useState(false);
+  const [gatePasses, setGatePasses] = useState(initialGatePasses);
+  const [newGatePass, setNewGatePass] = useState({
+    student: "",
+    room: "",
+    reason: "",
+    validFrom: "",
+    validTo: ""
+  });
+
+  const filteredLogs = initialEntryLogs.filter(log => 
+    log.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    log.room.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleCreateGatePass = () => {
+    const newId = `GP-${String(gatePasses.length + 1).padStart(3, '0')}`;
+    const pass = {
+      id: newId,
+      ...newGatePass,
+      status: "Active"
+    };
+    setGatePasses([pass, ...gatePasses]);
+    setIsGatePassOpen(false);
+    setNewGatePass({ student: "", room: "", reason: "", validFrom: "", validTo: "" });
+    
+    toast({
+      title: "Gate Pass Created",
+      description: `Pass generated for ${newGatePass.student}`,
+    });
+  };
+
   return (
     <DashboardLayout type="owner">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
@@ -29,7 +82,43 @@ export default function OwnerAttendance() {
         </div>
         <div className="flex gap-2">
           <Button variant="outline"><CalendarIcon className="mr-2 h-4 w-4" /> View Calendar</Button>
-          <Button><Shield className="mr-2 h-4 w-4" /> Create Gate Pass</Button>
+          
+          <Dialog open={isGatePassOpen} onOpenChange={setIsGatePassOpen}>
+            <DialogTrigger asChild>
+              <Button><Shield className="mr-2 h-4 w-4" /> Create Gate Pass</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Issue New Gate Pass</DialogTitle>
+                <DialogDescription>Create a temporary exit pass for a student.</DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="student" className="text-right">Student</Label>
+                  <Input id="student" value={newGatePass.student} onChange={(e) => setNewGatePass({...newGatePass, student: e.target.value})} className="col-span-3" placeholder="Student Name" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="room" className="text-right">Room</Label>
+                  <Input id="room" value={newGatePass.room} onChange={(e) => setNewGatePass({...newGatePass, room: e.target.value})} className="col-span-3" placeholder="Room Number" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="reason" className="text-right">Reason</Label>
+                  <Input id="reason" value={newGatePass.reason} onChange={(e) => setNewGatePass({...newGatePass, reason: e.target.value})} className="col-span-3" placeholder="Reason for leave" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="from" className="text-right">Valid From</Label>
+                  <Input id="from" type="date" value={newGatePass.validFrom} onChange={(e) => setNewGatePass({...newGatePass, validFrom: e.target.value})} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="to" className="text-right">Valid To</Label>
+                  <Input id="to" type="date" value={newGatePass.validTo} onChange={(e) => setNewGatePass({...newGatePass, validTo: e.target.value})} className="col-span-3" />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button onClick={handleCreateGatePass}>Generate Pass</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -48,7 +137,12 @@ export default function OwnerAttendance() {
                 <CardTitle>Daily Logs</CardTitle>
                 <div className="relative w-64">
                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                   <Input placeholder="Search student..." className="pl-8" />
+                   <Input 
+                     placeholder="Search student..." 
+                     className="pl-8" 
+                     value={searchTerm}
+                     onChange={(e) => setSearchTerm(e.target.value)}
+                   />
                 </div>
               </div>
             </CardHeader>
@@ -64,7 +158,7 @@ export default function OwnerAttendance() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {entryLogs.map((log) => (
+                  {filteredLogs.map((log) => (
                     <TableRow key={log.id}>
                       <TableCell>
                         <div className="font-medium">{log.name}</div>

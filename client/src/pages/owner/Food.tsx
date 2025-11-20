@@ -4,9 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Utensils, Calendar, CheckCircle, AlertCircle, Printer } from "lucide-react";
+import { Utensils, Calendar, CheckCircle, AlertCircle, Printer, Edit } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
-const todaysMenu = {
+const initialTodaysMenu = {
   breakfast: "Paratha, Vegetable Curry, Egg, Tea",
   lunch: "Rice, Chicken Curry, Dal, Salad",
   dinner: "Rice, Fish Curry, Vegetable, Dal"
@@ -25,6 +39,27 @@ const stockAlerts = [
 ];
 
 export default function OwnerFood() {
+  const { toast } = useToast();
+  const [todaysMenu, setTodaysMenu] = useState(initialTodaysMenu);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuForm, setMenuForm] = useState(initialTodaysMenu);
+
+  const handleUpdateMenu = () => {
+    setTodaysMenu(menuForm);
+    setIsMenuOpen(false);
+    toast({
+      title: "Menu Updated",
+      description: "Today's menu has been successfully updated.",
+    });
+  };
+
+  const handlePrintMenu = () => {
+    toast({
+      title: "Printing Menu...",
+      description: "Sending menu to printer.",
+    });
+  };
+
   return (
     <DashboardLayout type="owner">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
@@ -33,8 +68,48 @@ export default function OwnerFood() {
           <p className="text-muted-foreground">Manage meal plans, menu, and mess inventory.</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline"><Printer className="mr-2 h-4 w-4" /> Print Menu</Button>
-          <Button><Calendar className="mr-2 h-4 w-4" /> Edit Weekly Menu</Button>
+          <Button variant="outline" onClick={handlePrintMenu}><Printer className="mr-2 h-4 w-4" /> Print Menu</Button>
+          
+          <Dialog open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <DialogTrigger asChild>
+              <Button><Calendar className="mr-2 h-4 w-4" /> Edit Today's Menu</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit Today's Menu</DialogTitle>
+                <DialogDescription>Update breakfast, lunch, and dinner items.</DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="breakfast">Breakfast (07:30 AM - 09:30 AM)</Label>
+                  <Textarea 
+                    id="breakfast" 
+                    value={menuForm.breakfast} 
+                    onChange={(e) => setMenuForm({...menuForm, breakfast: e.target.value})} 
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="lunch">Lunch (01:00 PM - 02:30 PM)</Label>
+                  <Textarea 
+                    id="lunch" 
+                    value={menuForm.lunch} 
+                    onChange={(e) => setMenuForm({...menuForm, lunch: e.target.value})} 
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="dinner">Dinner (08:00 PM - 09:30 PM)</Label>
+                  <Textarea 
+                    id="dinner" 
+                    value={menuForm.dinner} 
+                    onChange={(e) => setMenuForm({...menuForm, dinner: e.target.value})} 
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button onClick={handleUpdateMenu}>Save Changes</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
