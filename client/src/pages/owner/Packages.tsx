@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, MoreVertical, Package, Wifi, Utensils, Clock, DollarSign } from "lucide-react";
+import { Plus, MoreVertical, Package, Wifi, Utensils, Clock, DollarSign, Save, X } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 
 const PACKAGES = [
   { id: 1, name: "Standard Monthly", type: "Stay", price: 5000, duration: "Monthly", status: "Active" },
@@ -34,7 +49,141 @@ export default function PricingPackages() {
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Packages & Pricing</h2>
           <p className="text-muted-foreground">Manage room rates, stay packages, and optional add-ons.</p>
         </div>
-        <Button><Plus className="h-4 w-4 mr-2"/> Create Package</Button>
+        
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button><Plus className="h-4 w-4 mr-2"/> Create Package</Button>
+          </SheetTrigger>
+          <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
+            <SheetHeader>
+              <SheetTitle>Create New Package</SheetTitle>
+              <SheetDescription>
+                Set up a new pricing package for your tenants.
+              </SheetDescription>
+            </SheetHeader>
+            
+            <div className="grid gap-6 py-6">
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Basic Details</h3>
+                <div className="grid gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Package Name</Label>
+                    <Input id="name" placeholder="e.g., Summer Special Deal" />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="type">Type</Label>
+                      <Select defaultValue="stay">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="stay">Stay / Accommodation</SelectItem>
+                          <SelectItem value="service">Service / Add-on</SelectItem>
+                          <SelectItem value="bundle">Bundle</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="status">Status</Label>
+                      <Select defaultValue="active">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="active">Active</SelectItem>
+                          <SelectItem value="draft">Draft</SelectItem>
+                          <SelectItem value="archived">Archived</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Pricing & Duration</h3>
+                <div className="grid gap-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="price">Price (৳)</Label>
+                      <div className="relative">
+                        <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Input id="price" className="pl-9" placeholder="5000" type="number" />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="billing">Billing Cycle</Label>
+                      <Select defaultValue="monthly">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select cycle" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="daily">Daily</SelectItem>
+                          <SelectItem value="weekly">Weekly</SelectItem>
+                          <SelectItem value="monthly">Monthly</SelectItem>
+                          <SelectItem value="quarterly">Quarterly (3 Mo)</SelectItem>
+                          <SelectItem value="biannual">Bi-Annual (6 Mo)</SelectItem>
+                          <SelectItem value="yearly">Yearly</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between border rounded-lg p-4">
+                    <div className="space-y-0.5">
+                      <Label className="text-base">Auto-renew</Label>
+                      <p className="text-sm text-muted-foreground">Automatically renew this package at the end of the term.</p>
+                    </div>
+                    <Switch />
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Features</h3>
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea id="description" placeholder="Describe what's included in this package..." className="h-20" />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label>Included Amenities</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                     <div className="flex items-center space-x-2 border p-3 rounded-md">
+                        <Switch id="wifi" defaultChecked />
+                        <Label htmlFor="wifi">High-Speed WiFi</Label>
+                     </div>
+                     <div className="flex items-center space-x-2 border p-3 rounded-md">
+                        <Switch id="cleaning" defaultChecked />
+                        <Label htmlFor="cleaning">Weekly Cleaning</Label>
+                     </div>
+                     <div className="flex items-center space-x-2 border p-3 rounded-md">
+                        <Switch id="laundry" />
+                        <Label htmlFor="laundry">Laundry Access</Label>
+                     </div>
+                     <div className="flex items-center space-x-2 border p-3 rounded-md">
+                        <Switch id="gym" />
+                        <Label htmlFor="gym">Gym Access</Label>
+                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <SheetFooter className="pb-6">
+              <SheetClose asChild>
+                 <Button variant="outline" className="mr-2">Cancel</Button>
+              </SheetClose>
+              <Button type="submit"><Save className="h-4 w-4 mr-2" /> Create Package</Button>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
