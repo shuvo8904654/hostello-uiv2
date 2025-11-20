@@ -1,0 +1,173 @@
+1. Dashboard & Analytics
+
+Total hostels
+
+Total branches
+
+Total rooms / beds
+
+Occupancy rate (daily/weekly/monthly)
+
+Revenue dashboard
+
+Pending payments
+
+Bookings overview
+
+City/area performance
+
+Growth metrics
+
+2. Room & Bed Management
+
+Add/edit/delete rooms
+
+Bed-level availability tracking
+
+Room categories (AC, Non-AC, deluxe, shared, etc.)
+
+Dynamic bed pricing
+
+Bed assignment history
+
+Auto blocking of beds for maintenance
+
+Floor-plan style view
+
+3. Booking & Check-In/Out
+
+Online booking
+
+On-spot booking
+
+Bed selection
+
+Check-in/out workflows
+
+Booking confirmation receipts
+
+Auto-send notifications
+
+Cancel/refund logic
+
+Bulk check-in for groups
+
+4. Student/Guest Management
+
+Profile creation
+
+ID verification upload
+
+Digital documents storage
+
+Emergency contacts
+
+Past stay history
+
+Behavior/incident notes
+
+KYC status
+
+5. Payments & Billing
+
+Monthly rent cycle
+
+Auto-generated invoices
+
+
+Due tracking
+
+Auto-reminders
+
+Financial reports
+
+Export to Excel/CSV
+
+6. Multi-Branch Management
+
+
+Switch dashboard between branches
+
+Branch-level analytics
+
+Branch-level staff roles
+
+Data isolation per branch
+
+7. Staff & Role Management
+
+Admin
+
+Brand owner
+
+Branch manager
+
+Receptionist
+
+Accountant
+
+Maintenance staff
+
+Each role gets its own permissions & dashboard.
+
+8. Complaint & Maintenance System
+
+Residents submit issues
+
+Auto-assign to technician
+
+Maintenance calendar
+
+Status tracking (open → assigned → resolved)
+
+Image/video proof upload
+
+Priority tagging
+
+9. Inventory & Assets
+
+Track furniture, appliances, mattresses
+
+Add purchase date, warranty, cost
+
+Depreciation tracking
+
+Maintenance cycles
+
+10. Messaging & Notifications
+
+Email reminders
+
+SMS reminders
+
+WhatsApp integration
+
+Payment due alerts
+
+Check-in/out alerts
+
+Booking confirmation
+
+Staff notifications
+
+11. Attendance & Security
+
+
+Daily entry log
+
+Visitor log
+
+Gate pass generation
+
+Night-out tracking
+
+12. Food & Meal Management (Optional)
+
+Meal plan selection
+
+Attendance in meal hall
+
+Monthly meal billing
+
+Mess stock management
+
