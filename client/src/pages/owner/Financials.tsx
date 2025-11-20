@@ -2,14 +2,45 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DollarSign, Download, TrendingDown, TrendingUp } from "lucide-react";
+import { DollarSign, Download, TrendingDown, TrendingUp, Plus, Search, Filter, Calendar, FileText } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Label } from "@/components/ui/label";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 const TRANSACTIONS = [
-  { id: 1, desc: "Rent Payment - Room 101", type: "Income", amount: 5000, date: "Aug 20", status: "Cleared" },
-  { id: 2, desc: "Plumbing Repair", type: "Expense", amount: 1200, date: "Aug 18", status: "Paid" },
-  { id: 3, desc: "WiFi Bill", type: "Expense", amount: 2500, date: "Aug 15", status: "Paid" },
+  { id: 1, desc: "Rent Payment - Room 101", type: "Income", amount: 5000, date: "Aug 20", status: "Cleared", category: "Rent" },
+  { id: 2, desc: "Plumbing Repair", type: "Expense", amount: 1200, date: "Aug 18", status: "Paid", category: "Maintenance" },
+  { id: 3, desc: "WiFi Bill", type: "Expense", amount: 2500, date: "Aug 15", status: "Paid", category: "Utilities" },
+  { id: 4, desc: "Rent Payment - Room 204", type: "Income", amount: 5000, date: "Aug 14", status: "Cleared", category: "Rent" },
+  { id: 5, desc: "Cleaning Supplies", type: "Expense", amount: 800, date: "Aug 12", status: "Paid", category: "Supplies" },
+  { id: 6, desc: "Deposit - Room 305", type: "Income", amount: 10000, date: "Aug 10", status: "Cleared", category: "Deposit" },
+];
+
+const CHART_DATA = [
+  { name: 'Week 1', income: 15000, expense: 5000 },
+  { name: 'Week 2', income: 22000, expense: 8000 },
+  { name: 'Week 3', income: 18000, expense: 4000 },
+  { name: 'Week 4', income: 25000, expense: 6000 },
 ];
 
 export default function OwnerFinancials() {
@@ -22,6 +53,13 @@ export default function OwnerFinancials() {
     });
   };
 
+  const handleAddTransaction = () => {
+    toast({
+      title: "Transaction Recorded",
+      description: "New transaction has been added to the ledger.",
+    });
+  };
+
   return (
     <DashboardLayout type="owner">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -29,7 +67,80 @@ export default function OwnerFinancials() {
           <h2 className="text-3xl font-bold tracking-tight">Financials</h2>
           <p className="text-muted-foreground">Track income, expenses, and invoices.</p>
         </div>
-        <Button variant="outline" onClick={handleDownload}><Download className="h-4 w-4 mr-2"/> Download Report</Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleDownload}><Download className="h-4 w-4 mr-2"/> Download Report</Button>
+          
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button><Plus className="h-4 w-4 mr-2"/> Add Transaction</Button>
+            </SheetTrigger>
+            <SheetContent className="w-[400px] sm:w-[540px]">
+              <SheetHeader>
+                <SheetTitle>Record Transaction</SheetTitle>
+                <SheetDescription>Add a new income or expense entry.</SheetDescription>
+              </SheetHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <Label>Transaction Type</Label>
+                  <Tabs defaultValue="income" className="w-full">
+                    <TabsList className="w-full">
+                      <TabsTrigger value="income" className="flex-1">Income</TabsTrigger>
+                      <TabsTrigger value="expense" className="flex-1">Expense</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </div>
+                <div className="space-y-2">
+                  <Label>Description</Label>
+                  <Input placeholder="e.g. Rent Payment" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Amount (৳)</Label>
+                    <Input type="number" placeholder="0.00" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Date</Label>
+                    <Input type="date" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Category</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="rent">Rent</SelectItem>
+                      <SelectItem value="deposit">Security Deposit</SelectItem>
+                      <SelectItem value="utilities">Utilities</SelectItem>
+                      <SelectItem value="maintenance">Maintenance</SelectItem>
+                      <SelectItem value="supplies">Supplies</SelectItem>
+                      <SelectItem value="salary">Staff Salary</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Payment Method</Label>
+                  <Select defaultValue="cash">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Method" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="cash">Cash</SelectItem>
+                      <SelectItem value="bank">Bank Transfer</SelectItem>
+                      <SelectItem value="mobile">Mobile Banking (Bkash/Nagad)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <SheetFooter>
+                <SheetClose asChild>
+                  <Button onClick={handleAddTransaction}>Save Transaction</Button>
+                </SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3 mb-8">
@@ -65,41 +176,153 @@ export default function OwnerFinancials() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-           <CardTitle>Recent Transactions</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0 sm:p-6 overflow-x-auto">
-           <Table>
-              <TableHeader>
-                 <TableRow>
+      <div className="grid gap-6 lg:grid-cols-3 mb-8">
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle>Cash Flow Overview</CardTitle>
+            <CardDescription>Income vs Expenses over the last month</CardDescription>
+          </CardHeader>
+          <CardContent className="pl-0">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={CHART_DATA}>
+                <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `৳${value}`} />
+                <Tooltip 
+                  formatter={(value) => [`৳${value}`, '']}
+                  contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: 'var(--radius)' }}
+                />
+                <Bar dataKey="income" name="Income" fill="#22c55e" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="expense" name="Expenses" fill="#ef4444" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+        
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle>Expense Breakdown</CardTitle>
+            <CardDescription>Where your money is going</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">Maintenance</span>
+                  <span className="text-muted-foreground">45%</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500 w-[45%]" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">Utilities</span>
+                  <span className="text-muted-foreground">30%</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-orange-500 w-[30%]" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">Staff Salary</span>
+                  <span className="text-muted-foreground">15%</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-green-500 w-[15%]" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">Supplies</span>
+                  <span className="text-muted-foreground">10%</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-purple-500 w-[10%]" />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Tabs defaultValue="transactions" className="space-y-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <TabsList>
+            <TabsTrigger value="transactions">All Transactions</TabsTrigger>
+            <TabsTrigger value="invoices">Invoices</TabsTrigger>
+            <TabsTrigger value="reports">Reports</TabsTrigger>
+          </TabsList>
+          
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="relative flex-1 sm:w-64">
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input placeholder="Search transactions..." className="pl-8 h-9" />
+            </div>
+            <Button variant="outline" size="icon" className="h-9 w-9">
+              <Filter className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <TabsContent value="transactions" className="space-y-4">
+          <Card>
+            <CardContent className="p-0 sm:p-6 overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
                     <TableHead>Description</TableHead>
+                    <TableHead>Category</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Status</TableHead>
-                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                 {TRANSACTIONS.map(t => (
+                    <TableHead className="text-right">Receipt</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {TRANSACTIONS.map(t => (
                     <TableRow key={t.id}>
-                       <TableCell className="font-medium">{t.desc}</TableCell>
-                       <TableCell>
-                          <Badge variant={t.type === 'Income' ? 'outline' : 'secondary'} className={t.type === 'Income' ? 'text-green-600 border-green-200 bg-green-50' : ''}>
-                             {t.type}
-                          </Badge>
-                       </TableCell>
-                       <TableCell>{t.date}</TableCell>
-                       <TableCell className={t.type === 'Income' ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}>
-                          {t.type === 'Income' ? '+' : '-'}৳{t.amount}
-                       </TableCell>
-                       <TableCell>{t.status}</TableCell>
+                      <TableCell className="font-medium">{t.desc}</TableCell>
+                      <TableCell>
+                        <Badge variant="secondary" className="font-normal">{t.category}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={t.type === 'Income' ? 'outline' : 'secondary'} className={t.type === 'Income' ? 'text-green-600 border-green-200 bg-green-50' : ''}>
+                          {t.type}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{t.date}</TableCell>
+                      <TableCell className={t.type === 'Income' ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}>
+                        {t.type === 'Income' ? '+' : '-'}৳{t.amount}
+                      </TableCell>
+                      <TableCell>{t.status}</TableCell>
+                      <TableCell className="text-right">
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <FileText className="h-4 w-4 text-muted-foreground" />
+                        </Button>
+                      </TableCell>
                     </TableRow>
-                 ))}
-              </TableBody>
-           </Table>
-        </CardContent>
-      </Card>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="invoices">
+          <Card>
+            <CardContent className="p-12 text-center text-muted-foreground">
+              <div className="flex justify-center mb-4">
+                <FileText className="h-12 w-12 text-muted-foreground/50" />
+              </div>
+              <h3 className="text-lg font-medium mb-2">No Open Invoices</h3>
+              <p className="mb-6">All rent invoices for this month have been cleared.</p>
+              <Button>Create New Invoice</Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </DashboardLayout>
   );
 }

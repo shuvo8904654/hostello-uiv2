@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { Plus, MoreVertical, MapPin, BedDouble, Users } from "lucide-react";
+import { Plus, MoreVertical, MapPin, BedDouble, Users, Star, MessageSquare } from "lucide-react";
 import { Link } from "wouter";
 
 export default function OwnerProperties() {
@@ -27,6 +27,17 @@ export default function OwnerProperties() {
             <div className="h-40 w-full relative">
               <img src={hostel.image} className="w-full h-full object-cover" alt={hostel.name} />
               <Badge className="absolute top-2 right-2 bg-white/90 text-foreground hover:bg-white">Live</Badge>
+              
+              <div className="absolute bottom-2 left-2 flex gap-2">
+                 <Badge variant="secondary" className="bg-black/70 text-white hover:bg-black/80 flex items-center gap-1 border-0">
+                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> 
+                    {hostel.rating}
+                 </Badge>
+                 <Badge variant="secondary" className="bg-black/70 text-white hover:bg-black/80 flex items-center gap-1 border-0">
+                    <MessageSquare className="h-3 w-3" /> 
+                    {hostel.reviews} Reviews
+                 </Badge>
+              </div>
             </div>
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex justify-between items-start">
