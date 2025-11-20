@@ -4,8 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 import { TENANTS } from "@/lib/mockData";
-import { Search, Mail, Phone, MoreHorizontal } from "lucide-react";
+import { Search, Mail, Phone, MoreHorizontal, Eye, Edit, CreditCard, UserMinus, MessageSquare } from "lucide-react";
 
 export default function OwnerTenants() {
   return (
@@ -60,9 +68,34 @@ export default function OwnerTenants() {
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem>
+                          <Eye className="mr-2 h-4 w-4" /> View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Edit className="mr-2 h-4 w-4" /> Edit Tenant
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <MessageSquare className="mr-2 h-4 w-4" /> Message
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          <CreditCard className="mr-2 h-4 w-4" /> Record Payment
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive">
+                          <UserMinus className="mr-2 h-4 w-4" /> Terminate Lease
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))}
