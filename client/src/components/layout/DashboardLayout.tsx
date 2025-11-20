@@ -30,7 +30,8 @@ import {
   BedDouble,
   Armchair,
   Utensils,
-  DollarSign
+  DollarSign,
+  Wallet
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -69,6 +70,7 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
     { icon: DollarSign, label: 'Payroll', href: '/dashboard/owner/payroll' },
     { icon: Wrench, label: 'Maintenance', href: '/dashboard/owner/maintenance' },
     { icon: Banknote, label: 'Financials', href: '/dashboard/owner/financials' },
+    { icon: Wallet, label: 'Payouts', href: '/dashboard/owner/payouts' },
     { icon: Package, label: 'Packages', href: '/dashboard/owner/packages' },
     { icon: Megaphone, label: 'Marketing', href: '/dashboard/owner/marketing' },
     { icon: Star, label: 'Reviews', href: '/dashboard/owner/reviews' },
@@ -182,6 +184,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
         { label: 'Payroll', href: '/dashboard/owner/payroll' },
         { label: 'Maintenance', href: '/dashboard/owner/maintenance' },
         { label: 'Financials', href: '/dashboard/owner/financials' },
+        { label: 'Payouts', href: '/dashboard/owner/payouts' },
         { label: 'Packages', href: '/dashboard/owner/packages' },
         { label: 'Marketing', href: '/dashboard/owner/marketing' },
         { label: 'Reviews', href: '/dashboard/owner/reviews' },
@@ -271,7 +274,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
                         <div>
                            <p className="text-sm font-medium">New Booking Request</p>
                            <p className="text-xs text-muted-foreground">Rahim Ahmed requested Room 101</p>
-                           <p className="text-[10px] text-muted-foreground mt-1">2 mins ago</p>
+                           <p className="text-xs text-muted-foreground mt-1">2 mins ago</p>
                         </div>
                      </div>
                      <div className="flex items-start gap-2 p-2 rounded-md hover:bg-muted/50">
@@ -279,7 +282,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
                         <div>
                            <p className="text-sm font-medium">Maintenance Update</p>
                            <p className="text-xs text-muted-foreground">Leaking faucet ticket resolved</p>
-                           <p className="text-[10px] text-muted-foreground mt-1">1 hour ago</p>
+                           <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
                         </div>
                      </div>
                      <div className="flex items-start gap-2 p-2 rounded-md bg-muted/50">
@@ -287,7 +290,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
                         <div>
                            <p className="text-sm font-medium">Rent Overdue</p>
                            <p className="text-xs text-muted-foreground">Sujon Khan's rent is 5 days late</p>
-                           <p className="text-[10px] text-muted-foreground mt-1">Yesterday</p>
+                           <p className="text-xs text-muted-foreground mt-1">Yesterday</p>
                         </div>
                      </div>
                    </div>

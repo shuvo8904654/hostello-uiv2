@@ -2,11 +2,12 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DollarSign, Download, TrendingDown, TrendingUp, Plus, Search, Filter, Calendar, FileText } from "lucide-react";
+import { DollarSign, Download, TrendingDown, TrendingUp, Plus, Search, Filter, Calendar, FileText, Wallet } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { Link } from "wouter";
 import {
   Select,
   SelectContent,
@@ -68,6 +69,9 @@ export default function OwnerFinancials() {
           <p className="text-muted-foreground">Track income, expenses, and invoices.</p>
         </div>
         <div className="flex gap-2">
+          <Link href="/dashboard/owner/payouts">
+            <Button variant="outline"><Wallet className="h-4 w-4 mr-2"/> Manage Payouts</Button>
+          </Link>
           <Button variant="outline" onClick={handleDownload}><Download className="h-4 w-4 mr-2"/> Download Report</Button>
           
           <Sheet>
