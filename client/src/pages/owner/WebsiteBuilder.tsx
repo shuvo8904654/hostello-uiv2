@@ -619,9 +619,6 @@ export default function WebsiteBuilder() {
 
                            {/* Hero Section */}
                            <div className={`${colorMap[primaryColor]} text-white p-6 pt-10 pb-20 rounded-b-[3rem]`}>
-                              <div className="inline-block px-3 py-1 rounded-full border border-white/20 text-[10px] font-bold uppercase tracking-wider mb-6">
-                                 Established 2025
-                              </div>
                               <h1 className="text-5xl font-black leading-none mb-6 uppercase tracking-tight">
                                  {heroHeadline}
                               </h1>

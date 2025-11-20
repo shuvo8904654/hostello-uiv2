@@ -9,33 +9,55 @@ import {
   LogOut, 
   Building2, 
   Users, 
-  BarChart,
-  ShieldCheck,
-  Menu,
-  Globe,
-  Package,
-  CreditCard,
-  Calendar,
-  Wrench,
-  Megaphone,
-  Star,
-  Briefcase,
-  Banknote,
-  AlertTriangle,
-  LifeBuoy,
-  Server,
-  Database,
-  Sliders,
-  Bell,
-  BedDouble,
-  Armchair,
-  Utensils,
-  DollarSign,
-  Wallet
+  BarChart, 
+  ShieldCheck, 
+  Globe, 
+  Package, 
+  CreditCard, 
+  Calendar, 
+  Wrench, 
+  Megaphone, 
+  Star, 
+  Briefcase, 
+  Banknote, 
+  AlertTriangle, 
+  LifeBuoy, 
+  Server, 
+  Database, 
+  Sliders, 
+  Bell, 
+  BedDouble, 
+  Armchair, 
+  Utensils, 
+  DollarSign
 } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { useState } from "react";
 
 type DashboardType = 'tenant' | 'owner' | 'admin' | 'manager';
@@ -45,220 +67,267 @@ interface DashboardLayoutProps {
   type: DashboardType;
 }
 
-interface NavContentProps {
-  type: DashboardType;
-  location: string;
-  setOpen: (open: boolean) => void;
-}
-
-const NavContent = ({ type, location, setOpen }: NavContentProps) => {
-  const tenantLinks = [
-    { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/tenant' },
-    { icon: Search, label: 'Find Hostels', href: '/search' },
-    { icon: Users, label: 'Roommate Finder', href: '/dashboard/tenant/roommates' },
-    { icon: Home, label: 'My Bookings', href: '/dashboard/tenant/bookings' },
-    { icon: MessageSquare, label: 'Messages', href: '/dashboard/tenant/messages' },
-    { icon: Settings, label: 'Settings', href: '/dashboard/tenant/settings' },
-  ];
-
-  const ownerLinks = [
-    { icon: BarChart, label: 'Analytics', href: '/dashboard/owner' },
-    { icon: Calendar, label: 'Bookings', href: '/dashboard/owner/bookings' },
-    { icon: Building2, label: 'Properties', href: '/dashboard/owner/properties' },
-    { icon: Users, label: 'Tenants', href: '/dashboard/owner/tenants' },
-    { icon: Briefcase, label: 'Staff', href: '/dashboard/owner/staff' },
-    { icon: DollarSign, label: 'Salaries', href: '/dashboard/owner/salaries' },
-    { icon: Wrench, label: 'Maintenance', href: '/dashboard/owner/maintenance' },
-    { icon: Banknote, label: 'Financials', href: '/dashboard/owner/financials' },
-    { icon: Package, label: 'Packages', href: '/dashboard/owner/packages' },
-    { icon: Megaphone, label: 'Marketing', href: '/dashboard/owner/marketing' },
-    { icon: Star, label: 'Reviews', href: '/dashboard/owner/reviews' },
-    { icon: Armchair, label: 'Inventory', href: '/dashboard/owner/inventory' },
-    { icon: Utensils, label: 'Food & Meals', href: '/dashboard/owner/food' },
-    { icon: Globe, label: 'Website', href: '/dashboard/owner/website' },
-    { icon: MessageSquare, label: 'Messages', href: '/dashboard/owner/messages' },
-    { icon: Settings, label: 'Settings', href: '/dashboard/owner/settings' },
-  ];
-
-  const managerLinks = [
-    { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/manager' },
-    { icon: Calendar, label: 'Bookings', href: '/dashboard/manager/bookings' },
-    { icon: BedDouble, label: 'Rooms & Beds', href: '/dashboard/manager/rooms' },
-    { icon: Users, label: 'Tenants', href: '/dashboard/manager/tenants' },
-    { icon: Briefcase, label: 'Staff', href: '/dashboard/manager/staff' },
-    { icon: Wrench, label: 'Maintenance', href: '/dashboard/manager/maintenance' },
-    { icon: Banknote, label: 'Financials', href: '/dashboard/manager/financials' },
-    { icon: Megaphone, label: 'Marketing', href: '/dashboard/manager/marketing' },
-    { icon: Package, label: 'Packages', href: '/dashboard/manager/packages' },
-    { icon: Star, label: 'Reviews', href: '/dashboard/manager/reviews' },
-    { icon: BarChart, label: 'Analytics', href: '/dashboard/manager/analytics' },
-    { icon: MessageSquare, label: 'Messages', href: '/dashboard/manager/messages' },
-    { icon: Settings, label: 'Settings', href: '/dashboard/manager/settings' },
-  ];
-
-  const adminLinks = [
-    { icon: BarChart, label: 'Analytics', href: '/dashboard/admin' },
-    { icon: ShieldCheck, label: 'Verification', href: '/dashboard/admin/verification' },
-    { icon: Users, label: 'User Management', href: '/dashboard/admin/users' },
-    { icon: Building2, label: 'Hostels & Bookings', href: '/dashboard/admin/bookings' },
-    { icon: AlertTriangle, label: 'Moderation', href: '/dashboard/admin/moderation' },
-    { icon: CreditCard, label: 'Billing & Plans', href: '/dashboard/admin/billing' },
-    { icon: Sliders, label: 'Platform Control', href: '/dashboard/admin/control' },
-    { icon: LifeBuoy, label: 'Support & Tickets', href: '/dashboard/admin/support' },
-    { icon: Server, label: 'System', href: '/dashboard/admin/system' },
-    { icon: Database, label: 'Data Management', href: '/dashboard/admin/data' },
-  ];
-
-  const links = type === 'tenant' ? tenantLinks : 
-                type === 'owner' ? ownerLinks : 
-                type === 'manager' ? managerLinks : 
-                adminLinks;
-  
-  const roleLabel = type === 'tenant' ? 'Student' : 
-                    type === 'owner' ? 'Property Owner' : 
-                    type === 'manager' ? 'Branch Manager' : 
-                    'Administrator';
-
-  return (
-    <div className="flex flex-col h-full">
-      <div className="p-6 border-b">
-        <Link href="/" className="flex items-center gap-2 mb-1" onClick={() => setOpen(false)}>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Building2 className="h-5 w-5" />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-foreground">Hostello</span>
-        </Link>
-        <div className="text-xs font-medium text-muted-foreground px-1 uppercase tracking-wider mt-2">{roleLabel} Portal</div>
-      </div>
-
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-        {links.map((link) => {
-          const Icon = link.icon;
-          const isActive = location === link.href;
-          return (
-            <Link 
-              key={link.href} 
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                isActive 
-                  ? "bg-primary/10 text-primary" 
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              )}>
-                <Icon className="h-4 w-4" />
-                {link.label}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="p-4 border-t">
-        <button className="flex items-center gap-3 px-3 py-2 w-full rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors">
-          <LogOut className="h-4 w-4" />
-          Sign Out
-        </button>
-      </div>
-    </div>
-  );
-};
-
 export function DashboardLayout({ children, type }: DashboardLayoutProps) {
   const [location] = useLocation();
-  const [open, setOpen] = useState(false);
 
-  // Helper to find current label
-  const getLabel = () => {
-     // Combine all links to find label
-     const allLinks = [
-        { label: 'Overview', href: '/dashboard/tenant' },
-        { label: 'Find Hostels', href: '/search' },
-        { label: 'Roommate Finder', href: '/dashboard/tenant/roommates' },
-        { label: 'My Bookings', href: '/dashboard/tenant/bookings' },
-        { label: 'Messages', href: '/dashboard/tenant/messages' },
-        { label: 'Settings', href: '/dashboard/tenant/settings' },
-        { label: 'Analytics', href: '/dashboard/owner' },
-        { label: 'Bookings', href: '/dashboard/owner/bookings' },
-        { label: 'Properties', href: '/dashboard/owner/properties' },
-        { label: 'Staff', href: '/dashboard/owner/staff' },
-        { label: 'Salaries', href: '/dashboard/owner/salaries' },
-        { label: 'Maintenance', href: '/dashboard/owner/maintenance' },
-        { label: 'Financials', href: '/dashboard/owner/financials' },
-        { label: 'Packages', href: '/dashboard/owner/packages' },
-        { label: 'Marketing', href: '/dashboard/owner/marketing' },
-        { label: 'Reviews', href: '/dashboard/owner/reviews' },
-        { label: 'Website', href: '/dashboard/owner/website' },
-        { label: 'Tenants', href: '/dashboard/owner/tenants' },
-        { label: 'Inventory', href: '/dashboard/owner/inventory' },
-        { label: 'Food & Meals', href: '/dashboard/owner/food' },
-        { label: 'Messages', href: '/dashboard/owner/messages' },
-        { label: 'Settings', href: '/dashboard/owner/settings' },
-        
-        // Manager links
-        { label: 'Overview', href: '/dashboard/manager' },
-        { label: 'Bookings', href: '/dashboard/manager/bookings' },
-        { label: 'Rooms & Beds', href: '/dashboard/manager/rooms' },
-        { label: 'Tenants', href: '/dashboard/manager/tenants' },
-        { label: 'Staff', href: '/dashboard/manager/staff' },
-        { label: 'Maintenance', href: '/dashboard/manager/maintenance' },
-        { label: 'Financials', href: '/dashboard/manager/financials' },
-        { label: 'Marketing', href: '/dashboard/manager/marketing' },
-        { label: 'Packages', href: '/dashboard/manager/packages' },
-        { label: 'Reviews', href: '/dashboard/manager/reviews' },
-        { label: 'Analytics', href: '/dashboard/manager/analytics' },
-        { label: 'Messages', href: '/dashboard/manager/messages' },
-        { label: 'Settings', href: '/dashboard/manager/settings' },
+  // Grouped Links Configuration
+  const tenantGroups = [
+    {
+      label: "My Home",
+      items: [
+        { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/tenant' },
+        { icon: Home, label: 'My Bookings', href: '/dashboard/tenant/bookings' },
+        { icon: MessageSquare, label: 'Messages', href: '/dashboard/tenant/messages' },
+      ]
+    },
+    {
+      label: "Discover",
+      items: [
+        { icon: Search, label: 'Find Hostels', href: '/search' },
+        { icon: Users, label: 'Roommate Finder', href: '/dashboard/tenant/roommates' },
+      ]
+    },
+    {
+      label: "Account",
+      items: [
+        { icon: Settings, label: 'Settings', href: '/dashboard/tenant/settings' },
+      ]
+    }
+  ];
 
-        // Admin links
-        { label: 'Platform Analytics', href: '/dashboard/admin' },
-        { label: 'Verification & Approval', href: '/dashboard/admin/verification' },
-        { label: 'User Management', href: '/dashboard/admin/users' },
-        { label: 'Hostel & Booking Oversight', href: '/dashboard/admin/bookings' },
-        { label: 'Content Moderation', href: '/dashboard/admin/moderation' },
-        { label: 'Subscription & Billing', href: '/dashboard/admin/billing' },
-        { label: 'Platform Control', href: '/dashboard/admin/control' },
-        { label: 'Support & Tickets', href: '/dashboard/admin/support' },
-        { label: 'System Management', href: '/dashboard/admin/system' },
-        { label: 'Data Management', href: '/dashboard/admin/data' },
-     ];
-     return allLinks.find(l => l.href === location)?.label || 'Dashboard';
+  const ownerGroups = [
+    {
+      label: "Overview",
+      items: [
+        { icon: BarChart, label: 'Analytics', href: '/dashboard/owner' },
+      ]
+    },
+    {
+      label: "Management",
+      items: [
+        { icon: Calendar, label: 'Bookings', href: '/dashboard/owner/bookings' },
+        { icon: Users, label: 'Tenants', href: '/dashboard/owner/tenants' },
+        { icon: Briefcase, label: 'Staff', href: '/dashboard/owner/staff' },
+      ]
+    },
+    {
+      label: "Property",
+      items: [
+        { icon: Building2, label: 'Properties', href: '/dashboard/owner/properties' },
+        { icon: Globe, label: 'Website Builder', href: '/dashboard/owner/website' },
+        { icon: Package, label: 'Packages', href: '/dashboard/owner/packages' },
+        { icon: Armchair, label: 'Inventory', href: '/dashboard/owner/inventory' },
+        { icon: Utensils, label: 'Food & Meals', href: '/dashboard/owner/food' },
+      ]
+    },
+    {
+      label: "Operations",
+      items: [
+        { icon: Wrench, label: 'Maintenance', href: '/dashboard/owner/maintenance' },
+        { icon: Star, label: 'Reviews', href: '/dashboard/owner/reviews' },
+      ]
+    },
+    {
+      label: "Finance",
+      items: [
+        { icon: Banknote, label: 'Financials', href: '/dashboard/owner/financials' },
+        { icon: DollarSign, label: 'Salaries', href: '/dashboard/owner/salaries' },
+      ]
+    },
+    {
+      label: "System",
+      items: [
+        { icon: Megaphone, label: 'Marketing', href: '/dashboard/owner/marketing' },
+        { icon: MessageSquare, label: 'Messages', href: '/dashboard/owner/messages' },
+        { icon: Settings, label: 'Settings', href: '/dashboard/owner/settings' },
+      ]
+    }
+  ];
+
+  const managerGroups = [
+    {
+      label: "Main",
+      items: [
+        { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/manager' },
+        { icon: BarChart, label: 'Analytics', href: '/dashboard/manager/analytics' },
+      ]
+    },
+    {
+      label: "Operations",
+      items: [
+        { icon: Calendar, label: 'Bookings', href: '/dashboard/manager/bookings' },
+        { icon: BedDouble, label: 'Rooms & Beds', href: '/dashboard/manager/rooms' },
+        { icon: Users, label: 'Tenants', href: '/dashboard/manager/tenants' },
+        { icon: Wrench, label: 'Maintenance', href: '/dashboard/manager/maintenance' },
+        { icon: Star, label: 'Reviews', href: '/dashboard/manager/reviews' },
+      ]
+    },
+    {
+      label: "Finance & Team",
+      items: [
+        { icon: Banknote, label: 'Financials', href: '/dashboard/manager/financials' },
+        { icon: Briefcase, label: 'Staff', href: '/dashboard/manager/staff' },
+      ]
+    },
+    {
+      label: "System",
+      items: [
+        { icon: Megaphone, label: 'Marketing', href: '/dashboard/manager/marketing' },
+        { icon: Package, label: 'Packages', href: '/dashboard/manager/packages' },
+        { icon: MessageSquare, label: 'Messages', href: '/dashboard/manager/messages' },
+        { icon: Settings, label: 'Settings', href: '/dashboard/manager/settings' },
+      ]
+    }
+  ];
+
+  const adminGroups = [
+    {
+      label: "Platform",
+      items: [
+        { icon: BarChart, label: 'Analytics', href: '/dashboard/admin' },
+        { icon: ShieldCheck, label: 'Verification', href: '/dashboard/admin/verification' },
+        { icon: Users, label: 'User Management', href: '/dashboard/admin/users' },
+        { icon: Building2, label: 'Hostels & Bookings', href: '/dashboard/admin/bookings' },
+      ]
+    },
+    {
+      label: "Moderation",
+      items: [
+        { icon: AlertTriangle, label: 'Moderation', href: '/dashboard/admin/moderation' },
+        { icon: LifeBuoy, label: 'Support & Tickets', href: '/dashboard/admin/support' },
+      ]
+    },
+    {
+      label: "System",
+      items: [
+        { icon: CreditCard, label: 'Billing & Plans', href: '/dashboard/admin/billing' },
+        { icon: Sliders, label: 'Platform Control', href: '/dashboard/admin/control' },
+        { icon: Server, label: 'System', href: '/dashboard/admin/system' },
+        { icon: Database, label: 'Data Management', href: '/dashboard/admin/data' },
+      ]
+    }
+  ];
+
+  const groups = type === 'tenant' ? tenantGroups : 
+                 type === 'owner' ? ownerGroups : 
+                 type === 'manager' ? managerGroups : 
+                 adminGroups;
+
+  const roleLabel = type === 'tenant' ? 'Student' : 
+                    type === 'owner' ? 'Owner' : 
+                    type === 'manager' ? 'Manager' : 
+                    'Admin';
+
+  // Generate Breadcrumbs
+  const generateBreadcrumbs = () => {
+    const pathSegments = location.split('/').filter(Boolean);
+    // pathSegments example: ['dashboard', 'owner', 'website']
+    
+    // Basic breadcrumb structure
+    const items = [
+      { label: 'Dashboard', href: `/dashboard/${type}` }
+    ];
+
+    if (pathSegments.length > 2) {
+      // Find the current page label from groups
+      let currentLabel = '';
+      groups.forEach(group => {
+        const link = group.items.find(item => item.href === location);
+        if (link) currentLabel = link.label;
+      });
+
+      if (currentLabel && location !== `/dashboard/${type}`) {
+        items.push({ label: currentLabel, href: location });
+      }
+    }
+
+    return (
+      <Breadcrumb>
+        <BreadcrumbList>
+          {items.map((item, index) => (
+            <span key={index} className="flex items-center gap-2">
+              <BreadcrumbItem>
+                {index === items.length - 1 ? (
+                  <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                ) : (
+                  <>
+                    <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+                    <BreadcrumbSeparator />
+                  </>
+                )}
+              </BreadcrumbItem>
+            </span>
+          ))}
+        </BreadcrumbList>
+      </Breadcrumb>
+    );
   };
 
   return (
-    <div className="min-h-screen bg-muted/20 font-sans relative">
-      {/* Desktop Sidebar */}
-      <aside className="w-64 bg-card border-r hidden md:flex flex-col fixed inset-y-0 z-30">
-        <NavContent type={type} location={location} setOpen={setOpen} />
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 md:ml-64 min-h-screen flex flex-col relative">
-        <header className="h-16 border-b bg-card/50 backdrop-blur px-4 md:px-6 flex items-center justify-between sticky top-0 z-20 w-full">
-          <div className="flex items-center gap-3">
-            <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden -ml-2">
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle Menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="p-0 w-64">
-                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                 <NavContent type={type} location={location} setOpen={setOpen} />
-              </SheetContent>
-            </Sheet>
-            <h1 className="font-semibold text-lg capitalize truncate">
-              {getLabel()}
-            </h1>
+    <SidebarProvider>
+      <Sidebar collapsible="icon">
+        <SidebarHeader>
+          <div className="flex items-center gap-2 px-2 py-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Building2 className="h-5 w-5" />
+            </div>
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="truncate font-semibold">Hostello</span>
+              <span className="truncate text-xs text-muted-foreground">{roleLabel} Portal</span>
+            </div>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          {groups.map((group, index) => (
+            <SidebarGroup key={index}>
+              <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {group.items.map((item) => (
+                    <SidebarMenuItem key={item.href}>
+                      <SidebarMenuButton asChild isActive={location === item.href} tooltip={item.label}>
+                        <Link href={item.href}>
+                          <item.icon />
+                          <span>{item.label}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          ))}
+        </SidebarContent>
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Sign Out">
+                <button className="text-destructive hover:text-destructive">
+                  <LogOut />
+                  <span>Sign Out</span>
+                </button>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+      
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
+          <div className="flex items-center gap-2">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            {generateBreadcrumbs()}
           </div>
           
           <div className="flex items-center gap-4">
-            {/* Notifications & Alerts */}
-            <Popover>
+             {/* Notifications & Alerts */}
+             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-600 border-2 border-background"></span>
+                <Button variant="ghost" size="icon" className="relative h-8 w-8">
+                  <Bell className="h-4 w-4" />
+                  <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-red-600 border-2 border-background"></span>
                   <span className="sr-only">Notifications</span>
                 </Button>
               </PopoverTrigger>
@@ -277,14 +346,6 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
                            <p className="text-xs text-muted-foreground mt-1">2 mins ago</p>
                         </div>
                      </div>
-                     <div className="flex items-start gap-2 p-2 rounded-md hover:bg-muted/50">
-                        <div className="h-2 w-2 mt-1.5 rounded-full bg-transparent shrink-0" />
-                        <div>
-                           <p className="text-sm font-medium">Maintenance Update</p>
-                           <p className="text-xs text-muted-foreground">Leaking faucet ticket resolved</p>
-                           <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
-                        </div>
-                     </div>
                      <div className="flex items-start gap-2 p-2 rounded-md bg-muted/50">
                         <div className="h-2 w-2 mt-1.5 rounded-full bg-orange-500 shrink-0" />
                         <div>
@@ -299,15 +360,15 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
               </PopoverContent>
             </Popover>
 
-            <div className="h-8 w-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-xs font-bold text-primary">
+            <div className="h-8 w-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
               {type === 'tenant' ? 'AL' : type === 'owner' ? 'JD' : type === 'manager' ? 'BM' : 'AD'}
             </div>
           </div>
         </header>
-        <div className="p-4 md:p-8 max-w-7xl mx-auto w-full animate-in fade-in duration-500">
+        <div className="flex-1 p-4 pt-4 md:p-8 md:pt-6 max-w-[1600px] w-full mx-auto animate-in fade-in duration-500">
           {children}
         </div>
-      </main>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
