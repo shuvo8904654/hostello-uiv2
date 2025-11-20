@@ -31,7 +31,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-type DashboardType = 'tenant' | 'owner' | 'admin';
+type DashboardType = 'tenant' | 'owner' | 'admin' | 'manager';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -70,6 +70,15 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
     { icon: Settings, label: 'Settings', href: '/dashboard/owner/settings' },
   ];
 
+  const managerLinks = [
+    { icon: LayoutDashboard, label: 'Overview', href: '/dashboard/manager' },
+    { icon: Calendar, label: 'Bookings', href: '/dashboard/manager/bookings' },
+    { icon: Users, label: 'Tenants', href: '/dashboard/manager/tenants' },
+    { icon: Wrench, label: 'Maintenance', href: '/dashboard/manager/maintenance' },
+    { icon: MessageSquare, label: 'Messages', href: '/dashboard/manager/messages' },
+    { icon: Settings, label: 'Settings', href: '/dashboard/manager/settings' },
+  ];
+
   const adminLinks = [
     { icon: BarChart, label: 'Analytics', href: '/dashboard/admin' },
     { icon: ShieldCheck, label: 'Verification', href: '/dashboard/admin/verification' },
@@ -83,8 +92,15 @@ const NavContent = ({ type, location, setOpen }: NavContentProps) => {
     { icon: Database, label: 'Data Management', href: '/dashboard/admin/data' },
   ];
 
-  const links = type === 'tenant' ? tenantLinks : type === 'owner' ? ownerLinks : adminLinks;
-  const roleLabel = type === 'tenant' ? 'Student' : type === 'owner' ? 'Property Owner' : 'Administrator';
+  const links = type === 'tenant' ? tenantLinks : 
+                type === 'owner' ? ownerLinks : 
+                type === 'manager' ? managerLinks : 
+                adminLinks;
+  
+  const roleLabel = type === 'tenant' ? 'Student' : 
+                    type === 'owner' ? 'Property Owner' : 
+                    type === 'manager' ? 'Branch Manager' : 
+                    'Administrator';
 
   return (
     <div className="flex flex-col h-full">
@@ -158,6 +174,14 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
         { label: 'Messages', href: '/dashboard/owner/messages' },
         { label: 'Settings', href: '/dashboard/owner/settings' },
         
+        // Manager links
+        { label: 'Overview', href: '/dashboard/manager' },
+        { label: 'Bookings', href: '/dashboard/manager/bookings' },
+        { label: 'Tenants', href: '/dashboard/manager/tenants' },
+        { label: 'Maintenance', href: '/dashboard/manager/maintenance' },
+        { label: 'Messages', href: '/dashboard/manager/messages' },
+        { label: 'Settings', href: '/dashboard/manager/settings' },
+
         // Admin links
         { label: 'Platform Analytics', href: '/dashboard/admin' },
         { label: 'Verification & Approval', href: '/dashboard/admin/verification' },
@@ -203,7 +227,7 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
           
           <div className="flex items-center gap-4">
             <div className="h-8 w-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-xs font-bold text-primary">
-              {type === 'tenant' ? 'AL' : type === 'owner' ? 'JD' : 'AD'}
+              {type === 'tenant' ? 'AL' : type === 'owner' ? 'JD' : type === 'manager' ? 'BM' : 'AD'}
             </div>
           </div>
         </header>

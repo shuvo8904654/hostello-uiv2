@@ -34,6 +34,12 @@ import OwnerFinancials from "@/pages/owner/Financials";
 import OwnerMarketing from "@/pages/owner/Marketing";
 import OwnerReviews from "@/pages/owner/Reviews";
 
+// Manager Pages
+import ManagerDashboard from "@/pages/ManagerDashboard";
+import ManagerBookings from "@/pages/manager/Bookings";
+import ManagerTenants from "@/pages/manager/Tenants";
+import ManagerMaintenance from "@/pages/manager/Maintenance";
+
 // Admin Pages
 import AdminDashboard from "@/pages/AdminDashboard";
 import AdminUsers from "@/pages/admin/Users";
@@ -81,6 +87,14 @@ function Router() {
       <Route path="/dashboard/owner/reviews" component={OwnerReviews} />
       <Route path="/dashboard/owner/messages" component={MessagesPage} />
       <Route path="/dashboard/owner/settings" component={SettingsPage} />
+
+      {/* Manager Routes */}
+      <Route path="/dashboard/manager" component={ManagerDashboard} />
+      <Route path="/dashboard/manager/bookings" component={ManagerBookings} />
+      <Route path="/dashboard/manager/tenants" component={ManagerTenants} />
+      <Route path="/dashboard/manager/maintenance" component={ManagerMaintenance} />
+      <Route path="/dashboard/manager/messages" component={MessagesPage} />
+      <Route path="/dashboard/manager/settings" component={SettingsPage} />
       
       {/* Admin Routes */}
       <Route path="/dashboard/admin" component={AdminDashboard} />
