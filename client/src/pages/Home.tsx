@@ -12,7 +12,9 @@ import {
   Clock, 
   CreditCard,
   ChevronRight,
-  CheckCircle2
+  CheckCircle2,
+  MessageSquare,
+  Star
 } from "lucide-react";
 import { 
   Accordion, 
@@ -154,25 +156,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Feature 2: Roommate Matching */}
+            {/* Feature 2: Real Student Reviews (Replaced Roommate Matching) */}
             <div className="bg-slate-900 rounded-3xl p-8 text-white flex flex-col justify-between relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 -translate-y-10 translate-x-10"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500 rounded-full blur-3xl opacity-20 -translate-y-10 translate-x-10"></div>
               <div className="relative z-10">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 backdrop-blur-sm">
-                  <Users className="w-6 h-6 text-blue-400" />
+                  <Star className="w-6 h-6 text-yellow-400" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Smart Roommate Matching</h3>
-                <p className="text-slate-400">Find people who match your vibe. Filter by study habits, interests, and lifestyle.</p>
+                <h3 className="text-xl font-bold mb-3">Real Student Reviews</h3>
+                <p className="text-slate-400">Make informed decisions with authentic reviews and ratings from verified residents.</p>
               </div>
-              <div className="relative z-10 mt-4 flex -space-x-3">
-                {[1,2,3,4].map(i => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-xs font-medium">
-                    {String.fromCharCode(64+i)}
-                  </div>
-                ))}
-                <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-blue-600 flex items-center justify-center text-xs font-medium">
-                  +2k
+              <div className="relative z-10 mt-4 flex items-center gap-2">
+                <div className="flex -space-x-1">
+                   {[1,2,3,4,5].map(i => (
+                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                   ))}
                 </div>
+                <span className="text-sm font-medium text-slate-300">(4.8/5)</span>
               </div>
             </div>
 
@@ -192,31 +192,33 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Feature 4: Payments (Wide) */}
+            {/* Feature 4: Direct Booking (Replaced Digital Payments) */}
             <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col md:flex-row items-center gap-8 overflow-hidden group">
               <div className="flex-1">
                 <div className="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">
-                  <CreditCard className="w-6 h-6" />
+                  <MessageSquare className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-slate-900">Secure Digital Payments</h3>
+                <h3 className="text-2xl font-bold mb-3 text-slate-900">Direct Booking & Communication</h3>
                 <p className="text-slate-500 mb-6">
-                  Pay rent, deposits, and utility bills directly through the app. Get instant receipts and track your payment history automatically.
+                  Reserve your room online and pay directly at the property. No hidden platform fees or complicated digital wallets. Chat directly with owners.
                 </p>
-                <Button variant="outline" className="rounded-full">Learn about protection</Button>
+                <Button variant="outline" className="rounded-full">How it works</Button>
               </div>
               <div className="flex-1 relative h-48 w-full bg-slate-50 rounded-2xl border border-slate-100 p-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                 <div className="text-center space-y-2">
-                    <div className="bg-white p-3 rounded-xl shadow-sm border flex items-center gap-3 w-64 mx-auto">
-                      <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600"><CheckCircle2 size={16} /></div>
-                      <div className="text-left">
-                        <div className="text-xs text-muted-foreground">Payment Successful</div>
-                        <div className="text-sm font-bold">Rent - September</div>
+                 <div className="text-center space-y-2 w-full max-w-xs">
+                    <div className="bg-white p-4 rounded-xl shadow-sm border flex items-center gap-4 w-full mx-auto">
+                      <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <Users size={18} />
                       </div>
-                      <div className="ml-auto font-bold text-slate-900">৳5,000</div>
+                      <div className="text-left flex-1">
+                        <div className="text-xs text-muted-foreground">Message from Owner</div>
+                        <div className="text-sm font-bold truncate">"Room is available!"</div>
+                      </div>
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
                     </div>
-                    <div className="bg-white/50 p-3 rounded-xl border flex items-center gap-3 w-56 mx-auto opacity-70">
-                       <div className="w-8 h-8 rounded-full bg-slate-100"></div>
-                       <div className="h-2 w-20 bg-slate-200 rounded"></div>
+                    <div className="bg-green-50 p-3 rounded-xl border border-green-100 flex items-center gap-3 w-3/4 ml-auto">
+                       <div className="text-xs text-green-700 font-medium">Booking Confirmed</div>
+                       <CheckCircle2 size={14} className="text-green-600 ml-auto" />
                     </div>
                  </div>
               </div>
