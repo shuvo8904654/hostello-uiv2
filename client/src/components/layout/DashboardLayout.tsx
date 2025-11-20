@@ -174,15 +174,15 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen flex bg-muted/20 font-sans">
+    <div className="min-h-screen bg-muted/20 font-sans relative">
       {/* Desktop Sidebar */}
-      <aside className="w-64 bg-card border-r hidden md:flex flex-col fixed h-full z-30">
+      <aside className="w-64 bg-card border-r hidden md:flex flex-col fixed inset-y-0 z-30">
         <NavContent type={type} location={location} setOpen={setOpen} />
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 min-h-screen flex flex-col">
-        <header className="h-16 border-b bg-card/50 backdrop-blur px-4 md:px-6 flex items-center justify-between sticky top-0 z-20">
+      <main className="flex-1 md:ml-64 min-h-screen flex flex-col relative">
+        <header className="h-16 border-b bg-card/50 backdrop-blur px-4 md:px-6 flex items-center justify-between sticky top-0 z-20 w-full">
           <div className="flex items-center gap-3">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
