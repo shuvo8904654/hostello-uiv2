@@ -2,7 +2,7 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
 import { Users, Building2, TrendingUp, MapPin, DollarSign, Home } from "lucide-react";
 
 // Mock Data
@@ -20,6 +20,15 @@ const cityData = [
   { name: 'Chittagong', value: 120 },
   { name: 'Sylhet', value: 80 },
   { name: 'Rajshahi', value: 40 },
+];
+
+const occupancyTrendData = [
+  { name: 'Jan', rate: 65 },
+  { name: 'Feb', rate: 68 },
+  { name: 'Mar', rate: 75 },
+  { name: 'Apr', rate: 72 },
+  { name: 'May', rate: 78 },
+  { name: 'Jun', rate: 85 },
 ];
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
@@ -119,7 +128,7 @@ export default function AdminDashboard() {
         </Card>
       </div>
 
-      <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-3 mb-8">
         <Card className="col-span-1">
             <CardHeader>
                 <CardTitle>Occupancy Stats</CardTitle>
@@ -183,6 +192,33 @@ export default function AdminDashboard() {
                         </div>
                     </div>
                 </div>
+            </CardContent>
+        </Card>
+      </div>
+
+      {/* Detailed Occupancy Analytics */}
+      <div className="grid gap-6 grid-cols-1 mb-8">
+        <Card>
+            <CardHeader>
+                <CardTitle>Occupancy Trends</CardTitle>
+                <CardDescription>Platform-wide occupancy rates over the last 6 months</CardDescription>
+            </CardHeader>
+            <CardContent className="h-[300px]">
+                <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={occupancyTrendData}>
+                        <defs>
+                            <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                            </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                        <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `${value}%`} domain={[0, 100]} />
+                        <Tooltip formatter={(value) => `${value}%`} />
+                        <Area type="monotone" dataKey="rate" stroke="#2563eb" fillOpacity={1} fill="url(#colorRate)" />
+                    </AreaChart>
+                </ResponsiveContainer>
             </CardContent>
         </Card>
       </div>
