@@ -5,10 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Building2, User, Mail, Lock, ArrowRight, Check } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SignUp() {
+  const [_, setLocation] = useLocation();
+
+  const handleStudentSignup = () => {
+    setLocation("/dashboard/tenant");
+  };
+
+  const handleOwnerSignup = () => {
+    setLocation("/dashboard/owner/properties");
+  };
+
   return (
     <PublicLayout>
       <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 bg-muted/30">
@@ -105,7 +115,7 @@ export default function SignUp() {
                       I agree to the <span className="text-primary underline cursor-pointer">Terms</span> and <span className="text-primary underline cursor-pointer">Privacy Policy</span>
                     </label>
                   </div>
-                  <Button className="w-full" size="lg">
+                  <Button className="w-full" size="lg" onClick={handleStudentSignup}>
                     Create Student Account <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </TabsContent>
@@ -148,7 +158,7 @@ export default function SignUp() {
                       I agree to the Terms and Service Agreement
                     </label>
                   </div>
-                  <Button className="w-full" size="lg">
+                  <Button className="w-full" size="lg" onClick={handleOwnerSignup}>
                     Register as Owner <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </TabsContent>
