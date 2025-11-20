@@ -4,7 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, MoreVertical, Package, Wifi, Utensils } from "lucide-react";
+import { Plus, MoreVertical, Package, Wifi, Utensils, Clock, DollarSign } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const PACKAGES = [
   { id: 1, name: "Standard Monthly", type: "Stay", price: 5000, duration: "Monthly", status: "Active" },
@@ -23,7 +31,7 @@ export default function PricingPackages() {
     <DashboardLayout type="owner">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Packages & Pricing</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Packages & Pricing</h2>
           <p className="text-muted-foreground">Manage room rates, stay packages, and optional add-ons.</p>
         </div>
         <Button><Plus className="h-4 w-4 mr-2"/> Create Package</Button>
@@ -36,31 +44,82 @@ export default function PricingPackages() {
               <CardTitle>Stay Packages</CardTitle>
               <CardDescription>Base rates for different durations.</CardDescription>
             </CardHeader>
-            <CardContent className="p-0 sm:p-6 overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[150px]">Package Name</TableHead>
-                    <TableHead>Duration</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {PACKAGES.map((pkg) => (
-                    <TableRow key={pkg.id}>
-                      <TableCell className="font-medium whitespace-nowrap">{pkg.name}</TableCell>
-                      <TableCell>{pkg.duration}</TableCell>
-                      <TableCell>৳{pkg.price}</TableCell>
-                      <TableCell><Badge variant="outline">{pkg.status}</Badge></TableCell>
-                      <TableCell className="text-right">
-                        <Button variant="ghost" size="icon"><MoreVertical className="h-4 w-4"/></Button>
-                      </TableCell>
+            <CardContent className="p-0 sm:p-6">
+              {/* Desktop Table View */}
+              <div className="hidden sm:block overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[150px]">Package Name</TableHead>
+                      <TableHead>Duration</TableHead>
+                      <TableHead>Price</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {PACKAGES.map((pkg) => (
+                      <TableRow key={pkg.id}>
+                        <TableCell className="font-medium whitespace-nowrap">{pkg.name}</TableCell>
+                        <TableCell>{pkg.duration}</TableCell>
+                        <TableCell>৳{pkg.price}</TableCell>
+                        <TableCell><Badge variant={pkg.status === 'Active' ? 'default' : 'secondary'}>{pkg.status}</Badge></TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon"><MoreVertical className="h-4 w-4"/></Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuItem>Edit Package</DropdownMenuItem>
+                              <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile List View */}
+              <div className="sm:hidden divide-y">
+                {PACKAGES.map((pkg) => (
+                  <div key={pkg.id} className="p-4 space-y-3">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="font-semibold">{pkg.name}</h4>
+                        <Badge variant={pkg.status === 'Active' ? 'default' : 'secondary'} className="mt-1 text-xs">
+                          {pkg.status}
+                        </Badge>
+                      </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="-mr-2 h-8 w-8"><MoreVertical className="h-4 w-4"/></Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>Edit Package</DropdownMenuItem>
+                          <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="flex items-center text-muted-foreground">
+                        <Clock className="h-3 w-3 mr-2" />
+                        {pkg.duration}
+                      </div>
+                      <div className="flex items-center font-medium">
+                        <DollarSign className="h-3 w-3 mr-1" />
+                        ৳{pkg.price}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
 
@@ -75,9 +134,9 @@ export default function PricingPackages() {
                </div>
             </CardHeader>
             <CardContent>
-               <div className="grid sm:grid-cols-2 gap-4">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {ADDONS.map(addon => (
-                    <div key={addon.id} className="flex items-center gap-4 p-4 border rounded-lg">
+                    <div key={addon.id} className="flex items-center gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                        <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                           <addon.icon className="h-5 w-5" />
                        </div>
