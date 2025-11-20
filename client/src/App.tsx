@@ -11,6 +11,7 @@ import OwnerLanding from "@/pages/OwnerLanding";
 import Search from "@/pages/Search";
 import HostelDetail from "@/pages/HostelDetail";
 import SignUp from "@/pages/SignUp";
+import Compare from "@/pages/Compare";
 
 // Tenant Pages
 import TenantDashboard from "@/pages/TenantDashboard";
@@ -53,6 +54,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/list-your-property" component={OwnerLanding} />
       <Route path="/search" component={Search} />
+      <Route path="/compare" component={Compare} />
       <Route path="/hostel/:id" component={HostelDetail} />
       <Route path="/signup" component={SignUp} />
       
