@@ -17,7 +17,8 @@ import {
   CreditCard, 
   Ban, 
   Search, 
-  Filter
+  Filter,
+  Download
 } from "lucide-react";
 import {
   Sheet,
@@ -40,6 +41,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   DropdownMenu,
@@ -81,12 +83,27 @@ const BOOKINGS = [
     paidAmount: 1000,
     paymentStatus: "Partial"
   },
+  { 
+    id: 5, 
+    guest: "New Applicant", 
+    room: "202", 
+    status: "Pending", 
+    checkIn: "2024-08-25", 
+    checkOut: "2024-08-30", 
+    type: "Online",
+    email: "applicant@example.com",
+    phone: "+8801512345678",
+    totalAmount: 4000,
+    paidAmount: 0,
+    paymentStatus: "Pending"
+  },
 ];
 
 export default function ManagerBookings() {
   const { toast } = useToast();
   const [selectedBooking, setSelectedBooking] = useState<any>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isRejectOpen, setIsRejectOpen] = useState(false);
 
   const handleCheckIn = (id: number) => {
     toast({
@@ -102,9 +119,30 @@ export default function ManagerBookings() {
     });
   };
 
+  const handleApprove = (id: number) => {
+    toast({
+      title: "Booking Approved",
+      description: `Booking #${id} has been confirmed.`,
+    });
+  };
+
+  const handleReject = () => {
+    toast({
+      title: "Booking Rejected",
+      description: "The booking request has been declined.",
+      variant: "destructive",
+    });
+    setIsRejectOpen(false);
+  };
+
   const openDetails = (booking: any) => {
     setSelectedBooking(booking);
     setIsDetailsOpen(true);
+  };
+
+  const openRejectDialog = (booking: any) => {
+    setSelectedBooking(booking);
+    setIsRejectOpen(true);
   };
 
   const getStatusBadge = (status: string) => {
@@ -126,6 +164,7 @@ export default function ManagerBookings() {
           <p className="text-muted-foreground">Manage bookings for your assigned branch.</p>
         </div>
         <div className="flex gap-2">
+          <Button variant="outline"><Download className="h-4 w-4 mr-2"/> Export</Button>
           <Sheet>
             <SheetTrigger asChild>
               <Button><Plus className="h-4 w-4 mr-2"/> New Booking</Button>
@@ -142,7 +181,26 @@ export default function ManagerBookings() {
                   <Label>Guest Name</Label>
                   <Input placeholder="Enter full name" />
                 </div>
-                {/* Simplified form for manager */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Phone Number</Label>
+                    <Input placeholder="+880..." />
+                  </div>
+                  <div className="space-y-2">
+                     <Label>Email (Optional)</Label>
+                     <Input placeholder="guest@example.com" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                   <div className="space-y-2">
+                      <Label>Check-in Date</Label>
+                      <Input type="date" />
+                   </div>
+                   <div className="space-y-2">
+                      <Label>Check-out Date</Label>
+                      <Input type="date" />
+                   </div>
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                    <div className="space-y-2">
                       <Label>Room</Label>
@@ -169,6 +227,10 @@ export default function ManagerBookings() {
                       </Select>
                    </div>
                 </div>
+                <div className="space-y-2">
+                   <Label>Total Amount (৳)</Label>
+                   <Input type="number" placeholder="0.00" />
+                </div>
               </div>
               <SheetFooter>
                 <SheetClose asChild>
@@ -187,6 +249,29 @@ export default function ManagerBookings() {
           </CardHeader>
           <CardContent>
             <Calendar mode="single" className="rounded-md border w-full flex justify-center" />
+            <div className="mt-6 space-y-4">
+               <div className="flex items-center justify-between">
+                 <h4 className="text-sm font-medium">Upcoming Check-ins</h4>
+                 <Badge variant="outline" className="text-xs">Today</Badge>
+               </div>
+               {BOOKINGS.filter(b => b.status === 'Confirmed' || b.status === 'Pending').slice(0, 3).map(b => (
+                 <div key={b.id} className="flex items-center justify-between p-3 border rounded-lg bg-card hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => openDetails(b)}>
+                    <div className="flex items-center gap-3">
+                       <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                          <User className="h-4 w-4"/>
+                       </div>
+                       <div>
+                          <div className="text-sm font-medium leading-none">{b.guest}</div>
+                          <div className="text-xs text-muted-foreground mt-1">Room {b.room}</div>
+                       </div>
+                    </div>
+                    <div className="text-right">
+                       <div className="text-xs font-medium">{b.checkIn}</div>
+                       <Badge variant="secondary" className="text-[10px] h-5 mt-1">{b.status}</Badge>
+                    </div>
+                 </div>
+               ))}
+            </div>
           </CardContent>
         </Card>
 
@@ -219,6 +304,9 @@ export default function ManagerBookings() {
                       <SelectItem value="all">All Statuses</SelectItem>
                       <SelectItem value="pending">Pending</SelectItem>
                       <SelectItem value="confirmed">Confirmed</SelectItem>
+                      <SelectItem value="checked-in">Checked In</SelectItem>
+                      <SelectItem value="checked-out">Checked Out</SelectItem>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
                     </SelectContent>
                   </Select>
                </div>
@@ -240,44 +328,56 @@ export default function ManagerBookings() {
                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1"><Badge variant="outline" className="h-5 px-1 font-normal">{booking.type}</Badge></span>
                               <span>Room {booking.room}</span>
+                              <span>•</span>
+                              <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {booking.checkIn} - {booking.checkOut}</span>
                            </div>
                         </div>
                      </div>
                      
                      <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-48">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => openDetails(booking)}>
-                              <Eye className="mr-2 h-4 w-4" /> View Details
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            
-                            {booking.status === 'Confirmed' && (
-                              <>
-                                 <DropdownMenuItem onClick={() => handleCheckIn(booking.id)}>
-                                   <LogIn className="mr-2 h-4 w-4 text-green-600" /> Check In
-                                 </DropdownMenuItem>
-                              </>
-                            )}
-                            
-                            {booking.status === 'Checked-In' && (
-                               <DropdownMenuItem onClick={() => handleCheckOut(booking.id)}>
-                                 <LogOut className="mr-2 h-4 w-4 text-orange-600" /> Check Out
+                        {booking.status === 'Pending' ? (
+                           <>
+                             <Button size="sm" variant="outline" className="text-destructive hover:text-destructive border-destructive/20" onClick={() => openRejectDialog(booking)}>Reject</Button>
+                             <Button size="sm" onClick={() => handleApprove(booking.id)}>Approve</Button>
+                           </>
+                        ) : (
+                           <DropdownMenu>
+                             <DropdownMenuTrigger asChild>
+                               <Button variant="ghost" size="icon">
+                                 <MoreHorizontal className="h-4 w-4" />
+                               </Button>
+                             </DropdownMenuTrigger>
+                             <DropdownMenuContent align="end" className="w-48">
+                               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                               <DropdownMenuItem onClick={() => openDetails(booking)}>
+                                 <Eye className="mr-2 h-4 w-4" /> View Details
                                </DropdownMenuItem>
-                            )}
+                               <DropdownMenuSeparator />
+                               
+                               {booking.status === 'Confirmed' && (
+                                 <>
+                                    <DropdownMenuItem onClick={() => handleCheckIn(booking.id)}>
+                                      <LogIn className="mr-2 h-4 w-4 text-green-600" /> Check In
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem className="text-destructive focus:text-destructive">
+                                      <Ban className="mr-2 h-4 w-4" /> Cancel Booking
+                                    </DropdownMenuItem>
+                                 </>
+                               )}
+                               
+                               {booking.status === 'Checked-In' && (
+                                  <DropdownMenuItem onClick={() => handleCheckOut(booking.id)}>
+                                    <LogOut className="mr-2 h-4 w-4 text-orange-600" /> Check Out
+                                  </DropdownMenuItem>
+                               )}
 
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                              <CreditCard className="mr-2 h-4 w-4" /> Record Payment
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                               <DropdownMenuSeparator />
+                               <DropdownMenuItem>
+                                 <CreditCard className="mr-2 h-4 w-4" /> Record Payment
+                               </DropdownMenuItem>
+                             </DropdownMenuContent>
+                           </DropdownMenu>
+                        )}
                      </div>
                   </div>
                 ))}
@@ -305,9 +405,29 @@ export default function ManagerBookings() {
                  </div>
                  <div className="text-right">
                     {getStatusBadge(selectedBooking.status)}
+                    <p className="text-xs text-muted-foreground mt-2">{selectedBooking.type} Booking</p>
                  </div>
               </div>
               
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                 <div>
+                    <Label className="text-xs text-muted-foreground">Check In</Label>
+                    <p className="font-medium">{selectedBooking.checkIn}</p>
+                 </div>
+                 <div>
+                    <Label className="text-xs text-muted-foreground">Check Out</Label>
+                    <p className="font-medium">{selectedBooking.checkOut}</p>
+                 </div>
+                 <div>
+                    <Label className="text-xs text-muted-foreground">Room</Label>
+                    <p className="font-medium">Room {selectedBooking.room}</p>
+                 </div>
+                 <div>
+                    <Label className="text-xs text-muted-foreground">Guests</Label>
+                    <p className="font-medium">1 Adult</p>
+                 </div>
+              </div>
+
               <div className="bg-muted/30 p-3 rounded-md space-y-2">
                  <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Total Amount</span>
@@ -326,8 +446,34 @@ export default function ManagerBookings() {
           )}
           <DialogFooter className="flex-col sm:flex-row gap-2">
              <Button variant="outline" onClick={() => setIsDetailsOpen(false)}>Close</Button>
+             {selectedBooking?.status === 'Confirmed' && (
+                <Button onClick={() => {
+                   handleCheckIn(selectedBooking.id);
+                   setIsDetailsOpen(false);
+                }}>Check In Guest</Button>
+             )}
           </DialogFooter>
         </DialogContent>
+      </Dialog>
+
+      {/* Reject Dialog */}
+      <Dialog open={isRejectOpen} onOpenChange={setIsRejectOpen}>
+         <DialogContent>
+           <DialogHeader>
+             <DialogTitle>Reject Booking Request</DialogTitle>
+             <DialogDescription>
+               Are you sure you want to reject this request? This action cannot be undone.
+             </DialogDescription>
+           </DialogHeader>
+           <div className="py-2">
+             <Label>Reason for Rejection</Label>
+             <Input placeholder="e.g., Room unavailable, Incomplete profile" className="mt-2" />
+           </div>
+           <DialogFooter>
+             <Button variant="outline" onClick={() => setIsRejectOpen(false)}>Cancel</Button>
+             <Button variant="destructive" onClick={handleReject}>Confirm Reject</Button>
+           </DialogFooter>
+         </DialogContent>
       </Dialog>
 
     </DashboardLayout>

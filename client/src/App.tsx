@@ -50,6 +50,7 @@ import ManagerPackages from "@/pages/manager/Packages";
 import ManagerReviews from "@/pages/manager/Reviews";
 import ManagerAnalytics from "@/pages/manager/Analytics";
 import ManagerRooms from "@/pages/manager/Rooms";
+import ManagerStaff from "@/pages/manager/Staff";
 
 // Admin Pages
 import AdminDashboard from "@/pages/AdminDashboard";
@@ -115,6 +116,7 @@ function Router() {
       <Route path="/dashboard/manager/reviews" component={ManagerReviews} />
       <Route path="/dashboard/manager/analytics" component={ManagerAnalytics} />
       <Route path="/dashboard/manager/rooms" component={ManagerRooms} />
+      <Route path="/dashboard/manager/staff" component={ManagerStaff} />
       <Route path="/dashboard/manager/messages" component={MessagesPage} />
       <Route path="/dashboard/manager/settings" component={SettingsPage} />
       
