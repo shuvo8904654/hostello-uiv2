@@ -18,15 +18,15 @@ const data = [
 export default function OwnerDashboard() {
   return (
     <DashboardLayout type="owner">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Owner Dashboard</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Owner Dashboard</h2>
           <p className="text-muted-foreground">Manage your properties and track performance.</p>
         </div>
         <Button>+ Add New Property</Button>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-4 mb-8">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
@@ -73,50 +73,50 @@ export default function OwnerDashboard() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-7 mb-8">
-        <Card className="col-span-4">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-7 mb-8">
+        <Card className="col-span-1 lg:col-span-4">
           <CardHeader>
             <CardTitle>Revenue Overview</CardTitle>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent className="pl-0 sm:pl-2">
             <ResponsiveContainer width="100%" height={350}>
               <BarChart data={data}>
                 <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `৳${value}`} />
+                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `৳${value}`} width={60} />
                 <Bar dataKey="total" fill="currentColor" radius={[4, 4, 0, 0]} className="fill-primary" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card className="col-span-3">
+        <Card className="col-span-1 lg:col-span-3">
           <CardHeader>
             <CardTitle>Recent Booking Requests</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
-                 <div className="flex items-center gap-3">
+                 <div className="flex items-center gap-3 overflow-hidden">
                    <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground shrink-0">RA</div>
-                   <div>
-                     <div className="font-medium">Rahim Ahmed</div>
-                     <div className="text-xs text-muted-foreground">Dhaka Hub • Room 101</div>
+                   <div className="min-w-0">
+                     <div className="font-medium truncate">Rahim Ahmed</div>
+                     <div className="text-xs text-muted-foreground truncate">Dhaka Hub • Room 101</div>
                    </div>
                  </div>
-                 <div className="flex gap-2 w-full sm:w-auto">
+                 <div className="flex gap-2 w-full sm:w-auto shrink-0">
                    <Button size="sm" variant="outline" className="text-xs px-2 h-8 flex-1 sm:flex-none">Decline</Button>
                    <Button size="sm" className="text-xs px-2 h-8 flex-1 sm:flex-none">Accept</Button>
                  </div>
                </div>
                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
-                 <div className="flex items-center gap-3">
+                 <div className="flex items-center gap-3 overflow-hidden">
                    <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground shrink-0">FK</div>
-                   <div>
-                     <div className="font-medium">Fatima Khan</div>
-                     <div className="text-xs text-muted-foreground">Uttara Girls • Bed 2</div>
+                   <div className="min-w-0">
+                     <div className="font-medium truncate">Fatima Khan</div>
+                     <div className="text-xs text-muted-foreground truncate">Uttara Girls • Bed 2</div>
                    </div>
                  </div>
-                 <div className="flex gap-2 w-full sm:w-auto">
+                 <div className="flex gap-2 w-full sm:w-auto shrink-0">
                    <Button size="sm" variant="outline" className="text-xs px-2 h-8 flex-1 sm:flex-none">Decline</Button>
                    <Button size="sm" className="text-xs px-2 h-8 flex-1 sm:flex-none">Accept</Button>
                  </div>
