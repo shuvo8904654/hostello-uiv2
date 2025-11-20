@@ -114,11 +114,18 @@ export default function OwnerProperties() {
           <h2 className="text-3xl font-bold tracking-tight">My Properties</h2>
           <p className="text-muted-foreground">Manage your listings and rooms.</p>
         </div>
-        <Link href="/dashboard/owner/properties/new">
-          <Button>
-            <Plus className="h-4 w-4 mr-2" /> Add New Property
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/dashboard/owner/website">
+             <Button variant="outline">
+                <Globe className="h-4 w-4 mr-2" /> Manage Website
+             </Button>
+          </Link>
+          <Link href="/dashboard/owner/properties/new">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" /> Add New Property
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -154,11 +161,6 @@ export default function OwnerProperties() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <Link href={`/dashboard/owner/website?hostelId=${hostel.id}`}>
-                         <DropdownMenuItem>
-                           <Globe className="mr-2 h-4 w-4" /> Website Builder
-                         </DropdownMenuItem>
-                      </Link>
                       <Link href={`/dashboard/owner/properties/edit/${hostel.id}`}>
                          <DropdownMenuItem>
                            <Edit className="mr-2 h-4 w-4" /> Edit Details
@@ -210,9 +212,9 @@ export default function OwnerProperties() {
                 </div>
 
                 <div className="mt-auto flex gap-2">
-                  <Link href={`/dashboard/owner/website?hostelId=${hostel.id}`} className="flex-1">
+                  <Link href={`/dashboard/owner/properties/edit/${hostel.id}`} className="flex-1">
                      <Button variant="outline" className="w-full">
-                        <Globe className="h-3 w-3 mr-2" /> Site
+                        <Edit className="h-3 w-3 mr-2" /> Edit Details
                      </Button>
                   </Link>
                   <Button className="flex-1" onClick={() => openRooms(hostel)}>Manage Rooms</Button>
