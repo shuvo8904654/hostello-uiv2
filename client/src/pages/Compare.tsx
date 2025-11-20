@@ -1,6 +1,6 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Check, X, MapPin, Star, Trash2, ArrowRight, Info } from "lucide-react";
@@ -65,7 +65,117 @@ export default function Compare() {
           </p>
         </div>
 
-        <div className="overflow-x-auto pb-4">
+        {/* Mobile Layout (Vertical Stack - No horizontal scroll) */}
+        <div className="block md:hidden space-y-8">
+            {/* Feature: Overview */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-lg">Overview</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6 p-4">
+                    {hostelsToCompare.map(hostel => (
+                        <div key={hostel.id} className="border-b last:border-0 pb-6 last:pb-0 relative">
+                             <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="absolute top-0 right-0 text-muted-foreground hover:text-destructive -mt-2 -mr-2"
+                                onClick={() => removeFromCompare(hostel.id)}
+                             >
+                                <Trash2 className="h-4 w-4" />
+                             </Button>
+                             <div className="flex gap-4">
+                                 <img src={hostel.image} className="w-20 h-20 rounded-lg object-cover shrink-0" alt={hostel.name} />
+                                 <div>
+                                     <h3 className="font-bold text-base leading-tight mb-1">
+                                        <a href={`/hostel/${hostel.id}`} className="hover:underline">{hostel.name}</a>
+                                     </h3>
+                                     <div className="flex items-center gap-1 text-sm mb-1">
+                                        <Star className="h-3 w-3 fill-primary text-primary" />
+                                        <span className="font-bold">{hostel.rating}</span>
+                                     </div>
+                                     <div className="text-lg font-bold text-primary">
+                                        ৳{hostel.price}<span className="text-xs font-normal text-muted-foreground">/mo</span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div className="mt-3 flex gap-2">
+                                <Button size="sm" className="flex-1" onClick={() => setLocation(`/hostel/${hostel.id}`)}>Book Now</Button>
+                                <Button size="sm" variant="outline" className="flex-1" onClick={() => setLocation(`/hostel/${hostel.id}`)}>Details</Button>
+                             </div>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+
+            {/* Feature: Type & Location */}
+            <Card>
+                <CardHeader><CardTitle className="text-lg">Details</CardTitle></CardHeader>
+                <CardContent className="space-y-4 p-4">
+                    {hostelsToCompare.map(hostel => (
+                        <div key={hostel.id} className="flex justify-between items-center border-b last:border-0 pb-4 last:pb-0">
+                            <span className="font-bold text-sm w-1/3 truncate">{hostel.name}</span>
+                            <div className="text-right">
+                                <Badge variant="outline" className="mb-1">{hostel.type}</Badge>
+                                <div className="text-xs text-muted-foreground flex justify-end items-center">
+                                    <MapPin className="h-3 w-3 mr-1" /> {hostel.location}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+
+            {/* Feature: Amenities */}
+            <Card>
+                <CardHeader><CardTitle className="text-lg">Amenities</CardTitle></CardHeader>
+                <CardContent className="space-y-6 p-4">
+                    {allAmenities.map(amenity => (
+                        <div key={amenity} className="border-b last:border-0 pb-4 last:pb-0">
+                            <h4 className="font-medium text-sm mb-2 text-muted-foreground">{amenity}</h4>
+                            <div className="grid grid-cols-1 gap-2">
+                                {hostelsToCompare.map(hostel => {
+                                    const hasAmenity = hostel.amenities.includes(amenity);
+                                    return (
+                                        <div key={hostel.id} className="flex items-center justify-between text-sm p-2 bg-muted/20 rounded">
+                                            <span className="truncate w-2/3 pr-2 font-medium">{hostel.name}</span>
+                                            {hasAmenity ? (
+                                                <div className="flex items-center text-green-600 text-xs font-bold">
+                                                    <Check className="h-4 w-4 mr-1" /> Yes
+                                                </div>
+                                            ) : (
+                                                <div className="flex items-center text-muted-foreground text-xs">
+                                                    <X className="h-4 w-4 mr-1" /> No
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+             
+            {/* Feature: Room Types */}
+            <Card>
+                <CardHeader><CardTitle className="text-lg">Room Types</CardTitle></CardHeader>
+                <CardContent className="space-y-4 p-4">
+                    {hostelsToCompare.map(hostel => (
+                        <div key={hostel.id} className="space-y-2 border-b last:border-0 pb-4 last:pb-0">
+                            <h4 className="font-bold text-sm">{hostel.name}</h4>
+                            <ul className="list-disc list-inside text-sm text-muted-foreground pl-2">
+                                {hostel.rooms.map(room => (
+                                    <li key={room.id}>{room.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+        </div>
+
+        {/* Desktop Table Layout */}
+        <div className="hidden md:block overflow-x-auto pb-4">
           <table className="w-full border-collapse min-w-[800px]">
             <thead className="sticky top-0 z-20 shadow-sm">
               <tr>
@@ -103,19 +213,6 @@ export default function Compare() {
                       </div>
                       <Button size="sm" className="w-full" onClick={() => setLocation(`/hostel/${hostel.id}`)}>
                         View Details
-                      </Button>
-                    </div>
-
-                    {/* Mobile/Tablet Header (Condensed) */}
-                    <div className="block md:hidden pr-8">
-                      <h3 className="font-bold text-base leading-tight mb-1 truncate" title={hostel.name}>
-                        <a href={`/hostel/${hostel.id}`} className="hover:underline">{hostel.name}</a>
-                      </h3>
-                      <div className="text-sm font-bold text-primary mb-2">
-                        ৳{hostel.price}<span className="text-xs font-normal text-muted-foreground">/mo</span>
-                      </div>
-                      <Button size="sm" variant="outline" className="w-full text-xs h-8" onClick={() => setLocation(`/hostel/${hostel.id}`)}>
-                        View
                       </Button>
                     </div>
                   </th>
