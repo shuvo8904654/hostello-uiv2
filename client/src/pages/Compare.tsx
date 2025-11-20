@@ -7,6 +7,7 @@ import { Check, X, MapPin, Star, Trash2, ArrowRight, Info } from "lucide-react";
 import { useLocation } from "wouter";
 import { HOSTELS } from "@/lib/mockData";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function Compare() {
   const [location, setLocation] = useLocation();
@@ -66,15 +67,15 @@ export default function Compare() {
 
         <div className="overflow-x-auto pb-4">
           <table className="w-full border-collapse min-w-[800px]">
-            <thead>
+            <thead className="sticky top-0 z-20 shadow-sm">
               <tr>
-                <th className="p-4 text-left w-48 bg-muted/30 border-b border-r sticky left-0 z-10">Features</th>
+                <th className="p-4 text-left w-48 bg-background border-b border-r sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Features</th>
                 {hostelsToCompare.map(hostel => (
-                  <th key={hostel.id} className="p-4 text-left min-w-[250px] border-b relative align-top bg-card">
+                  <th key={hostel.id} className="p-4 text-left min-w-[250px] border-b relative align-top bg-background">
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="absolute top-2 right-2 text-muted-foreground hover:text-destructive"
+                      className="absolute top-2 right-2 text-muted-foreground hover:text-destructive z-10"
                       onClick={() => removeFromCompare(hostel.id)}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -107,7 +108,7 @@ export default function Compare() {
             <tbody>
               {/* Price Row */}
               <tr className="hover:bg-muted/10">
-                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10">Monthly Rent</td>
+                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Monthly Rent</td>
                 {hostelsToCompare.map(hostel => (
                   <td key={hostel.id} className="p-4 border-b align-top">
                     <div className="text-xl font-bold text-primary">
@@ -121,7 +122,7 @@ export default function Compare() {
 
               {/* Type Row */}
               <tr className="hover:bg-muted/10">
-                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10">Type</td>
+                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Type</td>
                 {hostelsToCompare.map(hostel => (
                   <td key={hostel.id} className="p-4 border-b align-top">
                     <Badge variant="outline">{hostel.type} Hostel</Badge>
@@ -131,7 +132,7 @@ export default function Compare() {
 
                {/* Room Types Row */}
                <tr className="hover:bg-muted/10">
-                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10">Room Types</td>
+                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Room Types</td>
                 {hostelsToCompare.map(hostel => (
                   <td key={hostel.id} className="p-4 border-b align-top text-sm">
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground">
@@ -145,12 +146,12 @@ export default function Compare() {
 
               {/* Amenities Section */}
               <tr>
-                <td colSpan={hostelsToCompare.length + 1} className="p-4 bg-muted/30 font-bold border-y">Amenities</td>
+                <td colSpan={hostelsToCompare.length + 1} className="p-4 bg-muted/30 font-bold border-y sticky left-0 z-10">Amenities</td>
               </tr>
               
               {allAmenities.map(amenity => (
                 <tr key={amenity} className="hover:bg-muted/10">
-                  <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10 text-sm">{amenity}</td>
+                  <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10 text-sm shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">{amenity}</td>
                   {hostelsToCompare.map(hostel => {
                     const hasAmenity = hostel.amenities.includes(amenity);
                     return (
@@ -168,7 +169,7 @@ export default function Compare() {
 
               {/* Description Row */}
               <tr className="hover:bg-muted/10">
-                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10">Description</td>
+                <td className="p-4 font-medium border-b border-r sticky left-0 bg-background z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Description</td>
                 {hostelsToCompare.map(hostel => (
                   <td key={hostel.id} className="p-4 border-b align-top text-sm text-muted-foreground leading-relaxed min-w-[250px]">
                     {hostel.description}
@@ -178,7 +179,7 @@ export default function Compare() {
               
               {/* Action Row */}
               <tr>
-                <td className="p-4 border-r sticky left-0 bg-background z-10"></td>
+                <td className="p-4 border-r sticky left-0 bg-background z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]"></td>
                 {hostelsToCompare.map(hostel => (
                   <td key={hostel.id} className="p-4 pt-6">
                     <Button className="w-full" size="lg" onClick={() => setLocation(`/hostel/${hostel.id}`)}>
