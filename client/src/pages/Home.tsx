@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-      <section className="relative h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src={heroImage} 
@@ -58,16 +58,16 @@ export default function Home() {
         
         <div className="container relative z-10 px-4 pt-10">
           <div className="max-w-3xl mx-auto text-center text-white mb-8">
-            <h1 className="text-3xl md:text-6xl font-extrabold tracking-tight mb-4 md:mb-6 drop-shadow-lg">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
               Find your home away from home in Bangladesh
             </h1>
-            <p className="text-base md:text-xl text-white/90 mb-6 md:mb-8 font-medium drop-shadow-md">
+            <p className="text-lg md:text-xl text-white/90 mb-8 font-medium drop-shadow-md">
               The smartest way to find student accommodation. Verified listings, roommate matching, and zero hassle.
             </p>
           </div>
 
           {/* Search Box */}
-          <div className="max-w-4xl mx-auto bg-white p-3 md:p-4 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-3 animate-in slide-in-from-bottom-10 duration-700">
+          <div className="max-w-4xl mx-auto bg-white p-4 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-3 animate-in slide-in-from-bottom-10 duration-700">
             <div className="flex-1 relative">
               <MapPin className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
               <Select value={selectedCity} onValueChange={setSelectedCity}>
