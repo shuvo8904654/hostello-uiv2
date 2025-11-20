@@ -14,7 +14,8 @@ import {
   LayoutGrid,
   LayoutList,
   Map as MapIcon,
-  X
+  X,
+  Scale
 } from "lucide-react";
 import {
   Sheet,
@@ -31,16 +32,41 @@ import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSearch } from "wouter";
+import { useSearch, useLocation } from "wouter";
 
 export default function Search() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
+  const [_, setLocation] = useLocation();
   
   const [searchQuery, setSearchQuery] = useState(params.get("location") || "");
   const [selectedCity, setSelectedCity] = useState(params.get("city") || "");
+
+  // Compare Logic
+  const [compareCount, setCompareCount] = useState(0);
+
+  useEffect(() => {
+    const updateCompareCount = () => {
+      const storedIds = localStorage.getItem('compareIds')?.split(',').filter(Boolean) || [];
+      setCompareCount(storedIds.length);
+    };
+
+    // Initial load
+    updateCompareCount();
+
+    // Listen for updates from HostelCard
+    window.addEventListener('storage', updateCompareCount);
+    return () => window.removeEventListener('storage', updateCompareCount);
+  }, []);
+
+  const handleCompareClick = () => {
+    const storedIds = localStorage.getItem('compareIds')?.split(',').filter(Boolean) || [];
+    if (storedIds.length > 0) {
+      setLocation(`/compare?ids=${storedIds.join(',')}`);
+    }
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(searchString);
@@ -98,7 +124,17 @@ export default function Search() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
+      <div className="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8 relative">
+        {/* Floating Compare Button */}
+        {compareCount > 0 && (
+           <div className="fixed bottom-8 right-8 z-50 animate-in fade-in slide-in-from-bottom-4">
+              <Button onClick={handleCompareClick} size="lg" className="shadow-xl rounded-full h-14 px-6 gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
+                 <Scale className="h-5 w-5" /> 
+                 Compare ({compareCount})
+              </Button>
+           </div>
+        )}
+
         {/* Desktop Filters Sidebar */}
         <aside className="hidden lg:block w-72 space-y-8 flex-shrink-0 sticky top-24 h-fit">
           <div className="bg-card border rounded-xl p-6 shadow-sm">

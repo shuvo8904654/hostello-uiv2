@@ -1,17 +1,55 @@
 import { Hostel } from "@/lib/mockData";
-import { MapPin, Star, Wifi, User } from "lucide-react";
+import { MapPin, Star, Scale } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 interface HostelCardProps {
   hostel: Hostel;
 }
 
 export function HostelCard({ hostel }: HostelCardProps) {
+  const [isComparing, setIsComparing] = useState(false);
+
+  useEffect(() => {
+    // Check if this hostel is already in comparison list (mock implementation)
+    const params = new URLSearchParams(window.location.search);
+    // In a real app, we'd check a global store or context.
+    // For now, we just initialize state locally, but to make it work "live" on the search page
+    // without a refresh is tricky without context. 
+    // Let's assume the parent component might handle this or we use localStorage.
+    const storedIds = localStorage.getItem('compareIds')?.split(',') || [];
+    setIsComparing(storedIds.includes(hostel.id));
+  }, [hostel.id]);
+
+  const toggleCompare = (checked: boolean) => {
+    setIsComparing(checked);
+    
+    const storedIds = localStorage.getItem('compareIds')?.split(',').filter(Boolean) || [];
+    let newIds;
+    
+    if (checked) {
+      if (!storedIds.includes(hostel.id)) {
+        newIds = [...storedIds, hostel.id];
+      } else {
+        newIds = storedIds;
+      }
+    } else {
+      newIds = storedIds.filter(id => id !== hostel.id);
+    }
+    
+    localStorage.setItem('compareIds', newIds.join(','));
+    
+    // Dispatch a custom event so other components can update (like a floating counter)
+    window.dispatchEvent(new Event('storage'));
+  };
+
   return (
-    <div className="group rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col h-full">
+    <div className="group rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col h-full relative">
       <div className="relative aspect-[4/3] overflow-hidden">
         <img 
           src={hostel.image} 
@@ -25,6 +63,19 @@ export function HostelCard({ hostel }: HostelCardProps) {
         <Badge className="absolute top-3 left-3 bg-primary/90 hover:bg-primary">
           {hostel.type}
         </Badge>
+        
+        {/* Compare Checkbox Overlay */}
+        <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-md shadow-sm flex items-center gap-2">
+           <Checkbox 
+              id={`compare-${hostel.id}`} 
+              checked={isComparing}
+              onCheckedChange={(checked) => toggleCompare(checked as boolean)}
+              className="h-4 w-4"
+           />
+           <Label htmlFor={`compare-${hostel.id}`} className="text-xs font-bold cursor-pointer select-none">
+              Compare
+           </Label>
+        </div>
       </div>
       
       <div className="p-5 flex flex-col flex-1">
