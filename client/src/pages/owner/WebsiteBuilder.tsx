@@ -32,7 +32,8 @@ import {
   Package as PackageIcon,
   Grid,
   List,
-  CreditCard
+  CreditCard,
+  Briefcase
 } from "lucide-react";
 import { HOSTELS } from "@/lib/mockData";
 import { useState } from "react";
@@ -51,11 +52,11 @@ export default function WebsiteBuilder() {
   
   // State for the builder
   const [selectedTemplate, setSelectedTemplate] = useState("modern");
-  const [brandName, setBrandName] = useState("Premium Hostels");
-  const [subdomain, setSubdomain] = useState("premium-hostels");
+  const [brandName, setBrandName] = useState("Premium Stays");
+  const [subdomain, setSubdomain] = useState("premium-stays");
   const [primaryColor, setPrimaryColor] = useState("indigo");
-  const [heroHeadline, setHeroHeadline] = useState("Elevate Your Student Life");
-  const [heroSubheadline, setHeroSubheadline] = useState("Experience premium living designed for students who want more than just a room.");
+  const [heroHeadline, setHeroHeadline] = useState("Elevate Your Living Experience");
+  const [heroSubheadline, setHeroSubheadline] = useState("Experience premium living designed for professionals and travelers who want more than just a room.");
   const [showAmenities, setShowAmenities] = useState(true);
   const [showTestimonials, setShowTestimonials] = useState(true);
   const [buttonRadius, setButtonRadius] = useState([8]);
@@ -122,7 +123,7 @@ export default function WebsiteBuilder() {
                </Link>
                <h2 className="text-2xl font-bold tracking-tight">Website Builder</h2>
             </div>
-            <p className="text-muted-foreground text-sm">Design and publish your hostel's landing page.</p>
+            <p className="text-muted-foreground text-sm">Design and publish your accommodation's landing page.</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
@@ -379,7 +380,7 @@ export default function WebsiteBuilder() {
 
                        <div className="space-y-3">
                           <Label>SEO Settings</Label>
-                          <Input placeholder="Meta Title" defaultValue={`${brandName} - Best Student Accommodation`} />
+                          <Input placeholder="Meta Title" defaultValue={`${brandName} - Best Accommodation`} />
                           <Textarea placeholder="Meta Description" className="h-20" />
                        </div>
                     </TabsContent>
@@ -475,12 +476,12 @@ export default function WebsiteBuilder() {
                               <img 
                                  src={HOSTELS[0].image} 
                                  className="w-full h-[420px] object-cover"
-                                 alt="Hostel Hero"
+                                 alt="Hero"
                               />
                               
                               <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white">
                                  <Badge className={`mb-4 hover:bg-white/20 bg-white/20 text-white border-0 backdrop-blur-md`}>
-                                    Premium Student Living
+                                    Premium Living
                                  </Badge>
                                  <h1 className="text-4xl font-bold leading-tight mb-3 drop-shadow-sm">
                                     {heroHeadline}
@@ -503,7 +504,7 @@ export default function WebsiteBuilder() {
                            <div className="grid grid-cols-3 border-b border-gray-100">
                               <div className="p-4 py-6 text-center border-r border-gray-100">
                                  <div className={`text-xl font-bold ${textMap[primaryColor]}`}>500+</div>
-                                 <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Students</div>
+                                 <div className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mt-1">Residents</div>
                               </div>
                               <div className="p-4 py-6 text-center border-r border-gray-100">
                                  <div className={`text-xl font-bold ${textMap[primaryColor]}`}>4.9</div>
@@ -526,7 +527,7 @@ export default function WebsiteBuilder() {
                                     {[
                                        { icon: Wifi, label: "High-Speed Wifi", desc: "100 Mbps Dedicated" },
                                        { icon: Shield, label: "24/7 Security", desc: "CCTV & Guards" },
-                                       { icon: Coffee, label: "Study Lounge", desc: "Quiet Zones" },
+                                       { icon: Briefcase, label: "Work Space", desc: "Quiet Zones" },
                                        { icon: Zap, label: "Power Backup", desc: "Always On" }
                                     ].map((item, i) => (
                                        <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all group">
@@ -577,7 +578,7 @@ export default function WebsiteBuilder() {
                                <img 
                                  src={HOSTELS[1].image} 
                                  className="w-full h-full object-cover"
-                                 alt="Hostel Hero"
+                                 alt="Hero"
                               />
                            </div>
 
@@ -589,7 +590,7 @@ export default function WebsiteBuilder() {
                                     {[
                                        { icon: Wifi, label: "High-Speed Wifi", desc: "100 Mbps Dedicated" },
                                        { icon: Shield, label: "24/7 Security", desc: "CCTV & Guards" },
-                                       { icon: Coffee, label: "Study Lounge", desc: "Quiet Zones" },
+                                       { icon: Briefcase, label: "Work Space", desc: "Quiet Zones" },
                                     ].map((item, i) => (
                                        <div key={i} className="flex items-start gap-4 pb-6 border-b border-gray-100 last:border-0">
                                           <div className="text-lg font-medium text-black w-1/3">{item.label}</div>
@@ -618,7 +619,7 @@ export default function WebsiteBuilder() {
                            {/* Hero Section */}
                            <div className={`${colorMap[primaryColor]} text-white p-6 pt-10 pb-20 rounded-b-[3rem]`}>
                               <div className="inline-block px-3 py-1 rounded-full border border-white/20 text-[10px] font-bold uppercase tracking-wider mb-6">
-                                 New Academic Year 2025
+                                 Established 2025
                               </div>
                               <h1 className="text-5xl font-black leading-none mb-6 uppercase tracking-tight">
                                  {heroHeadline}
@@ -637,7 +638,7 @@ export default function WebsiteBuilder() {
                               <img 
                                  src={HOSTELS[2].image} 
                                  className="w-full aspect-square object-cover rounded-[2rem] border-4 border-white shadow-2xl rotate-1"
-                                 alt="Hostel Hero"
+                                 alt="Hero"
                               />
                            </div>
 
@@ -649,7 +650,7 @@ export default function WebsiteBuilder() {
                                     {[
                                        { icon: Wifi, label: "Fast Wifi" },
                                        { icon: Shield, label: "Secure" },
-                                       { icon: Coffee, label: "Lounge" },
+                                       { icon: Briefcase, label: "Lounge" },
                                        { icon: Zap, label: "Power" }
                                     ].map((item, i) => (
                                        <div key={i} className="bg-gray-100 p-6 rounded-2xl hover:bg-black hover:text-white transition-colors group cursor-pointer">
@@ -770,14 +771,14 @@ export default function WebsiteBuilder() {
                       {showTestimonials && (
                          <div className={`p-8 ${selectedTemplate === 'minimal' ? 'bg-gray-50 text-black' : ''} ${selectedTemplate === 'modern' ? 'bg-slate-900 text-white' : ''} ${selectedTemplate === 'bold' ? `${colorMap[primaryColor]} text-white` : ''}`}>
                             <div className="text-center mb-8">
-                               <h3 className="font-bold text-xl mb-2">Student Stories</h3>
+                               <h3 className="font-bold text-xl mb-2">Guest Stories</h3>
                                <p className="text-white/60 text-xs">Hear from our happy residents</p>
                             </div>
                             
                             <div className={`backdrop-blur-md border rounded-2xl p-6 relative ${selectedTemplate === 'minimal' ? 'bg-white border-gray-200 shadow-sm' : 'bg-white/10 border-white/10'}`}>
                                <div className="absolute -top-3 -left-2 text-4xl opacity-20 font-serif">"</div>
                                <p className={`text-sm leading-relaxed mb-4 italic ${selectedTemplate === 'minimal' ? 'text-gray-600' : 'text-white/90'}`}>
-                                  Moving here was the best decision I made for my university life. The community is amazing and the facilities are top-notch.
+                                  Moving here was the best decision I made. The community is amazing and the facilities are top-notch.
                                </p>
                                <div className="flex items-center gap-3">
                                   <div className="h-8 w-8 rounded-full bg-white/20 overflow-hidden">
@@ -807,7 +808,7 @@ export default function WebsiteBuilder() {
                          </div>
                          
                          <div className="text-xs text-gray-500 leading-relaxed mb-6">
-                            Premium student accommodation designed for comfort, community, and academic success.
+                            Premium accommodation designed for comfort, community, and success.
                          </div>
 
                          <div className="grid grid-cols-2 gap-4 text-xs text-gray-600 font-medium">

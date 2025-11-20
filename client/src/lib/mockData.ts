@@ -48,21 +48,21 @@ export interface Package {
 export const HOSTELS: Hostel[] = [
   {
     id: '1',
-    name: 'Dhaka Student Hub',
+    name: 'Dhaka City Hub',
     city: 'Dhaka',
     location: 'Bashundhara R/A',
     price: 5000,
     rating: 4.8,
     reviews: 124,
     reviewsList: [
-      { id: 'r1', user: 'Tanvir Hasan', rating: 5, date: '2 days ago', comment: 'Amazing place! The WiFi is super fast and the study room is very quiet.', avatar: 'TH' },
+      { id: 'r1', user: 'Tanvir Hasan', rating: 5, date: '2 days ago', comment: 'Amazing place! The WiFi is super fast and the workspace is very quiet.', avatar: 'TH' },
       { id: 'r2', user: 'Sadia Rahman', rating: 4, date: '1 week ago', comment: 'Great security and clean environment. Just wish the kitchen was a bit bigger.', avatar: 'SR' },
-      { id: 'r3', user: 'Karim Ullah', rating: 5, date: '2 weeks ago', comment: 'Best hostel in Bashundhara area for this price.', avatar: 'KU' },
+      { id: 'r3', user: 'Karim Ullah', rating: 5, date: '2 weeks ago', comment: 'Best stay in Bashundhara area for this price.', avatar: 'KU' },
     ],
     image: exteriorImage,
     images: [exteriorImage, dormImage, privateRoomImage, heroImage],
-    amenities: ['High-speed WiFi', 'Gym', 'Study Room', 'Generator', '24/7 Security', 'CCTV'],
-    description: 'The Hub offers a premium student living experience in the heart of Bashundhara. Close to NSU and IUB. With modern amenities and a vibrant community.',
+    amenities: ['High-speed WiFi', 'Gym', 'Co-working Space', 'Generator', '24/7 Security', 'CCTV'],
+    description: 'The Hub offers a premium living experience in the heart of Bashundhara. Close to major offices and universities. With modern amenities and a vibrant community.',
     type: 'Mens',
     rooms: [
       { id: 'r1', name: '4-Bed AC Dorm', price: 5000, capacity: 4, type: 'Dorm', available: 2 },
@@ -70,25 +70,25 @@ export const HOSTELS: Hostel[] = [
     ],
     packages: [
       { name: 'Monthly Stay', duration: 'Monthly', price: 5000 },
-      { name: 'Semester Package', duration: 'Semester', price: 28000 },
+      { name: 'Long Term', duration: 'Semester', price: 28000 },
     ]
   },
   {
     id: '2',
-    name: 'Uttara Girls Hostel',
+    name: 'Uttara Ladies Residence',
     city: 'Dhaka',
     location: 'Uttara Sector 4',
     price: 4500,
     rating: 4.5,
     reviews: 89,
     reviewsList: [
-       { id: 'r4', user: 'Nusrat Jahan', rating: 5, date: '3 days ago', comment: 'Very safe for girls. The warden is very helpful.', avatar: 'NJ' },
+       { id: 'r4', user: 'Nusrat Jahan', rating: 5, date: '3 days ago', comment: 'Very safe environment. The manager is very helpful.', avatar: 'NJ' },
        { id: 'r5', user: 'Farhana Akter', rating: 4, date: '2 weeks ago', comment: 'Good food and clean rooms.', avatar: 'FA' }
     ],
     image: dormImage,
     images: [dormImage, exteriorImage, heroImage],
     amenities: ['WiFi', 'Meal Service', 'Kitchen', 'Lounge', 'CCTV'],
-    description: 'Safe and secure accommodation for female students in Uttara. Home-cooked meals available.',
+    description: 'Safe and secure accommodation for women in Uttara. Home-cooked meals available.',
     type: 'Womens',
     rooms: [
       { id: 'r3', name: '2-Bed Shared Room', price: 4500, capacity: 2, type: 'Dorm', available: 4 },
@@ -99,7 +99,7 @@ export const HOSTELS: Hostel[] = [
   },
   {
     id: '3',
-    name: 'Chittagong Scholars Hall',
+    name: 'Chittagong Metro Stay',
     city: 'Chittagong',
     location: 'Nasirabad',
     price: 3500,
@@ -108,8 +108,8 @@ export const HOSTELS: Hostel[] = [
     reviewsList: [],
     image: privateRoomImage,
     images: [privateRoomImage, heroImage, exteriorImage],
-    amenities: ['WiFi', 'Study Hall', 'Praying Room', 'Dining Hall'],
-    description: 'Peaceful environment for serious students. Located near GEC circle.',
+    amenities: ['WiFi', 'Work Station', 'Praying Room', 'Dining Hall'],
+    description: 'Peaceful environment for professionals. Located near GEC circle.',
     type: 'Mens',
     rooms: [
       { id: 'r4', name: 'Single Room', price: 6000, capacity: 1, type: 'Private', available: 3 },
@@ -131,7 +131,7 @@ export const HOSTELS: Hostel[] = [
     image: exteriorImage,
     images: [exteriorImage, dormImage],
     amenities: ['Garden', 'WiFi', 'IPS Backup', 'Attached Bath'],
-    description: 'Eco-friendly hostel with open spaces and fresh air.',
+    description: 'Eco-friendly residence with open spaces and fresh air.',
     type: 'Co-ed',
     rooms: [
       { id: 'r6', name: 'Double Room', price: 5000, capacity: 2, type: 'Private', available: 1 },
@@ -144,13 +144,13 @@ export const HOSTELS: Hostel[] = [
 
 export const CITIES = ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna'];
 export const LOCATIONS = ['Bashundhara R/A', 'Uttara', 'Dhanmondi', 'Mirpur', 'Mohammadpur', 'Banani', 'Gulshan'];
-export const AMENITIES = ['WiFi', 'AC', 'Meal Service', 'Generator/IPS', 'Attached Bath', 'CCTV', 'Gym', 'Study Room'];
+export const AMENITIES = ['WiFi', 'AC', 'Meal Service', 'Generator/IPS', 'Attached Bath', 'CCTV', 'Gym', 'Co-working Space'];
 
 // New Mock Data for Dashboard
 
 export const BOOKINGS = [
-  { id: 'b1', hostelName: 'Dhaka Student Hub', roomType: 'Private AC Room', checkIn: '2025-09-01', checkOut: '2026-08-31', status: 'Active', price: 12000 },
-  { id: 'b2', hostelName: 'Uttara Girls Hostel', roomType: '2-Bed Shared', checkIn: '2024-09-01', checkOut: '2025-06-30', status: 'Completed', price: 4500 },
+  { id: 'b1', hostelName: 'Dhaka City Hub', roomType: 'Private AC Room', checkIn: '2025-09-01', checkOut: '2026-08-31', status: 'Active', price: 12000 },
+  { id: 'b2', hostelName: 'Uttara Ladies Residence', roomType: '2-Bed Shared', checkIn: '2024-09-01', checkOut: '2025-06-30', status: 'Completed', price: 4500 },
 ];
 
 export const MESSAGES = [
