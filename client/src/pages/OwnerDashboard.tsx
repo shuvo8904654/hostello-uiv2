@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity, Building2, BedDouble, AlertCircle, CreditCard } from "lucide-react";
+import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity, Building2, BedDouble, AlertCircle, CreditCard, Utensils, Shield, Armchair } from "lucide-react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, LineChart, Line, PieChart, Pie, Cell, Tooltip, AreaChart, Area } from "recharts";
 import { Link } from "wouter";
 
@@ -115,6 +115,67 @@ export default function OwnerDashboard() {
               </p>
             </div>
           </CardContent>
+        </Card>
+      </div>
+
+      {/* Operational Updates - New Section */}
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-3 mb-8">
+        <Card className="bg-blue-50/50 dark:bg-blue-950/20 border-blue-100 dark:border-blue-900">
+           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Today's Attendance</CardTitle>
+              <Shield className="h-4 w-4 text-blue-600" />
+           </CardHeader>
+           <CardContent>
+              <div className="flex justify-between items-end mb-2">
+                 <div className="text-2xl font-bold">142<span className="text-sm font-normal text-muted-foreground">/150</span></div>
+                 <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-200">95% Present</Badge>
+              </div>
+              <div className="text-xs text-muted-foreground mb-3">
+                 3 Late Entries • 2 Gate Passes Active
+              </div>
+              <Link href="/dashboard/owner/attendance">
+                 <Button size="sm" variant="ghost" className="w-full h-8 text-blue-700 hover:text-blue-800 hover:bg-blue-100">View Logs</Button>
+              </Link>
+           </CardContent>
+        </Card>
+
+        <Card className="bg-orange-50/50 dark:bg-orange-950/20 border-orange-100 dark:border-orange-900">
+           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Mess & Food</CardTitle>
+              <Utensils className="h-4 w-4 text-orange-600" />
+           </CardHeader>
+           <CardContent>
+              <div className="mb-2">
+                 <span className="text-xs font-medium text-muted-foreground uppercase">Tonight's Menu</span>
+                 <p className="font-medium truncate">Rice, Fish Curry, Vegetable, Dal</p>
+              </div>
+              <div className="text-xs text-muted-foreground mb-3 flex items-center gap-2">
+                 <AlertCircle className="h-3 w-3 text-orange-600" />
+                 <span className="text-orange-700 dark:text-orange-400 font-medium">Low Stock: Rice (50kg)</span>
+              </div>
+              <Link href="/dashboard/owner/food">
+                 <Button size="sm" variant="ghost" className="w-full h-8 text-orange-700 hover:text-orange-800 hover:bg-orange-100">Manage Menu</Button>
+              </Link>
+           </CardContent>
+        </Card>
+
+        <Card className="bg-purple-50/50 dark:bg-purple-950/20 border-purple-100 dark:border-purple-900">
+           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Inventory Status</CardTitle>
+              <Armchair className="h-4 w-4 text-purple-600" />
+           </CardHeader>
+           <CardContent>
+              <div className="flex justify-between items-end mb-2">
+                 <div className="text-2xl font-bold">28</div>
+                 <Badge variant="outline" className="bg-purple-100 text-purple-700 border-purple-200">Maintenance Due</Badge>
+              </div>
+              <div className="text-xs text-muted-foreground mb-3">
+                 12 Warranties expiring this month
+              </div>
+              <Link href="/dashboard/owner/inventory">
+                 <Button size="sm" variant="ghost" className="w-full h-8 text-purple-700 hover:text-purple-800 hover:bg-purple-100">Check Assets</Button>
+              </Link>
+           </CardContent>
         </Card>
       </div>
 
