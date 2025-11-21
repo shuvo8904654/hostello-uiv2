@@ -32,6 +32,15 @@ export default function OwnerTenants() {
   const [selectedTenant, setSelectedTenant] = useState<any>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [property, setProperty] = useState("all");
+
+  const filteredTenants = property === "all"
+    ? TENANTS
+    : TENANTS.filter(t => {
+        if (property === "dhaka") return t.hostelId === "1";
+        if (property === "uttara") return t.hostelId === "2";
+        return true;
+    });
 
   const handleRecordPayment = () => {
     toast({
@@ -58,6 +67,21 @@ export default function OwnerTenants() {
         <p className="text-muted-foreground">View and manage your current tenants.</p>
       </div>
 
+      <div className="flex justify-end mb-4">
+         <div className="w-full sm:w-[200px]">
+            <Select defaultValue="all" onValueChange={setProperty}>
+               <SelectTrigger>
+                  <SelectValue placeholder="Select Property" />
+               </SelectTrigger>
+               <SelectContent>
+                  <SelectItem value="all">All Properties</SelectItem>
+                  <SelectItem value="dhaka">Dhaka Hub</SelectItem>
+                  <SelectItem value="uttara">Uttara Girls</SelectItem>
+               </SelectContent>
+            </Select>
+         </div>
+      </div>
+
       <Card className="overflow-hidden">
         <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4">
            <div className="relative w-full sm:w-64">
@@ -82,7 +106,7 @@ export default function OwnerTenants() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {TENANTS.map((tenant) => (
+              {filteredTenants.map((tenant) => (
                 <TableRow key={tenant.id}>
                   <TableCell className="font-medium whitespace-nowrap cursor-pointer hover:underline" onClick={() => openDetails(tenant)}>
                     {tenant.name}

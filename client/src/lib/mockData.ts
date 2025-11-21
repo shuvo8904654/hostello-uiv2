@@ -167,9 +167,9 @@ export const USERS = [
 ];
 
 export const TENANTS = [
-  { id: 't1', name: 'Rahim Ahmed', room: '304', rentStatus: 'Paid', leaseEnd: '2026-08-31', phone: '01711000000', email: 'rahim@example.com', leaseStart: '2025-09-01', rentAmount: 5000 },
-  { id: 't2', name: 'Sujon Khan', room: '305', rentStatus: 'Overdue', leaseEnd: '2026-08-31', phone: '01711000111', email: 'sujon@example.com', leaseStart: '2025-09-01', rentAmount: 5000 },
-  { id: 't3', name: 'Nusrat Jahan', room: '306', rentStatus: 'Paid', leaseEnd: '2026-08-31', phone: '01711000222', email: 'nusrat@example.com', leaseStart: '2025-09-01', rentAmount: 5000 },
+  { id: 't1', name: 'Rahim Ahmed', room: '304', rentStatus: 'Paid', leaseEnd: '2026-08-31', phone: '01711000000', email: 'rahim@example.com', leaseStart: '2025-09-01', rentAmount: 5000, hostelId: '1', hostelName: 'Dhaka Student & Pro Hub' },
+  { id: 't2', name: 'Sujon Khan', room: '305', rentStatus: 'Overdue', leaseEnd: '2026-08-31', phone: '01711000111', email: 'sujon@example.com', leaseStart: '2025-09-01', rentAmount: 5000, hostelId: '1', hostelName: 'Dhaka Student & Pro Hub' },
+  { id: 't3', name: 'Nusrat Jahan', room: '306', rentStatus: 'Paid', leaseEnd: '2026-08-31', phone: '01711000222', email: 'nusrat@example.com', leaseStart: '2025-09-01', rentAmount: 5000, hostelId: '2', hostelName: 'Uttara Ladies Residence' },
 ];
 
 export { heroImage, exteriorImage, dormImage, privateRoomImage };

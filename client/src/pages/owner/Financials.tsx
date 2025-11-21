@@ -60,6 +60,33 @@ export default function OwnerFinancials() {
         return true;
     });
 
+  // Calculate totals based on filtered transactions
+  const totalIncome = filteredTransactions
+    .filter(t => t.type === 'Income')
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const totalExpense = filteredTransactions
+    .filter(t => t.type === 'Expense')
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const netProfit = totalIncome - totalExpense;
+
+  // Mock chart data updates (in a real app, this would be aggregated from transactions)
+  const getChartData = () => {
+    if (property === "dhaka") {
+       return CHART_DATA.map(d => ({ ...d, income: d.income * 0.6, expense: d.expense * 0.6 }));
+    }
+    if (property === "uttara") {
+       return CHART_DATA.map(d => ({ ...d, income: d.income * 0.3, expense: d.expense * 0.3 }));
+    }
+    if (property === "mirpur") {
+       return CHART_DATA.map(d => ({ ...d, income: d.income * 0.1, expense: d.expense * 0.1 }));
+    }
+    return CHART_DATA;
+  };
+
+  const currentChartData = getChartData();
+
   const handleDownload = () => {
     toast({
       title: "Report Downloaded",
@@ -192,7 +219,7 @@ export default function OwnerFinancials() {
               <TrendingUp className="h-4 w-4 text-green-500" />
            </CardHeader>
            <CardContent>
-              <div className="text-2xl font-bold">৳1,24,500</div>
+              <div className="text-2xl font-bold">৳{totalIncome.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">+12% from last month</p>
            </CardContent>
         </Card>
@@ -202,7 +229,7 @@ export default function OwnerFinancials() {
               <TrendingDown className="h-4 w-4 text-red-500" />
            </CardHeader>
            <CardContent>
-              <div className="text-2xl font-bold">৳88,200</div>
+              <div className="text-2xl font-bold">৳{totalExpense.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">+15% from last month</p>
            </CardContent>
         </Card>
@@ -212,7 +239,7 @@ export default function OwnerFinancials() {
               <DollarSign className="h-4 w-4 text-primary" />
            </CardHeader>
            <CardContent>
-              <div className="text-2xl font-bold text-primary">৳36,300</div>
+              <div className="text-2xl font-bold text-primary">৳{netProfit.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">Healthy Margin</p>
            </CardContent>
         </Card>
@@ -226,7 +253,7 @@ export default function OwnerFinancials() {
           </CardHeader>
           <CardContent className="pl-0">
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={CHART_DATA}>
+              <BarChart data={currentChartData}>
                 <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
                 <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `৳${value}`} />
                 <Tooltip 
