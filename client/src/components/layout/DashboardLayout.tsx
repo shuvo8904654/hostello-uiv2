@@ -321,44 +321,8 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
           </div>
           
           <div className="flex items-center gap-4">
-             {/* Notifications & Alerts */}
-             <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative h-8 w-8">
-                  <Bell className="h-4 w-4" />
-                  <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-red-600 border-2 border-background"></span>
-                  <span className="sr-only">Notifications</span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent align="end" className="w-80">
-                 <div className="grid gap-4">
-                   <div className="space-y-2">
-                     <h4 className="font-medium leading-none">Notifications</h4>
-                     <p className="text-sm text-muted-foreground">You have 3 unread messages.</p>
-                   </div>
-                   <div className="grid gap-2">
-                     <div className="flex items-start gap-2 p-2 rounded-md bg-muted/50">
-                        <div className="h-2 w-2 mt-1.5 rounded-full bg-blue-500 shrink-0" />
-                        <div>
-                           <p className="text-sm font-medium">New Booking Request</p>
-                           <p className="text-xs text-muted-foreground">Rahim Ahmed requested Room 101</p>
-                           <p className="text-xs text-muted-foreground mt-1">2 mins ago</p>
-                        </div>
-                     </div>
-                     <div className="flex items-start gap-2 p-2 rounded-md bg-muted/50">
-                        <div className="h-2 w-2 mt-1.5 rounded-full bg-orange-500 shrink-0" />
-                        <div>
-                           <p className="text-sm font-medium">Rent Overdue</p>
-                           <p className="text-xs text-muted-foreground">Sujon Khan's rent is 5 days late</p>
-                           <p className="text-xs text-muted-foreground mt-1">Yesterday</p>
-                        </div>
-                     </div>
-                   </div>
-                   <Button variant="outline" size="sm" className="w-full">View All Notifications</Button>
-                 </div>
-              </PopoverContent>
-            </Popover>
-
+             {/* Notifications & Alerts - Removed as requested */}
+            
             <div className="h-8 w-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
               {type === 'tenant' ? 'AL' : type === 'owner' ? 'JD' : type === 'manager' ? 'BM' : 'AD'}
             </div>
