@@ -3,7 +3,7 @@ import { useRoute, Link } from "wouter";
 import { HOSTELS, Review } from "@/lib/mockData";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, MapPin, Wifi, Users, ShieldCheck, BedDouble, Calendar as CalendarIcon, CheckCircle, MessageSquare, User, X, Check } from "lucide-react";
+import { Star, MapPin, Wifi, Users, ShieldCheck, BedDouble, Calendar as CalendarIcon, CheckCircle, MessageSquare, User, X, Check, Package } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -30,6 +30,7 @@ export default function HostelDetail() {
   // Booking State
   const [date, setDate] = useState<Date>();
   const [selectedRoom, setSelectedRoom] = useState<string>("");
+  const [selectedPackage, setSelectedPackage] = useState<string>("");
   const [isBookingSuccessOpen, setIsBookingSuccessOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [signUpData, setSignUpData] = useState({ name: "", email: "", password: "" });
@@ -44,6 +45,15 @@ export default function HostelDetail() {
         variant: "destructive"
       });
       return;
+    }
+
+    if (!selectedRoom && !selectedPackage) {
+        toast({
+          title: "Select a room or package",
+          description: "Please select a room or a package to continue.",
+          variant: "destructive"
+        });
+        return;
     }
 
     // Open Sign Up modal instead of direct success
@@ -83,6 +93,7 @@ export default function HostelDetail() {
     // Reset form
     setDate(undefined);
     setSelectedRoom("");
+    setSelectedPackage("");
   };
 
   const handleSubmitReview = () => {
@@ -194,6 +205,28 @@ export default function HostelDetail() {
               </div>
             </div>
 
+            {/* Packages Section */}
+            <div>
+              <h3 className="text-xl font-bold mb-4">Packages & Offers</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {hostel.packages.map((pkg, index) => (
+                  <div key={index} className="p-4 border rounded-xl hover:border-primary/50 transition-colors bg-primary/5">
+                    <div className="flex justify-between items-start mb-2">
+                       <div>
+                          <h4 className="font-bold text-lg">{pkg.name}</h4>
+                          <Badge variant="outline" className="mt-1 bg-background">{pkg.duration}</Badge>
+                       </div>
+                       <Package className="h-5 w-5 text-primary" />
+                    </div>
+                    <div className="mt-4">
+                       <div className="text-2xl font-bold text-primary">৳{pkg.price}</div>
+                       <p className="text-xs text-muted-foreground">Best value for {pkg.duration.toLowerCase()} stays</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
 
           </div>
 
@@ -239,7 +272,7 @@ export default function HostelDetail() {
                 {/* Room Type Selection */}
                 <div className="space-y-2">
                   <Label>Select Room</Label>
-                  <Select value={selectedRoom} onValueChange={setSelectedRoom}>
+                  <Select value={selectedRoom} onValueChange={(v) => { setSelectedRoom(v); setSelectedPackage(""); }}>
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a room type" />
                     </SelectTrigger>
@@ -247,6 +280,23 @@ export default function HostelDetail() {
                       {hostel.rooms.map(room => (
                         <SelectItem key={room.id} value={room.id}>
                           {room.name} - ৳{room.price}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Package Selection */}
+                <div className="space-y-2">
+                  <Label>Select Package (Optional)</Label>
+                  <Select value={selectedPackage} onValueChange={(v) => { setSelectedPackage(v); setSelectedRoom(""); }}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a package" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {hostel.packages.map((pkg, index) => (
+                        <SelectItem key={index} value={pkg.name}>
+                          {pkg.name} ({pkg.duration}) - ৳{pkg.price}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -347,9 +397,11 @@ export default function HostelDetail() {
                     <div className="flex justify-between">
                        <span className="text-muted-foreground">Payable Amount:</span>
                        <span className="font-bold text-primary">
-                          {selectedRoom 
-                            ? `৳${hostel.rooms.find(r => r.id === selectedRoom)?.price}` 
-                            : `Starts from ৳${hostel.price}`}
+                          {selectedPackage
+                            ? `৳${hostel.packages.find(p => p.name === selectedPackage)?.price}`
+                            : selectedRoom 
+                                ? `৳${hostel.rooms.find(r => r.id === selectedRoom)?.price}` 
+                                : `Starts from ৳${hostel.price}`}
                        </span>
                     </div>
                  </div>
