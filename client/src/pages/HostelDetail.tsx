@@ -47,10 +47,10 @@ export default function HostelDetail() {
       return;
     }
 
-    if (!selectedRoom && !selectedPackage) {
+    if (!selectedPackage) {
         toast({
-          title: "Select a room or package",
-          description: "Please select a room or a package to continue.",
+          title: "Select a package",
+          description: "Please select a package to continue.",
           variant: "destructive"
         });
         return;
@@ -288,7 +288,7 @@ export default function HostelDetail() {
 
                 {/* Package Selection */}
                 <div className="space-y-2">
-                  <Label>Select Package (Optional)</Label>
+                  <Label>Select Package</Label>
                   <Select value={selectedPackage} onValueChange={(v) => { setSelectedPackage(v); setSelectedRoom(""); }}>
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a package" />
