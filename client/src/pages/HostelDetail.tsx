@@ -227,6 +227,90 @@ export default function HostelDetail() {
               </div>
             </div>
 
+            {/* Reviews Section - Public */}
+            <div className="pt-8 border-t">
+              <div className="flex items-center justify-between mb-6">
+                 <h3 className="text-2xl font-bold">Guest Reviews</h3>
+                 <Button onClick={() => setIsReviewOpen(true)}>Write a Review</Button>
+              </div>
+              
+              <div className="grid gap-6">
+                 {hostel.reviewsList.length > 0 ? (
+                    hostel.reviewsList.map((review) => (
+                       <div key={review.id} className="flex gap-4 p-4 border rounded-lg bg-card">
+                          <Avatar>
+                             <AvatarImage src={review.avatar} />
+                             <AvatarFallback>{review.user.charAt(0)}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                             <div className="flex items-center justify-between mb-1">
+                                <h4 className="font-bold">{review.user}</h4>
+                                <span className="text-sm text-muted-foreground">{review.date}</span>
+                             </div>
+                             <div className="flex items-center mb-2">
+                                {[...Array(5)].map((_, i) => (
+                                   <Star 
+                                      key={i} 
+                                      className={cn("h-4 w-4", i < review.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30")} 
+                                   />
+                                ))}
+                             </div>
+                             <p className="text-muted-foreground">{review.comment}</p>
+                          </div>
+                       </div>
+                    ))
+                 ) : (
+                    <div className="text-center py-12 text-muted-foreground">
+                       <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                       <p>No reviews yet. Be the first to share your experience!</p>
+                    </div>
+                 )}
+              </div>
+            </div>
+
+            {/* Review Dialog */}
+            <Dialog open={isReviewOpen} onOpenChange={setIsReviewOpen}>
+               <DialogContent>
+                  <DialogHeader>
+                     <DialogTitle>Write a Review</DialogTitle>
+                     <DialogDescription>Share your experience at {hostel.name}</DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                     <div className="space-y-2">
+                        <Label>Rating</Label>
+                        <div className="flex gap-1">
+                           {[1, 2, 3, 4, 5].map((star) => (
+                              <button
+                                 key={star}
+                                 onClick={() => setNewReview({...newReview, rating: star})}
+                                 className="focus:outline-none"
+                              >
+                                 <Star 
+                                    className={cn(
+                                       "h-8 w-8 transition-colors", 
+                                       star <= newReview.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"
+                                    )} 
+                                 />
+                              </button>
+                           ))}
+                        </div>
+                     </div>
+                     <div className="space-y-2">
+                        <Label>Your Review</Label>
+                        <Textarea 
+                           placeholder="Tell us about your stay..." 
+                           value={newReview.comment}
+                           onChange={(e) => setNewReview({...newReview, comment: e.target.value})}
+                           className="min-h-[100px]"
+                        />
+                     </div>
+                  </div>
+                  <DialogFooter>
+                     <Button variant="outline" onClick={() => setIsReviewOpen(false)}>Cancel</Button>
+                     <Button onClick={handleSubmitReview}>Post Review</Button>
+                  </DialogFooter>
+               </DialogContent>
+            </Dialog>
 
           </div>
 

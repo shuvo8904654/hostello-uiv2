@@ -254,6 +254,39 @@ export default function OwnerBookings() {
                       </Select>
                    </div>
                 </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                   <div className="space-y-2">
+                      <Label>Package</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select package" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="standard">Monthly Standard</SelectItem>
+                          <SelectItem value="semester">Semester Special</SelectItem>
+                          <SelectItem value="none">No Package (Custom)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                   </div>
+                   <div className="space-y-2">
+                      <Label>Duration</Label>
+                      <div className="flex gap-2">
+                         <Input type="number" placeholder="Qty" className="w-20" />
+                         <Select defaultValue="months">
+                           <SelectTrigger>
+                             <SelectValue />
+                           </SelectTrigger>
+                           <SelectContent>
+                             <SelectItem value="days">Days</SelectItem>
+                             <SelectItem value="months">Months</SelectItem>
+                             <SelectItem value="years">Years</SelectItem>
+                           </SelectContent>
+                         </Select>
+                      </div>
+                   </div>
+                </div>
+
                 <div className="space-y-2">
                    <Label>Total Amount (৳)</Label>
                    <Input type="number" placeholder="0.00" />

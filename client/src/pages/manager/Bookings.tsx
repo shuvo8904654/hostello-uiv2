@@ -215,18 +215,37 @@ export default function ManagerBookings() {
                       </Select>
                    </div>
                    <div className="space-y-2">
-                      <Label>Duration</Label>
-                      <Select defaultValue="monthly">
+                      <Label>Package</Label>
+                      <Select>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select duration" />
+                          <SelectValue placeholder="Select package" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="daily">Daily</SelectItem>
-                          <SelectItem value="monthly">Monthly</SelectItem>
+                          <SelectItem value="standard">Monthly Standard</SelectItem>
+                          <SelectItem value="semester">Semester Special</SelectItem>
+                          <SelectItem value="none">No Package (Custom)</SelectItem>
                         </SelectContent>
                       </Select>
                    </div>
                 </div>
+                
+                <div className="space-y-2">
+                   <Label>Duration (Custom)</Label>
+                   <div className="flex gap-2">
+                      <Input type="number" placeholder="Qty" className="w-24" />
+                      <Select defaultValue="months">
+                        <SelectTrigger className="flex-1">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="days">Days</SelectItem>
+                          <SelectItem value="weeks">Weeks</SelectItem>
+                          <SelectItem value="months">Months</SelectItem>
+                        </SelectContent>
+                      </Select>
+                   </div>
+                </div>
+
                 <div className="space-y-2">
                    <Label>Total Amount (৳)</Label>
                    <Input type="number" placeholder="0.00" />
