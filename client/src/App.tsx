@@ -11,6 +11,7 @@ import OwnerLanding from "@/pages/OwnerLanding";
 import Search from "@/pages/Search";
 import HostelDetail from "@/pages/HostelDetail";
 import SignUp from "@/pages/SignUp";
+import Login from "@/pages/Login";
 import Compare from "@/pages/Compare";
 
 // Tenant Pages
@@ -75,6 +76,7 @@ function Router() {
       <Route path="/compare" component={Compare} />
       <Route path="/hostel/:id" component={HostelDetail} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/login" component={Login} />
       
       {/* Tenant Routes */}
       <Route path="/dashboard/tenant" component={TenantDashboard} />

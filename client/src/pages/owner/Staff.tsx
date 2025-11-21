@@ -90,6 +90,13 @@ export default function OwnerStaff() {
                          <Input placeholder="manager@hostello.com" type="email" />
                       </div>
                       <div className="space-y-2">
+                         <Label>Password</Label>
+                         <div className="relative">
+                            <Key className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input className="pl-9" type="password" placeholder="Set a temporary password" />
+                         </div>
+                      </div>
+                      <div className="space-y-2">
                          <Label>Phone Number</Label>
                          <Input placeholder="+880..." />
                       </div>
