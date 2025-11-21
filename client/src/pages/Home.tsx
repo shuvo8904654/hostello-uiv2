@@ -1,6 +1,6 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { LocationSearch } from "@/components/LocationSearch";
 import { 
   Search, 
   MapPin, 
@@ -69,26 +69,22 @@ export default function Home() {
           {/* Search Box */}
           <div className="max-w-4xl mx-auto bg-white p-4 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-3 animate-in slide-in-from-bottom-10 duration-700">
             <div className="flex-1 relative">
-              <MapPin className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-              <Select value={selectedCity} onValueChange={setSelectedCity}>
-                <SelectTrigger className="pl-10 h-12 border-0 bg-muted/30 focus:ring-0 text-base">
-                  <SelectValue placeholder="Select City" />
-                </SelectTrigger>
-                <SelectContent>
-                  {CITIES.map(city => <SelectItem key={city} value={city}>{city}</SelectItem>)}
-                </SelectContent>
-              </Select>
+              <LocationSearch 
+                items={CITIES}
+                placeholder="Select City"
+                value={selectedCity}
+                onValueChange={setSelectedCity}
+                icon={MapPin}
+              />
             </div>
             <div className="flex-1 relative">
-              <HomeIcon className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-              <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                <SelectTrigger className="pl-10 h-12 border-0 bg-muted/30 focus:ring-0 text-base">
-                  <SelectValue placeholder="Select Area / Location" />
-                </SelectTrigger>
-                <SelectContent>
-                  {LOCATIONS.map(loc => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
-                </SelectContent>
-              </Select>
+              <LocationSearch 
+                items={LOCATIONS}
+                placeholder="Select Area / Location"
+                value={selectedLocation}
+                onValueChange={setSelectedLocation}
+                icon={HomeIcon}
+              />
             </div>
             <Button 
               onClick={handleSearch}

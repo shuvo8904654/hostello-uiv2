@@ -1,11 +1,12 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { HostelCard } from "@/components/HostelCard";
-import { HOSTELS, CITIES, AMENITIES } from "@/lib/mockData";
+import { HOSTELS, CITIES, LOCATIONS, AMENITIES } from "@/lib/mockData";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { LocationSearch } from "@/components/LocationSearch";
 import { 
   Search as SearchIcon, 
   SlidersHorizontal, 
@@ -15,7 +16,8 @@ import {
   LayoutList,
   Map as MapIcon,
   X,
-  Scale
+  Scale,
+  Home as HomeIcon
 } from "lucide-react";
 import {
   Sheet,
@@ -86,29 +88,25 @@ export default function Search() {
            
            <div className="bg-background p-4 rounded-xl shadow-lg border max-w-4xl flex flex-col md:flex-row gap-4">
              <div className="relative flex-1">
-               <SearchIcon className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
-               <Input 
-                 className="pl-10 h-12 border-none bg-muted/30 text-lg focus-visible:ring-0" 
-                 placeholder="Search by location, university, or hostel name..." 
-                 value={searchQuery}
-                 onChange={(e) => setSearchQuery(e.target.value)}
+               <LocationSearch 
+                  items={LOCATIONS}
+                  placeholder="Search by location, area..."
+                  value={searchQuery}
+                  onValueChange={setSearchQuery}
+                  icon={SearchIcon}
                />
              </div>
              
              <div className="w-px bg-border hidden md:block mx-2"></div>
              
              <div className="relative w-full md:w-64">
-               <MapPin className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
-               <Select value={selectedCity} onValueChange={setSelectedCity}>
-                 <SelectTrigger className="pl-10 h-12 border-none bg-muted/30 text-lg focus:ring-0 shadow-none">
-                   <SelectValue placeholder="Select City" />
-                 </SelectTrigger>
-                 <SelectContent>
-                   {CITIES.map(city => (
-                     <SelectItem key={city} value={city}>{city}</SelectItem>
-                   ))}
-                 </SelectContent>
-               </Select>
+               <LocationSearch 
+                  items={CITIES}
+                  placeholder="Select City"
+                  value={selectedCity}
+                  onValueChange={setSelectedCity}
+                  icon={MapPin}
+               />
              </div>
 
              <Button size="lg" className="h-12 px-8 text-lg font-medium">Search</Button>
