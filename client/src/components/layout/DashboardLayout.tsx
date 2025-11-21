@@ -84,7 +84,6 @@ export function DashboardLayout({ children, type }: DashboardLayoutProps) {
       label: "Discover",
       items: [
         { icon: Search, label: 'Find Hostels', href: '/search' },
-        { icon: Users, label: 'Roommate Finder', href: '/dashboard/tenant/roommates' },
       ]
     },
     {

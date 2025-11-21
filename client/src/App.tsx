@@ -17,7 +17,6 @@ import Compare from "@/pages/Compare";
 // Tenant Pages
 import TenantDashboard from "@/pages/TenantDashboard";
 import TenantBookings from "@/pages/tenant/Bookings";
-import RoommateFinder from "@/pages/tenant/RoommateFinder";
 import MessagesPage from "@/pages/shared/Messages";
 import SettingsPage from "@/pages/shared/Settings";
 
@@ -81,7 +80,6 @@ function Router() {
       {/* Tenant Routes */}
       <Route path="/dashboard/tenant" component={TenantDashboard} />
       <Route path="/dashboard/tenant/bookings" component={TenantBookings} />
-      <Route path="/dashboard/tenant/roommates" component={RoommateFinder} />
       <Route path="/dashboard/tenant/messages" component={MessagesPage} />
       <Route path="/dashboard/tenant/settings" component={SettingsPage} />
       
