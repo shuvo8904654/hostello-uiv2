@@ -230,8 +230,7 @@ export default function HostelDetail() {
             {/* Reviews Section - Public */}
             <div className="pt-8 border-t">
               <div className="flex items-center justify-between mb-6">
-                 <h3 className="text-2xl font-bold">Guest Reviews</h3>
-                 <Button onClick={() => setIsReviewOpen(true)}>Write a Review</Button>
+                 <h3 className="text-2xl font-bold">Verified Tenant Reviews</h3>
               </div>
               
               <div className="grid gap-6">
@@ -244,7 +243,10 @@ export default function HostelDetail() {
                           </Avatar>
                           <div className="flex-1">
                              <div className="flex items-center justify-between mb-1">
-                                <h4 className="font-bold">{review.user}</h4>
+                                <div>
+                                   <h4 className="font-bold inline mr-2">{review.user}</h4>
+                                   <Badge variant="secondary" className="text-[10px] h-5 px-1 bg-green-100 text-green-700 hover:bg-green-100 font-normal border-green-200">Verified Tenant</Badge>
+                                </div>
                                 <span className="text-sm text-muted-foreground">{review.date}</span>
                              </div>
                              <div className="flex items-center mb-2">
@@ -262,55 +264,11 @@ export default function HostelDetail() {
                  ) : (
                     <div className="text-center py-12 text-muted-foreground">
                        <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-20" />
-                       <p>No reviews yet. Be the first to share your experience!</p>
+                       <p>No reviews yet.</p>
                     </div>
                  )}
               </div>
             </div>
-
-            {/* Review Dialog */}
-            <Dialog open={isReviewOpen} onOpenChange={setIsReviewOpen}>
-               <DialogContent>
-                  <DialogHeader>
-                     <DialogTitle>Write a Review</DialogTitle>
-                     <DialogDescription>Share your experience at {hostel.name}</DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                     <div className="space-y-2">
-                        <Label>Rating</Label>
-                        <div className="flex gap-1">
-                           {[1, 2, 3, 4, 5].map((star) => (
-                              <button
-                                 key={star}
-                                 onClick={() => setNewReview({...newReview, rating: star})}
-                                 className="focus:outline-none"
-                              >
-                                 <Star 
-                                    className={cn(
-                                       "h-8 w-8 transition-colors", 
-                                       star <= newReview.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"
-                                    )} 
-                                 />
-                              </button>
-                           ))}
-                        </div>
-                     </div>
-                     <div className="space-y-2">
-                        <Label>Your Review</Label>
-                        <Textarea 
-                           placeholder="Tell us about your stay..." 
-                           value={newReview.comment}
-                           onChange={(e) => setNewReview({...newReview, comment: e.target.value})}
-                           className="min-h-[100px]"
-                        />
-                     </div>
-                  </div>
-                  <DialogFooter>
-                     <Button variant="outline" onClick={() => setIsReviewOpen(false)}>Cancel</Button>
-                     <Button onClick={handleSubmitReview}>Post Review</Button>
-                  </DialogFooter>
-               </DialogContent>
-            </Dialog>
 
           </div>
 
