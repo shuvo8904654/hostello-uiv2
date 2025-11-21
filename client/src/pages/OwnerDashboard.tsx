@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HOSTELS } from "@/lib/mockData";
-import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity, Building2, BedDouble, AlertCircle, CreditCard, Utensils, Shield, Armchair } from "lucide-react";
+import { BarChart as BarChartIcon, Users, ArrowUpRight, DollarSign, TrendingUp, PieChart as PieChartIcon, Activity, Building2, BedDouble, AlertCircle, CreditCard, Utensils, Shield, Armchair, Star } from "lucide-react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, LineChart, Line, PieChart, Pie, Cell, Tooltip, AreaChart, Area } from "recharts";
 import { Link } from "wouter";
 
@@ -40,6 +40,11 @@ const expensesData = [
 const MANAGERS = [
   { id: 1, name: "Abdul Karim", branch: "Dhaka Hub", email: "abdul.k@hostello.com", status: "Active" },
   { id: 2, name: "Fatima Hasan", branch: "Uttara Girls", email: "fatima.h@hostello.com", status: "Active" },
+];
+
+const recentReviews = [
+  { id: 1, user: "Rahim A.", rating: 5, comment: "Great facilities and food!", date: "2 days ago", property: "Dhaka Hub" },
+  { id: 2, user: "Sarah K.", rating: 4, comment: "WiFi could be faster in common area.", date: "5 days ago", property: "Uttara Girls" },
 ];
 
 export default function OwnerDashboard() {
@@ -311,6 +316,62 @@ export default function OwnerDashboard() {
                ))}
             </div>
           </CardContent>
+        </Card>
+      </div>
+
+      {/* Community & Feedback - New Section */}
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 mb-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Reviews</CardTitle>
+            <CardDescription>Latest feedback from tenants.</CardDescription>
+          </CardHeader>
+          <CardContent>
+             <div className="space-y-4">
+                {recentReviews.map((review) => (
+                   <div key={review.id} className="border-b last:border-0 pb-4 last:pb-0">
+                      <div className="flex justify-between items-start mb-1">
+                         <div className="font-medium text-sm">{review.user}</div>
+                         <div className="flex items-center text-yellow-500">
+                            <Star className="h-3 w-3 fill-current" />
+                            <span className="text-xs ml-1 text-muted-foreground">{review.rating}.0</span>
+                         </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-1">"{review.comment}"</p>
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{review.property} • {review.date}</p>
+                   </div>
+                ))}
+             </div>
+             <Link href="/dashboard/owner/reviews">
+                <Button variant="ghost" size="sm" className="w-full mt-2">View All Reviews</Button>
+             </Link>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-blue-50/50 dark:bg-blue-950/20 border-blue-100 dark:border-blue-900">
+           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-400">Roommate Matching</CardTitle>
+              <Users className="h-4 w-4 text-blue-600" />
+           </CardHeader>
+           <CardContent>
+              <div className="flex items-center gap-4 mb-6">
+                 <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">12</div>
+                 <p className="text-xs text-blue-600/80 font-medium">Active searches this week</p>
+              </div>
+              
+              <div className="space-y-3">
+                 <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Successful Matches</span>
+                    <span className="font-medium">45</span>
+                 </div>
+                 <div className="w-full bg-blue-200/50 rounded-full h-2">
+                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: '75%' }}></div>
+                 </div>
+                 <p className="text-xs text-muted-foreground pt-2">
+                    75% matching success rate. High demand for non-smoking roommates.
+                 </p>
+              </div>
+           </CardContent>
         </Card>
       </div>
     </DashboardLayout>
