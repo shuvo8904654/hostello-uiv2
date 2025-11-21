@@ -81,7 +81,23 @@ export default function TenantDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-1">
+        <Card className="col-span-1 bg-primary/5 border-primary/20">
+          <CardHeader>
+             <CardTitle className="text-primary flex items-center gap-2">
+                <Clock className="h-5 w-5" /> Pending Review
+             </CardTitle>
+          </CardHeader>
+          <CardContent>
+             <p className="text-sm text-muted-foreground mb-4">
+                You haven't rated your stay at <strong>Uttara Ladies Residence</strong> yet. Your feedback helps us improve!
+             </p>
+             <Link href="/dashboard/tenant/bookings">
+                <Button className="w-full sm:w-auto">Leave a Review</Button>
+             </Link>
+          </CardContent>
+        </Card>
+
+        <Card className="col-span-1 lg:col-span-2">
           <CardHeader>
             <CardTitle>Recommended for you</CardTitle>
           </CardHeader>

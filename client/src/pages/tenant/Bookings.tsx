@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BOOKINGS } from "@/lib/mockData";
-import { Calendar, MapPin, Download, FileText, AlertCircle, Clock, CreditCard, ChevronRight, LogOut, PenTool, Upload } from "lucide-react";
+import { Calendar, MapPin, Download, FileText, AlertCircle, Clock, CreditCard, ChevronRight, LogOut, PenTool, Upload, Star, MessageSquare } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -22,9 +22,22 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function TenantBookings() {
   const [date, setDate] = useState<string>("");
+  const { toast } = useToast();
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
+  const handleSubmitReview = () => {
+    toast({
+      title: "Review Submitted",
+      description: "Thank you for your feedback! Your review has been posted.",
+    });
+    setRating(0);
+    setComment("");
+  };
 
   return (
     <DashboardLayout type="tenant">
@@ -67,6 +80,50 @@ export default function TenantBookings() {
                   <Button variant="outline" size="sm">
                     <Download className="h-4 w-4 mr-2" /> Receipt
                   </Button>
+
+                  {booking.status === 'Completed' && (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button size="sm" variant="secondary">
+                          <Star className="h-4 w-4 mr-2" /> Leave Review
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Rate Your Stay</DialogTitle>
+                          <DialogDescription>
+                            How was your experience at {booking.hostelName}?
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                          <div className="space-y-2">
+                            <Label>Rating</Label>
+                            <div className="flex gap-1">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <Star
+                                  key={star}
+                                  className={`h-8 w-8 cursor-pointer transition-colors ${star <= rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30 hover:text-yellow-400"}`}
+                                  onClick={() => setRating(star)}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Your Review</Label>
+                            <Textarea 
+                              placeholder="Tell us what you liked or didn't like..." 
+                              value={comment}
+                              onChange={(e) => setComment(e.target.value)}
+                              className="h-32"
+                            />
+                          </div>
+                        </div>
+                        <DialogFooter>
+                          <Button onClick={handleSubmitReview} disabled={rating === 0}>Submit Review</Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                  )}
                   
                   {booking.status === 'Active' && (
                     <Sheet>
