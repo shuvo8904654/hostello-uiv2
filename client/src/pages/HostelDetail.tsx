@@ -3,7 +3,7 @@ import { useRoute, Link } from "wouter";
 import { HOSTELS, Review } from "@/lib/mockData";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, MapPin, Wifi, Users, ShieldCheck, BedDouble, Calendar, CheckCircle, MessageSquare, User, X } from "lucide-react";
+import { Star, MapPin, Wifi, Users, ShieldCheck, BedDouble, Calendar as CalendarIcon, CheckCircle, MessageSquare, User, X, Check } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -12,6 +12,11 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function HostelDetail() {
   const [match, params] = useRoute("/hostel/:id");
@@ -19,14 +24,36 @@ export default function HostelDetail() {
   const { toast } = useToast();
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
+  
+  // Booking State
+  const [date, setDate] = useState<Date>();
+  const [selectedRoom, setSelectedRoom] = useState<string>("");
+  const [isBookingSuccessOpen, setIsBookingSuccessOpen] = useState(false);
 
   if (!hostel) return <div>Hostel not found</div>;
 
   const handleBook = () => {
+    if (!date) {
+      toast({
+        title: "Select a date",
+        description: "Please select a check-in date to continue.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsBookingSuccessOpen(true);
+  };
+
+  const confirmBooking = () => {
+    setIsBookingSuccessOpen(false);
     toast({
-      title: "Request Sent! 🚀",
-      description: "The owner will review your booking request shortly.",
+      title: "Booking Confirmed! 🎉",
+      description: "We've sent the details to your email.",
     });
+    // Reset form
+    setDate(undefined);
+    setSelectedRoom("");
   };
 
   const handleSubmitReview = () => {
@@ -270,25 +297,104 @@ export default function HostelDetail() {
               </div>
 
               <div className="space-y-4 mb-6">
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="border rounded-lg p-3">
-                    <label className="text-xs text-muted-foreground block mb-1">Check-in</label>
-                    <div className="font-medium flex items-center gap-2"><Calendar className="h-4 w-4" /> ASAP</div>
-                  </div>
-                  <div className="border rounded-lg p-3">
-                    <label className="text-xs text-muted-foreground block mb-1">Duration</label>
-                    <div className="font-medium">Monthly</div>
-                  </div>
+                {/* Date Picker */}
+                <div className="space-y-2">
+                   <Label>Check-in Date</Label>
+                   <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
-                <Button size="lg" className="w-full font-bold text-lg" onClick={handleBook}>Request to Book</Button>
+
+                {/* Room Type Selection */}
+                <div className="space-y-2">
+                  <Label>Select Room</Label>
+                  <Select value={selectedRoom} onValueChange={setSelectedRoom}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a room type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {hostel.rooms.map(room => (
+                        <SelectItem key={room.id} value={room.id}>
+                          {room.name} - ৳{room.price}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="pt-2">
+                    <div className="flex items-start gap-2 text-sm text-muted-foreground mb-4 bg-muted/50 p-3 rounded-lg border">
+                        <div className="mt-0.5"><CheckCircle className="h-4 w-4 text-green-600" /></div>
+                        <div>
+                            <span className="font-medium text-foreground">Pay on Arrival</span>
+                            <p className="text-xs mt-1">Book now to reserve your spot. Payment is collected directly by the owner when you check in.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <Button size="lg" className="w-full font-bold text-lg" onClick={handleBook}>Book Now</Button>
                 <Button variant="outline" className="w-full">Message Owner</Button>
-              </div>
-              
-              <div className="text-center text-xs text-muted-foreground">
-                You won't be charged yet
               </div>
             </div>
           </div>
+
+          {/* Booking Success Modal */}
+          <Dialog open={isBookingSuccessOpen} onOpenChange={setIsBookingSuccessOpen}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 mb-4">
+                  <Check className="h-6 w-6 text-green-600" />
+                </div>
+                <DialogTitle className="text-center text-xl">Booking Request Received!</DialogTitle>
+                <DialogDescription className="text-center pt-2">
+                  Your booking for <strong>{hostel.name}</strong> is pending confirmation.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                 <div className="bg-muted/30 p-4 rounded-lg space-y-3 text-sm">
+                    <div className="flex justify-between">
+                       <span className="text-muted-foreground">Check-in Date:</span>
+                       <span className="font-medium">{date ? format(date, "MMMM do, yyyy") : '-'}</span>
+                    </div>
+                    <div className="flex justify-between">
+                       <span className="text-muted-foreground">Payable Amount:</span>
+                       <span className="font-bold text-primary">
+                          {selectedRoom 
+                            ? `৳${hostel.rooms.find(r => r.id === selectedRoom)?.price}` 
+                            : `Starts from ৳${hostel.price}`}
+                       </span>
+                    </div>
+                 </div>
+                 <div className="text-center text-sm text-muted-foreground px-4">
+                    To confirm this booking, please visit the property on the check-in date and pay the owner directly.
+                 </div>
+              </div>
+              <DialogFooter className="sm:justify-center">
+                <Button type="button" className="w-full sm:w-auto" onClick={confirmBooking}>
+                  I Understand, Confirm Booking
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </PublicLayout>

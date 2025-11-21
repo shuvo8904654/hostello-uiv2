@@ -42,7 +42,7 @@ export default function ManagerDashboard() {
     <DashboardLayout type="manager">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Branch Manager Dashboard</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Property Manager Dashboard</h2>
           <p className="text-muted-foreground">Welcome back, Manager. Managing: <span className="font-semibold text-primary">Dhaka Hub</span></p>
         </div>
         <div className="flex gap-2">
@@ -57,7 +57,7 @@ export default function ManagerDashboard() {
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Branch Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">Property Revenue</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -156,7 +156,7 @@ export default function ManagerDashboard() {
         {/* Revenue Chart */}
         <Card className="col-span-1 lg:col-span-4">
           <CardHeader>
-            <CardTitle>Branch Revenue</CardTitle>
+            <CardTitle>Property Revenue</CardTitle>
             <CardDescription>Monthly revenue performance.</CardDescription>
           </CardHeader>
           <CardContent className="pl-0 sm:pl-2">

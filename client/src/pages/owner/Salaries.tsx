@@ -26,7 +26,7 @@ const STAFF_PAYROLL = [
 
 export default function OwnerSalaries() {
   const { toast } = useToast();
-  const [branch, setBranch] = useState("all");
+  const [property, setProperty] = useState("all");
 
   const handlePaySalary = (name: string) => {
     toast({
@@ -35,12 +35,12 @@ export default function OwnerSalaries() {
     });
   };
 
-  const filteredStaff = branch === "all" 
+  const filteredStaff = property === "all" 
     ? STAFF_PAYROLL 
     : STAFF_PAYROLL.filter(s => {
-        if (branch === "dhaka") return s.branch === "Dhaka Hub";
-        if (branch === "uttara") return s.branch === "Uttara Girls";
-        if (branch === "mirpur") return s.branch === "Mirpur Home";
+        if (property === "dhaka") return s.branch === "Dhaka Hub";
+        if (property === "uttara") return s.branch === "Uttara Girls";
+        if (property === "mirpur") return s.branch === "Mirpur Home";
         return true;
     });
 
@@ -56,12 +56,12 @@ export default function OwnerSalaries() {
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
            <div className="w-full sm:w-[200px]">
-            <Select defaultValue="all" onValueChange={setBranch}>
+            <Select defaultValue="all" onValueChange={setProperty}>
                <SelectTrigger>
-                  <SelectValue placeholder="Select Branch" />
+                  <SelectValue placeholder="Select Property" />
                </SelectTrigger>
                <SelectContent>
-                  <SelectItem value="all">All Branches</SelectItem>
+                  <SelectItem value="all">All Properties</SelectItem>
                   <SelectItem value="dhaka">Dhaka Hub</SelectItem>
                   <SelectItem value="uttara">Uttara Girls</SelectItem>
                   <SelectItem value="mirpur">Mirpur Home</SelectItem>
@@ -121,7 +121,7 @@ export default function OwnerSalaries() {
             <TableHeader>
               <TableRow>
                 <TableHead>Staff Member</TableHead>
-                <TableHead>Role & Branch</TableHead>
+                <TableHead>Role & Property</TableHead>
                 <TableHead>Monthly Salary</TableHead>
                 <TableHead>Last Paid</TableHead>
                 <TableHead>Status</TableHead>

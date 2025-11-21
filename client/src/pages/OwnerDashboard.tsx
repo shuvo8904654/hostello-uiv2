@@ -209,8 +209,8 @@ export default function OwnerDashboard() {
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-3 mb-8">
          <Card className="col-span-1 lg:col-span-3">
             <CardHeader>
-               <CardTitle>Branch Performance</CardTitle>
-               <CardDescription>Overview of metrics by branch manager.</CardDescription>
+               <CardTitle>Property Performance</CardTitle>
+               <CardDescription>Overview of metrics by property manager.</CardDescription>
             </CardHeader>
             <CardContent>
                <div className="space-y-4">

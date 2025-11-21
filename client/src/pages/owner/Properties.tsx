@@ -245,9 +245,9 @@ export default function OwnerProperties() {
       <Dialog open={isManagerOpen} onOpenChange={setIsManagerOpen}>
          <DialogContent>
             <DialogHeader>
-               <DialogTitle>Assign Branch Manager</DialogTitle>
+               <DialogTitle>Assign Property Manager</DialogTitle>
                <DialogDescription>
-                  Select a manager for <strong>{selectedProperty?.name}</strong>. They will have full access to manage this branch.
+                  Select a manager for <strong>{selectedProperty?.name}</strong>. They will have full access to manage this property.
                </DialogDescription>
             </DialogHeader>
             <div className="py-4">

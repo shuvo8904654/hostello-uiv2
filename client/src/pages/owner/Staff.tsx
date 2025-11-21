@@ -54,19 +54,19 @@ export default function OwnerStaff() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Team Management</h2>
-          <p className="text-muted-foreground">Manage branch managers, operational staff, and payroll.</p>
+          <p className="text-muted-foreground">Manage property managers, operational staff, and payroll.</p>
         </div>
       </div>
 
       <Tabs defaultValue="managers" className="space-y-6">
         <TabsList>
-          <TabsTrigger value="managers" className="gap-2"><Building2 className="h-4 w-4"/> Branch Managers</TabsTrigger>
+          <TabsTrigger value="managers" className="gap-2"><Building2 className="h-4 w-4"/> Property Managers</TabsTrigger>
           <TabsTrigger value="staff" className="gap-2"><Users className="h-4 w-4"/> General Staff</TabsTrigger>
         </TabsList>
 
         <TabsContent value="managers">
            <div className="flex justify-between items-center mb-4">
-             <h3 className="text-lg font-semibold">Branch Managers</h3>
+             <h3 className="text-lg font-semibold">Property Managers</h3>
              <Sheet>
               <SheetTrigger asChild>
                 <Button><UserPlus className="h-4 w-4 mr-2"/> Create Manager Account</Button>
@@ -75,7 +75,7 @@ export default function OwnerStaff() {
                 <SheetHeader>
                   <SheetTitle>Create Manager Account</SheetTitle>
                   <SheetDescription>
-                    Add a new manager who will have full access to manage a specific branch.
+                    Add a new manager who will have full access to manage a specific property.
                   </SheetDescription>
                 </SheetHeader>
                 <div className="grid gap-6 py-6">
@@ -105,10 +105,10 @@ export default function OwnerStaff() {
                    <div className="space-y-4">
                       <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Assignment</h3>
                       <div className="space-y-2">
-                        <Label>Assign Branch</Label>
+                        <Label>Assign Property</Label>
                         <Select>
                            <SelectTrigger>
-                              <SelectValue placeholder="Select Branch" />
+                              <SelectValue placeholder="Select Property" />
                            </SelectTrigger>
                            <SelectContent>
                               <SelectItem value="dhaka">Dhaka Hub</SelectItem>
@@ -116,7 +116,7 @@ export default function OwnerStaff() {
                               <SelectItem value="mirpur">Mirpur Home</SelectItem>
                            </SelectContent>
                         </Select>
-                        <p className="text-xs text-muted-foreground">This user will manage all operations for this branch.</p>
+                        <p className="text-xs text-muted-foreground">This user will manage all operations for this property.</p>
                       </div>
                    </div>
 
@@ -153,7 +153,7 @@ export default function OwnerStaff() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Manager Name</TableHead>
-                    <TableHead>Assigned Branch</TableHead>
+                    <TableHead>Assigned Property</TableHead>
                     <TableHead className="hidden md:table-cell">Email</TableHead>
                     <TableHead>Salary</TableHead>
                     <TableHead>Status</TableHead>
@@ -248,13 +248,13 @@ export default function OwnerStaff() {
                             </Select>
                          </div>
                          <div className="space-y-2">
-                            <Label>Branch</Label>
+                            <Label>Property</Label>
                             <Select>
                                <SelectTrigger>
-                                  <SelectValue placeholder="Assign Branch" />
+                                  <SelectValue placeholder="Assign Property" />
                                </SelectTrigger>
                                <SelectContent>
-                                  <SelectItem value="all">All Branches</SelectItem>
+                                  <SelectItem value="all">All Properties</SelectItem>
                                   <SelectItem value="dhaka">Dhaka Hub</SelectItem>
                                   <SelectItem value="uttara">Uttara Girls</SelectItem>
                                </SelectContent>
@@ -285,7 +285,7 @@ export default function OwnerStaff() {
                   <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead>Role</TableHead>
-                    <TableHead>Branch</TableHead>
+                    <TableHead>Property</TableHead>
                     <TableHead>Salary</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>

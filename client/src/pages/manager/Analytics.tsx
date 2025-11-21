@@ -23,7 +23,7 @@ export default function ManagerAnalytics() {
     <DashboardLayout type="manager">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Branch Analytics</h2>
+          <h2 className="text-3xl font-bold tracking-tight">Property Analytics</h2>
           <p className="text-muted-foreground">Deep dive into Dhaka Hub performance.</p>
         </div>
         <div className="flex gap-2">

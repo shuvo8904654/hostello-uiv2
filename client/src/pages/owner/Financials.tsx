@@ -49,14 +49,14 @@ const CHART_DATA = [
 
 export default function OwnerFinancials() {
   const { toast } = useToast();
-  const [branch, setBranch] = useState("all");
+  const [property, setProperty] = useState("all");
 
-  const filteredTransactions = branch === "all" 
+  const filteredTransactions = property === "all" 
     ? TRANSACTIONS 
     : TRANSACTIONS.filter(t => {
-        if (branch === "dhaka") return t.branch === "Dhaka Hub";
-        if (branch === "uttara") return t.branch === "Uttara Girls";
-        if (branch === "mirpur") return t.branch === "Mirpur Home";
+        if (property === "dhaka") return t.branch === "Dhaka Hub";
+        if (property === "uttara") return t.branch === "Uttara Girls";
+        if (property === "mirpur") return t.branch === "Mirpur Home";
         return true;
     });
 
@@ -83,12 +83,12 @@ export default function OwnerFinancials() {
         </div>
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <div className="w-full sm:w-[200px]">
-            <Select defaultValue="all" onValueChange={setBranch}>
+            <Select defaultValue="all" onValueChange={setProperty}>
                <SelectTrigger>
-                  <SelectValue placeholder="Select Branch" />
+                  <SelectValue placeholder="Select Property" />
                </SelectTrigger>
                <SelectContent>
-                  <SelectItem value="all">All Branches</SelectItem>
+                  <SelectItem value="all">All Properties</SelectItem>
                   <SelectItem value="dhaka">Dhaka Hub</SelectItem>
                   <SelectItem value="uttara">Uttara Girls</SelectItem>
                   <SelectItem value="mirpur">Mirpur Home</SelectItem>
@@ -117,10 +117,10 @@ export default function OwnerFinancials() {
                   </Tabs>
                 </div>
                 <div className="space-y-2">
-                  <Label>Branch</Label>
+                  <Label>Property</Label>
                   <Select>
                      <SelectTrigger>
-                        <SelectValue placeholder="Select Branch" />
+                        <SelectValue placeholder="Select Property" />
                      </SelectTrigger>
                      <SelectContent>
                         <SelectItem value="dhaka">Dhaka Hub</SelectItem>
@@ -315,7 +315,7 @@ export default function OwnerFinancials() {
                   <TableRow>
                     <TableHead>Description</TableHead>
                     <TableHead>Category</TableHead>
-                    <TableHead>Branch</TableHead>
+                    <TableHead>Property</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Amount</TableHead>

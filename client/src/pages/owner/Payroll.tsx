@@ -9,8 +9,8 @@ import { DollarSign, Users, Download, Filter, Search, CheckCircle2, Clock } from
 import { useState } from "react";
 
 const STAFF_PAYROLL = [
-  { id: 1, name: "Abdul Karim", role: "Branch Manager", salary: 25000, status: "Paid", paymentDate: "2023-11-01", type: "Monthly" },
-  { id: 2, name: "Fatima Hasan", role: "Branch Manager", salary: 24000, status: "Pending", paymentDate: "-", type: "Monthly" },
+  { id: 1, name: "Abdul Karim", role: "Property Manager", salary: 25000, status: "Paid", paymentDate: "2023-11-01", type: "Monthly" },
+  { id: 2, name: "Fatima Hasan", role: "Property Manager", salary: 24000, status: "Pending", paymentDate: "-", type: "Monthly" },
   { id: 3, name: "Rahim Mia", role: "Security Guard", salary: 12000, status: "Paid", paymentDate: "2023-11-01", type: "Monthly" },
   { id: 4, name: "Sokina Begum", role: "Cleaner", salary: 8000, status: "Paid", paymentDate: "2023-11-02", type: "Monthly" },
   { id: 5, name: "Kamal Hossain", role: "Maintenance", salary: 15000, status: "Pending", paymentDate: "-", type: "Contract" },

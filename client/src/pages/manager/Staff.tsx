@@ -19,11 +19,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
-// Mock Data for this branch
+// Mock Data for this property
 const STAFF = [
-  { id: 1, name: "Abdul Karim", role: "Manager", branch: "Dhaka Hub", status: "Active", email: "abdul@hostello.com", salary: "25,000" },
-  { id: 4, name: "Kamal Hossain", role: "Security", branch: "Dhaka Hub", status: "Active", email: "kamal@hostello.com", salary: "12,000" },
-  { id: 5, name: "Rahima Begum", role: "Cleaner", branch: "Dhaka Hub", status: "Active", email: "rahima@hostello.com", salary: "8,000" },
+  { id: 1, name: "Abdul Karim", role: "Manager", property: "Dhaka Hub", status: "Active", email: "abdul@hostello.com", salary: "25,000" },
+  { id: 4, name: "Kamal Hossain", role: "Security", property: "Dhaka Hub", status: "Active", email: "kamal@hostello.com", salary: "12,000" },
+  { id: 5, name: "Rahima Begum", role: "Cleaner", property: "Dhaka Hub", status: "Active", email: "rahima@hostello.com", salary: "8,000" },
 ];
 
 export default function ManagerStaff() {
@@ -51,7 +51,7 @@ export default function ManagerStaff() {
             <SheetHeader>
               <SheetTitle>Add New Staff</SheetTitle>
               <SheetDescription>
-                Add a new staff member to your branch.
+                Add a new staff member to your property.
               </SheetDescription>
             </SheetHeader>
             <div className="grid gap-6 py-6">
@@ -97,7 +97,7 @@ export default function ManagerStaff() {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label>Branch</Label>
+                        <Label>Property</Label>
                         <Input value="Dhaka Hub" disabled />
                       </div>
                   </div>
@@ -125,7 +125,7 @@ export default function ManagerStaff() {
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Role</TableHead>
-                <TableHead>Branch</TableHead>
+                <TableHead>Property</TableHead>
                 <TableHead>Salary</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
@@ -144,7 +144,7 @@ export default function ManagerStaff() {
                   <TableCell>
                     <div className="flex items-center text-xs text-muted-foreground">
                         <Building2 className="h-3 w-3 mr-1" />
-                        {member.branch}
+                        {member.property}
                     </div>
                   </TableCell>
                   <TableCell>
