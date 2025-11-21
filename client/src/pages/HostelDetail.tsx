@@ -210,17 +210,36 @@ export default function HostelDetail() {
               <h3 className="text-xl font-bold mb-4">Packages & Offers</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 {hostel.packages.map((pkg, index) => (
-                  <div key={index} className="p-4 border rounded-xl hover:border-primary/50 transition-colors bg-primary/5">
-                    <div className="flex justify-between items-start mb-2">
+                  <div key={index} className="p-5 border rounded-xl hover:border-primary/50 transition-all bg-card shadow-sm hover:shadow-md flex flex-col">
+                    <div className="flex justify-between items-start mb-4">
                        <div>
                           <h4 className="font-bold text-lg">{pkg.name}</h4>
-                          <Badge variant="outline" className="mt-1 bg-background">{pkg.duration}</Badge>
+                          <Badge variant="secondary" className="mt-1 font-normal">{pkg.duration}</Badge>
                        </div>
-                       <Package className="h-5 w-5 text-primary" />
+                       <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                          <Package className="h-5 w-5" />
+                       </div>
                     </div>
-                    <div className="mt-4">
-                       <div className="text-2xl font-bold text-primary">৳{pkg.price}</div>
-                       <p className="text-xs text-muted-foreground">Best value for {pkg.duration.toLowerCase()} stays</p>
+                    
+                    <div className="space-y-3 flex-1">
+                       {pkg.features && pkg.features.length > 0 && (
+                          <div className="space-y-2">
+                             {pkg.features.map((feature, idx) => (
+                                <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                   <Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+                                   <span>{feature}</span>
+                                </div>
+                             ))}
+                          </div>
+                       )}
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t flex items-end justify-between">
+                       <div>
+                          <div className="text-2xl font-bold text-primary">৳{pkg.price}</div>
+                          <p className="text-xs text-muted-foreground">Total for {pkg.duration.toLowerCase()}</p>
+                       </div>
+                       <Button size="sm" onClick={() => { setSelectedPackage(pkg.name); setSelectedRoom(""); toast({ title: "Package Selected", description: `${pkg.name} added to booking.` }); }}>Select</Button>
                     </div>
                   </div>
                 ))}

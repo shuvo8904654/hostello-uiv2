@@ -41,8 +41,9 @@ export interface Room {
 
 export interface Package {
   name: string;
-  duration: 'Daily' | 'Monthly' | 'Semester';
+  duration: string;
   price: number;
+  features?: string[];
 }
 
 export const HOSTELS: Hostel[] = [
@@ -69,8 +70,18 @@ export const HOSTELS: Hostel[] = [
       { id: 'r2', name: 'Private AC Room', price: 12000, capacity: 1, type: 'Private', available: 1 },
     ],
     packages: [
-      { name: 'Monthly Stay', duration: 'Monthly', price: 5000 },
-      { name: 'Semester Saver', duration: 'Semester', price: 28000 },
+      { 
+        name: 'Monthly Stay', 
+        duration: 'Monthly', 
+        price: 5000,
+        features: ['WiFi Included', 'Weekly Cleaning', 'Shared Kitchen Access']
+      },
+      { 
+        name: 'Semester Saver', 
+        duration: '6 Months', 
+        price: 28000,
+        features: ['10% Discount', 'Priority Support', 'Fixed Room Rate', 'Gym Access']
+      },
     ]
   },
   {
@@ -94,7 +105,12 @@ export const HOSTELS: Hostel[] = [
       { id: 'r3', name: '2-Bed Shared Room', price: 4500, capacity: 2, type: 'Dorm', available: 4 },
     ],
     packages: [
-      { name: 'Monthly Stay', duration: 'Monthly', price: 4500 },
+      { 
+        name: 'Monthly Stay', 
+        duration: 'Monthly', 
+        price: 4500,
+        features: ['3 Meals/Day', 'WiFi', 'Laundry Service']
+      },
     ]
   },
   {
@@ -116,7 +132,7 @@ export const HOSTELS: Hostel[] = [
       { id: 'r5', name: '3-Bed Shared', price: 3500, capacity: 3, type: 'Dorm', available: 5 },
     ],
     packages: [
-       { name: 'Monthly Stay', duration: 'Monthly', price: 3500 },
+       { name: 'Monthly Stay', duration: 'Monthly', price: 3500, features: ['WiFi', 'Study Hall Access'] },
     ]
   },
   {
@@ -137,7 +153,7 @@ export const HOSTELS: Hostel[] = [
       { id: 'r6', name: 'Double Room', price: 5000, capacity: 2, type: 'Private', available: 1 },
     ],
     packages: [
-      { name: 'Monthly Stay', duration: 'Monthly', price: 3000 },
+      { name: 'Monthly Stay', duration: 'Monthly', price: 3000, features: ['Garden Access', 'Weekly Cleaning'] },
     ]
   }
 ];

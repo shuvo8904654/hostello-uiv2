@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, MoreVertical, Package, Wifi, Utensils, Clock, DollarSign, Save, X } from "lucide-react";
+import { Plus, MoreVertical, Package, Wifi, Utensils, Clock, DollarSign, Save, X, Check } from "lucide-react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,6 +43,9 @@ const ADDONS = [
 ];
 
 export default function PricingPackages() {
+  const [billingCycle, setBillingCycle] = useState("monthly");
+  const [customDuration, setCustomDuration] = useState("");
+
   return (
     <DashboardLayout type="owner">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -117,7 +121,7 @@ export default function PricingPackages() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="billing">Billing Cycle</Label>
-                      <Select defaultValue="monthly">
+                      <Select value={billingCycle} onValueChange={setBillingCycle}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select cycle" />
                         </SelectTrigger>
@@ -128,10 +132,29 @@ export default function PricingPackages() {
                           <SelectItem value="quarterly">Quarterly (3 Mo)</SelectItem>
                           <SelectItem value="biannual">Bi-Annual (6 Mo)</SelectItem>
                           <SelectItem value="yearly">Yearly</SelectItem>
+                          <SelectItem value="custom">Custom Duration...</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
+
+                  {billingCycle === 'custom' && (
+                    <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                       <Label htmlFor="custom-duration">Custom Duration (Days)</Label>
+                       <div className="relative">
+                          <Clock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input 
+                             id="custom-duration" 
+                             className="pl-9" 
+                             placeholder="e.g. 45" 
+                             type="number"
+                             value={customDuration}
+                             onChange={(e) => setCustomDuration(e.target.value)} 
+                          />
+                       </div>
+                       <p className="text-xs text-muted-foreground">Enter the number of days for this package cycle.</p>
+                    </div>
+                  )}
 
                   <div className="flex items-center justify-between border rounded-lg p-4">
                     <div className="space-y-0.5">
