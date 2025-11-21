@@ -112,7 +112,7 @@ export default function OwnerDashboard() {
             <div className="text-2xl font-bold">25</div>
             <div className="flex gap-2 mt-1">
               <p className="text-xs text-muted-foreground text-orange-600 flex items-center">
-                 12 Payments
+                 12 Verifications
               </p>
               <span className="text-xs text-muted-foreground">•</span>
                <p className="text-xs text-muted-foreground text-blue-600 flex items-center">

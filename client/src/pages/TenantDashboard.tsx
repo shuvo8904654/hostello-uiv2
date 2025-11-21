@@ -33,6 +33,7 @@ export default function TenantDashboard() {
           <CardContent>
             <div className="text-2xl font-bold">৳5,000.00</div>
             <p className="text-xs text-muted-foreground">Due Aug 25, 2025</p>
+            <p className="text-[10px] text-orange-600 mt-1 font-medium">Manual Payment Required</p>
           </CardContent>
         </Card>
         <Card>

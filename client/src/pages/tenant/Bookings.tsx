@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BOOKINGS } from "@/lib/mockData";
-import { Calendar, MapPin, Download, FileText, AlertCircle, Clock, CreditCard, ChevronRight, LogOut, PenTool, Upload, Star, MessageSquare } from "lucide-react";
+import { Calendar, MapPin, Download, FileText, AlertCircle, Clock, CreditCard, ChevronRight, LogOut, PenTool, Upload, Star, MessageSquare, Wrench, Utensils } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -267,6 +267,33 @@ export default function TenantBookings() {
                                       </div>
                                       <Button size="sm" variant="outline">View</Button>
                                     </div>
+                                    
+                                    {/* New Features requested to match Manager/Owner view */}
+                                    <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/10">
+                                      <div className="flex items-center gap-3">
+                                        <div className="h-8 w-8 bg-purple-100 text-purple-600 rounded flex items-center justify-center">
+                                          <Wrench className="h-4 w-4" />
+                                        </div>
+                                        <div>
+                                          <p className="text-sm font-medium">Maintenance Log</p>
+                                          <p className="text-xs text-muted-foreground">View reported issues</p>
+                                        </div>
+                                      </div>
+                                      <Button size="sm" variant="outline">View</Button>
+                                    </div>
+
+                                    <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/10">
+                                      <div className="flex items-center gap-3">
+                                        <div className="h-8 w-8 bg-orange-100 text-orange-600 rounded flex items-center justify-center">
+                                          <Utensils className="h-4 w-4" />
+                                        </div>
+                                        <div>
+                                          <p className="text-sm font-medium">Meal Plan Status</p>
+                                          <p className="text-xs text-muted-foreground">Active (Lunch & Dinner)</p>
+                                        </div>
+                                      </div>
+                                      <Button size="sm" variant="outline">Manage</Button>
+                                    </div>
                                   </div>
                                   <DialogFooter>
                                     <Button variant="outline">Close</Button>
@@ -403,7 +430,13 @@ export default function TenantBookings() {
                                 <CardContent>
                                   <div className="text-2xl font-bold">৳{booking.price}</div>
                                   <p className="text-xs text-muted-foreground">Due on Aug 25, 2025</p>
-                                  <Button className="w-full mt-4">Pay Now</Button>
+                                  <div className="mt-4 p-4 bg-muted/30 rounded-md border">
+                                    <p className="text-sm font-medium mb-2">Manual Payment Instructions:</p>
+                                    <p className="text-xs text-muted-foreground mb-1">Please transfer the amount to the following bKash number:</p>
+                                    <p className="font-mono text-sm font-bold mb-3">01712345678 (Personal)</p>
+                                    <p className="text-xs text-muted-foreground">Reference: Room {booking.roomType}</p>
+                                  </div>
+                                  <Button className="w-full mt-4" variant="outline">Report Payment</Button>
                                 </CardContent>
                               </Card>
 
