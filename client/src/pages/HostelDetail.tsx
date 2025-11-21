@@ -18,6 +18,8 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { Input } from "@/components/ui/input";
+
 export default function HostelDetail() {
   const [match, params] = useRoute("/hostel/:id");
   const [hostel, setHostel] = useState(HOSTELS.find(h => h.id === params?.id));
@@ -29,6 +31,8 @@ export default function HostelDetail() {
   const [date, setDate] = useState<Date>();
   const [selectedRoom, setSelectedRoom] = useState<string>("");
   const [isBookingSuccessOpen, setIsBookingSuccessOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [signUpData, setSignUpData] = useState({ name: "", email: "", password: "" });
 
   if (!hostel) return <div>Hostel not found</div>;
 
@@ -42,7 +46,32 @@ export default function HostelDetail() {
       return;
     }
 
-    setIsBookingSuccessOpen(true);
+    // Open Sign Up modal instead of direct success
+    setIsSignUpOpen(true);
+  };
+
+  const handleSignUp = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!signUpData.name || !signUpData.email || !signUpData.password) {
+        toast({
+            title: "Missing information",
+            description: "Please fill in all fields to create your account.",
+            variant: "destructive"
+        });
+        return;
+    }
+
+    setIsSignUpOpen(false);
+    
+    toast({
+        title: "Account Created! 🎉",
+        description: "Welcome to Hostello. Completing your booking...",
+    });
+
+    // Proceed to booking success
+    setTimeout(() => {
+        setIsBookingSuccessOpen(true);
+    }, 500);
   };
 
   const confirmBooking = () => {
@@ -165,123 +194,6 @@ export default function HostelDetail() {
               </div>
             </div>
 
-            {/* Reviews Section */}
-            <div id="reviews" className="border-t pt-8">
-               <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-bold flex items-center gap-2">
-                    <Star className="h-6 w-6 fill-primary text-primary" /> 
-                    {hostel.rating} · {hostel.reviews} Reviews
-                  </h3>
-                  
-                  <Dialog open={isReviewOpen} onOpenChange={setIsReviewOpen}>
-                     <DialogTrigger asChild>
-                        <Button variant="outline">Write a Review</Button>
-                     </DialogTrigger>
-                     <DialogContent className="sm:max-w-[500px]">
-                        <DialogHeader>
-                           <DialogTitle>Rate your stay</DialogTitle>
-                           <DialogDescription>Share your experience at {hostel.name} to help others.</DialogDescription>
-                        </DialogHeader>
-                        <div className="py-4 space-y-4">
-                           <div className="space-y-2">
-                              <Label>Rating</Label>
-                              <div className="flex gap-2">
-                                 {[1, 2, 3, 4, 5].map((star) => (
-                                    <button 
-                                       key={star} 
-                                       type="button"
-                                       onClick={() => setNewReview({...newReview, rating: star})}
-                                       className="focus:outline-none"
-                                    >
-                                       <Star 
-                                          className={`h-8 w-8 ${star <= newReview.rating ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`} 
-                                       />
-                                    </button>
-                                 ))}
-                              </div>
-                           </div>
-                           <div className="space-y-2">
-                              <Label htmlFor="comment">Your Review</Label>
-                              <Textarea 
-                                 id="comment" 
-                                 placeholder="Tell us about the room, amenities, and overall vibe..." 
-                                 value={newReview.comment}
-                                 onChange={(e) => setNewReview({...newReview, comment: e.target.value})}
-                                 rows={4}
-                              />
-                           </div>
-                        </div>
-                        <DialogFooter>
-                           <Button onClick={handleSubmitReview}>Post Review</Button>
-                        </DialogFooter>
-                     </DialogContent>
-                  </Dialog>
-               </div>
-
-               {/* Rating Breakdown Mockup */}
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2 mb-8">
-                  <div className="flex items-center justify-between text-sm">
-                     <span>Cleanliness</span>
-                     <div className="flex items-center gap-2 w-1/2">
-                        <Progress value={95} className="h-2" />
-                        <span className="text-muted-foreground">4.9</span>
-                     </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                     <span>Communication</span>
-                     <div className="flex items-center gap-2 w-1/2">
-                        <Progress value={90} className="h-2" />
-                        <span className="text-muted-foreground">4.8</span>
-                     </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                     <span>Check-in</span>
-                     <div className="flex items-center gap-2 w-1/2">
-                        <Progress value={98} className="h-2" />
-                        <span className="text-muted-foreground">5.0</span>
-                     </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                     <span>Accuracy</span>
-                     <div className="flex items-center gap-2 w-1/2">
-                        <Progress value={85} className="h-2" />
-                        <span className="text-muted-foreground">4.5</span>
-                     </div>
-                  </div>
-               </div>
-
-               {/* Reviews Grid */}
-               <div className="grid md:grid-cols-2 gap-6">
-                  {hostel.reviewsList && hostel.reviewsList.length > 0 ? (
-                     hostel.reviewsList.map((review) => (
-                        <div key={review.id} className="p-4 rounded-xl bg-muted/30 space-y-3">
-                           <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-3">
-                                 <Avatar>
-                                    <AvatarFallback>{review.avatar || review.user[0]}</AvatarFallback>
-                                 </Avatar>
-                                 <div>
-                                    <p className="font-semibold text-sm">{review.user}</p>
-                                    <p className="text-xs text-muted-foreground">{review.date}</p>
-                                 </div>
-                              </div>
-                              <div className="flex items-center">
-                                 <Star className="h-3 w-3 fill-primary text-primary mr-1" />
-                                 <span className="font-medium text-sm">{review.rating}</span>
-                              </div>
-                           </div>
-                           <p className="text-sm text-muted-foreground leading-relaxed">
-                              {review.comment}
-                           </p>
-                        </div>
-                     ))
-                  ) : (
-                     <div className="col-span-2 text-center py-8 text-muted-foreground">
-                        No reviews yet. Be the first to share your experience!
-                     </div>
-                  )}
-               </div>
-            </div>
 
           </div>
 
@@ -356,6 +268,63 @@ export default function HostelDetail() {
               </div>
             </div>
           </div>
+
+            {/* Booking Success Modal */}
+          <Dialog open={isSignUpOpen} onOpenChange={setIsSignUpOpen}>
+            <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                    <DialogTitle className="text-center text-2xl font-bold">Create Tenant Account</DialogTitle>
+                    <DialogDescription className="text-center">
+                        You need a Hostello account to manage your booking and communicate with the owner.
+                    </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSignUp} className="space-y-4 py-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="name">Full Name</Label>
+                        <Input 
+                            id="name" 
+                            placeholder="John Doe" 
+                            value={signUpData.name}
+                            onChange={(e) => setSignUpData({...signUpData, name: e.target.value})}
+                            required
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="email">Email Address</Label>
+                        <Input 
+                            id="email" 
+                            type="email" 
+                            placeholder="john@example.com" 
+                            value={signUpData.email}
+                            onChange={(e) => setSignUpData({...signUpData, email: e.target.value})}
+                            required
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="password">Password</Label>
+                        <Input 
+                            id="password" 
+                            type="password" 
+                            placeholder="Create a password" 
+                            value={signUpData.password}
+                            onChange={(e) => setSignUpData({...signUpData, password: e.target.value})}
+                            required
+                        />
+                    </div>
+                    <div className="pt-2">
+                        <Button type="submit" className="w-full text-lg font-bold">
+                            Create Account & Continue
+                        </Button>
+                    </div>
+                    <div className="text-center text-sm text-muted-foreground">
+                        Already have an account? <Button variant="link" className="p-0 h-auto font-semibold" onClick={() => {
+                            setIsSignUpOpen(false);
+                            setIsBookingSuccessOpen(true); // Mock login flow
+                        }}>Log in</Button>
+                    </div>
+                </form>
+            </DialogContent>
+          </Dialog>
 
           {/* Booking Success Modal */}
           <Dialog open={isBookingSuccessOpen} onOpenChange={setIsBookingSuccessOpen}>

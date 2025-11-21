@@ -112,7 +112,7 @@ export default function WebsiteBuilder() {
 
   return (
     <DashboardLayout type="owner">
-      <div className="h-[calc(100vh-2rem)] flex flex-col">
+      <div className="lg:h-[calc(100vh-2rem)] h-auto flex flex-col">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 flex-shrink-0">
           <div>
@@ -136,10 +136,10 @@ export default function WebsiteBuilder() {
           </div>
         </div>
 
-        <div className="flex-1 grid lg:grid-cols-12 gap-6 overflow-hidden min-h-0">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:overflow-hidden min-h-0">
           
           {/* LEFT SIDEBAR - CONTROLS */}
-          <div className="lg:col-span-4 flex flex-col gap-4 overflow-hidden h-full">
+          <div className="lg:col-span-4 flex flex-col gap-4 lg:overflow-hidden h-auto lg:h-full">
             <Card className="flex-1 flex flex-col overflow-hidden border-0 shadow-md bg-card/50 backdrop-blur-sm">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col h-full">
                 <div className="px-4 pt-4 border-b bg-background/95 backdrop-blur z-10">
@@ -156,7 +156,7 @@ export default function WebsiteBuilder() {
                   </TabsList>
                 </div>
 
-                <ScrollArea className="flex-1">
+                <ScrollArea className="flex-1 h-[500px] lg:h-auto">
                   <div className="p-4 space-y-6">
                     
                     <TabsContent value="design" className="mt-0 space-y-6">
@@ -399,7 +399,7 @@ export default function WebsiteBuilder() {
           </div>
 
           {/* RIGHT SIDE - PREVIEW */}
-          <div className="lg:col-span-8 bg-muted/20 rounded-xl border overflow-hidden flex flex-col relative group">
+          <div className="lg:col-span-8 h-[600px] lg:h-auto bg-muted/20 rounded-xl border overflow-hidden flex flex-col relative group">
              {/* Preview Toolbar */}
              <div className="h-12 bg-background border-b flex items-center justify-between px-4 z-20">
                 <div className="flex items-center gap-4">
