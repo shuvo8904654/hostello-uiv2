@@ -431,12 +431,12 @@ export default function TenantBookings() {
                                   <div className="text-2xl font-bold">৳{booking.price}</div>
                                   <p className="text-xs text-muted-foreground">Due on Aug 25, 2025</p>
                                   <div className="mt-4 p-4 bg-muted/30 rounded-md border">
-                                    <p className="text-sm font-medium mb-2">Manual Payment Instructions:</p>
-                                    <p className="text-xs text-muted-foreground mb-1">Please transfer the amount to the following bKash number:</p>
-                                    <p className="font-mono text-sm font-bold mb-3">01712345678 (Personal)</p>
+                                    <p className="text-sm font-medium mb-2">Payment Instructions:</p>
+                                    <p className="text-xs text-muted-foreground mb-1">Please visit the hostel office to make your payment in cash.</p>
+                                    <p className="font-mono text-sm font-bold mb-3">Office Hours: 9 AM - 5 PM</p>
                                     <p className="text-xs text-muted-foreground">Reference: Room {booking.roomType}</p>
                                   </div>
-                                  <Button className="w-full mt-4" variant="outline">Report Payment</Button>
+                                  <Button className="w-full mt-4" variant="outline">Mark as Paid (Pending Verification)</Button>
                                 </CardContent>
                               </Card>
 
